@@ -2,8 +2,10 @@
 
 Universidad Autónoma de San Luis Potosí
 
-**Materia: ** Orientada a Objetos.
+**Materia:** Orientada a Objetos.
+
 **Semestre:** 2022-2023/II
+
 **Profesor:** Dr. Francisco Javier Torres Reyes
 
 **Integrantes del equipo:**
