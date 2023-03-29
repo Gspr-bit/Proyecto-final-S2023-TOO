@@ -16,3 +16,6 @@ Universidad Autónoma de San Luis Potosí
 
 ## Links de documentos
 
+[Diagrama de clases.](https://drive.google.com/file/d/1snGcUSY5bYXGBA6FtgykMt3ucN8PWXwm/view?usp=sharing)
+
+[GDD](https://docs.google.com/document/d/1A9WZvLQFwBW-sarXeNLkwbm-oMKjzaZj-78K0TxcB8Q/edit?usp=sharing)
