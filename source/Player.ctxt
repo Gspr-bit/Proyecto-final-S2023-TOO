@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Player
+comment0.text=\n\ Write\ a\ description\ of\ class\ Player\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=
+comment1.target=Player()
+comment2.params=
+comment2.target=Effect\ getEffect()
+comment3.params=effect
+comment3.target=void\ setEffect(Effect)
+comment4.params=
+comment4.target=int\ getEffectDuration()
+comment5.params=effectDuration
+comment5.target=void\ setEffectDuration(int)
+comment6.params=
+comment6.target=int\ getVisibility()
+comment7.params=visibility
+comment7.target=void\ setVisibility(int)
+comment8.params=
+comment8.target=void\ changeDirection()
+comment9.params=
+comment9.target=void\ collide()
+numComments=10
