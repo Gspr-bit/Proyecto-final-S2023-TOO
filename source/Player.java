@@ -1,5 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.List;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -21,6 +23,51 @@ public class Player extends Character {
         this.effectDuration = 0;
         this.visibility = 600;
         this.v = 2;
+        this.images = new HashMap<>();
+        this.direction = Direction.RIGHT;
+
+        this.images.put(Direction.UP, new ArrayList<>() {
+            {
+                add("Player/up-0.png");
+                add("Player/up-1.png");
+                add("Player/up-2.png");
+                add("Player/up-3.png");
+                add("Player/up-4.png");
+                add("Player/up-5.png");
+            }
+        });
+        this.images.put(Direction.DOWN, new ArrayList<>() {
+            {
+                add("Player/down-0.png");
+                add("Player/down-1.png");
+                add("Player/down-2.png");
+                add("Player/down-3.png");
+                add("Player/down-4.png");
+                add("Player/down-5.png");
+            }
+        });
+        this.images.put(Direction.LEFT, new ArrayList<>() {
+            {
+                add("Player/down-0.png");
+                add("Player/down-1.png");
+                add("Player/down-2.png");
+                add("Player/down-3.png");
+                add("Player/down-4.png");
+                add("Player/down-5.png");
+            }
+        });
+        this.images.put(Direction.RIGHT, new ArrayList<>() {
+            {
+                add("Player/down-0.png");
+                add("Player/down-1.png");
+                add("Player/down-2.png");
+                add("Player/down-3.png");
+                add("Player/down-4.png");
+                add("Player/down-5.png");
+            }
+        });
+
+        this.imageTimer = 0;
     }
 
     public Effect getEffect() {
@@ -50,15 +97,20 @@ public class Player extends Character {
     public void changeDirection() {
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
             move(v);
+            this.direction = Direction.RIGHT;
+
         }
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
             move(-v);
+            this.direction = Direction.LEFT;
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
             setLocation(this.getX(), this.getY() - v);
+            this.direction = Direction.UP;
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
             setLocation(this.getX(), this.getY() + v);
+            this.direction = Direction.DOWN;
         }
     }
 
@@ -79,5 +131,13 @@ public class Player extends Character {
             // Eliminar el item
             removeTouching(Item.class);
         }
+    }
+
+    public void updateImage() {
+        setImage(images.get(this.direction).get(imageTimer / UPDATE_RATE));
+
+        this.imageTimer++;
+        if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
+            this.imageTimer = 0;
     }
 }
