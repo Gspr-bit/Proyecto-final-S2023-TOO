@@ -10,7 +10,7 @@ public class InitialScreen extends World
 {
 
     /**
-     * Constructor for objects of class IntialScreen.
+     * Constructor for objects of class InitialScreen.
      * 
      */
      public InitialScreen()
