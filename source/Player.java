@@ -97,7 +97,7 @@ public class Player extends Character {
              *  todos los efectos
              */
             if (Objects.requireNonNull(item.getEffect()) == Effect.SLOW) {
-                this.v /= 2;
+                this.v = 1;
             }
 
             // Eliminar el item
