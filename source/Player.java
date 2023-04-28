@@ -26,46 +26,19 @@ public class Player extends Character {
         this.images = new HashMap<>();
         this.direction = Direction.RIGHT;
 
-        this.images.put(Direction.UP, new ArrayList<>() {
-            {
-                add("Player/up-0.png");
-                add("Player/up-1.png");
-                add("Player/up-2.png");
-                add("Player/up-3.png");
-                add("Player/up-4.png");
-                add("Player/up-5.png");
+        Direction [] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
+        String [] f = {"up", "down", "left", "right"};
+
+        this.images = new HashMap<>(4);
+
+        // Establecer las imágenes
+        for (int i = 0; i < 4; i++) {
+            images.put(d[i], new ArrayList<>(6));
+
+            for (int j = 0; j < 6; j++) {
+                images.get(d[i]).add("Player/" + f[i] + "-" + j + ".png");
             }
-        });
-        this.images.put(Direction.DOWN, new ArrayList<>() {
-            {
-                add("Player/down-0.png");
-                add("Player/down-1.png");
-                add("Player/down-2.png");
-                add("Player/down-3.png");
-                add("Player/down-4.png");
-                add("Player/down-5.png");
-            }
-        });
-        this.images.put(Direction.LEFT, new ArrayList<>() {
-            {
-                add("Player/down-0.png");
-                add("Player/down-1.png");
-                add("Player/down-2.png");
-                add("Player/down-3.png");
-                add("Player/down-4.png");
-                add("Player/down-5.png");
-            }
-        });
-        this.images.put(Direction.RIGHT, new ArrayList<>() {
-            {
-                add("Player/down-0.png");
-                add("Player/down-1.png");
-                add("Player/down-2.png");
-                add("Player/down-3.png");
-                add("Player/down-4.png");
-                add("Player/down-5.png");
-            }
-        });
+        }
 
         this.imageTimer = 0;
     }
