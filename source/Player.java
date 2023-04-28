@@ -23,7 +23,6 @@ public class Player extends Character {
         this.effectDuration = 0;
         this.visibility = 600;
         this.v = 2;
-        this.images = new HashMap<>();
         this.direction = Direction.RIGHT;
 
         Direction [] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
