@@ -67,23 +67,7 @@ public class Player extends Character {
     }
 
     public void changeDirection() {
-        if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
-            move(v);
-            this.direction = Direction.RIGHT;
-
-        }
-        if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
-            move(-v);
-            this.direction = Direction.LEFT;
-        }
-        if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
-            setLocation(this.getX(), this.getY() - v);
-            this.direction = Direction.UP;
-        }
-        if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
-            setLocation(this.getX(), this.getY() + v);
-            this.direction = Direction.DOWN;
-        }
+        // 
     }
 
     public void collide() {
