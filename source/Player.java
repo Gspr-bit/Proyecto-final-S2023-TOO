@@ -10,6 +10,7 @@ import java.util.Objects;
  * @author (your name)
  * @version (a version number or a date)
  */
+//jaja ese wey
 public class Player extends Character {
     // Tipo de efecto
     private Effect effect;
