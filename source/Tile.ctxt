@@ -1,9 +1,13 @@
 #BlueJ class context
 comment0.target=Tile
-comment0.text=\n\ Write\ a\ description\ of\ class\ Tile\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
-comment1.params=image
-comment1.target=Tile(greenfoot.GreenfootImage)
-comment1.text=\n\ Act\ -\ do\ whatever\ the\ Tile\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ WorldObjects.Tile\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=type\ imagePath
+comment1.target=Tile(Tile.TileType,\ java.lang.String)
+comment1.text=\n\ Act\ -\ do\ whatever\ the\ WorldObjects.Tile\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
 comment2.params=
-comment2.target=void\ act()
-numComments=3
+comment2.target=Tile.TileType\ getType()
+comment3.params=
+comment3.target=java.lang.String\ getImagePath()
+comment4.params=
+comment4.target=void\ act()
+numComments=5

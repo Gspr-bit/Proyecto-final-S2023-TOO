@@ -18,6 +18,9 @@ public class Player extends Character {
     private int effectDuration;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
+    // Posición relativa del jugador (no la posición en la ventana, la posición en el mapa)
+    private int posX;
+    private int posY;
 
     public Player() {
         this.effect = Effect.NONE;
@@ -25,6 +28,7 @@ public class Player extends Character {
         this.visibility = 600;
         this.v = 2;
         this.direction = Direction.RIGHT;
+        this.posX = this.posY = 0;
 
         Direction [] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
         String [] f = {"up", "down", "left", "right"};
@@ -67,8 +71,35 @@ public class Player extends Character {
         this.visibility = visibility;
     }
 
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
     public void changeDirection() {
-        // 
+        if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
+            this.direction = Direction.RIGHT;
+            this.posX += v;
+        }
+        if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
+            this.direction = Direction.LEFT;
+            this.posX -= v;
+            if (this.posX < 0)
+                this.posX = 0;
+        }
+        if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
+            this.direction = Direction.UP;
+            this.posY -= v;
+            if (this.posY < 0)
+                this.posY = 0;
+        }
+        if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
+            this.direction = Direction.DOWN;
+            this.posX += v;
+        }
     }
 
     public void collide() {

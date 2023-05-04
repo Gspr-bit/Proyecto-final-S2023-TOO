@@ -20,7 +20,7 @@ public class InitialScreen extends World
     }
     public void act(){
         if(Greenfoot.mouseClicked(this)){
-            Background1 world = new Background1();
+            BackgroundLevel2 world = new BackgroundLevel2();
             Greenfoot.setWorld(world);
         }
     }
