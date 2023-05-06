@@ -26,7 +26,7 @@ public class Player extends Character {
         this.effect = Effect.NONE;
         this.effectDuration = 0;
         this.visibility = 600;
-        this.v = 2;
+        this.v = 16;
         this.direction = Direction.RIGHT;
         this.posX = this.posY = 0;
 

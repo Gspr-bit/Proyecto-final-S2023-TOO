@@ -14,7 +14,7 @@ public class Background1 extends World {
     // Dimensiones de cada Tile en pixeles
     private static final int TILE_SIZE = 16;
     // Dimensiones del mapa en Tiles
-    private static final int MAP_WIDTH = 40;
+    private static final int MAP_WIDTH = 160;
     private static final int MAP_HEIGHT = 30;
     private static Player player;
     private final Random random;
@@ -83,6 +83,7 @@ public class Background1 extends World {
     }
 
     private void drawMap() {
+        // Quita todos los anteriores porque los va a volver a dibujar
         List<Tile> tiles = getObjects(Tile.class);
         removeObjects(tiles);
 
@@ -92,13 +93,15 @@ public class Background1 extends World {
         int endTileY = startTileY + getHeight() / TILE_SIZE;
         int offSetX = player.getPosX() % TILE_SIZE;
         int offSetY = player.getPosY() % TILE_SIZE;
+        int tilePosX = 0;
+        int tilePosY = 0;
 
-        for (int x = startTileX; x < endTileX; x++) {
-            for (int y = startTileY; y < endTileY; y++) {
+        for (int x = startTileX; x < endTileX; tilePosX += TILE_SIZE, x++) {
+            for (int y = startTileY; y < endTileY; tilePosY += TILE_SIZE, y++) {
                 if ( x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
                     continue;
 
-                addObject(mapTiles[x][y], offSetX + x * TILE_SIZE, offSetY + y * TILE_SIZE);
+                addObject(mapTiles[x][y], offSetX + tilePosX, offSetY + tilePosY);
             }
         }
     }
