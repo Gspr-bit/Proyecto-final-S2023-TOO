@@ -31,5 +31,10 @@ public class Tile extends Actor
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
             setLocation(this.getX(), this.getY() - v);
         }
+
+        // Eliminar los objetos cuando están en el borde
+        if (isAtEdge()) {
+            this.getWorld().removeObject(this);
+        }
     }
 }
