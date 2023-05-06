@@ -20,6 +20,7 @@ public class Background1 extends World
     // Porcentaje total de apariciones de cada tipo. Deben sumar 100. Si no suman 100 no dibuja el fondo.
     private final int [] percentages  = {    20,      2,      70,     2,      2,      2,       2};
 
+    private Player player;
     /**
      * Constructor for objects of class Background1.
      * 
@@ -41,6 +42,13 @@ public class Background1 extends World
         // assert (percentages[percentages.length -1] == 100);
         if (percentages[percentages.length -1] != 100)
             return;
+
+        // Agregar el jugador
+        this.player = new Player();
+        player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
+        this.addObject(this.player, this.getWidth() / 2, this.getHeight() / 2);
+        // Hacer que el jugador se muestre sobre el piso
+        setPaintOrder(Player.class, Tile.class);
 
         generateBackground();
     }
