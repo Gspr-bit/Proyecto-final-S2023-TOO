@@ -68,7 +68,19 @@ public class Player extends Character {
     }
 
     public void changeDirection() {
-        // 
+        // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
+        if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
+            this.direction = Direction.RIGHT;
+        }
+        if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
+            this.direction = Direction.LEFT;
+        }
+        if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
+            this.direction = Direction.UP;
+        }
+        if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
+            this.direction = Direction.DOWN;
+        }
     }
 
     public void collide() {
