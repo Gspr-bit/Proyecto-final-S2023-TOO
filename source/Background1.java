@@ -93,15 +93,16 @@ public class Background1 extends World {
         int endTileY = startTileY + getHeight() / TILE_SIZE;
         int offSetX = player.getPosX() % TILE_SIZE;
         int offSetY = player.getPosY() % TILE_SIZE;
-        int tilePosX = 0;
-        int tilePosY = 0;
+        int tilePosX = TILE_SIZE / 2;
+        int tilePosY;
 
         for (int x = startTileX; x < endTileX; tilePosX += TILE_SIZE, x++) {
+            tilePosY = TILE_SIZE / 2;
             for (int y = startTileY; y < endTileY; tilePosY += TILE_SIZE, y++) {
                 if ( x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
                     continue;
 
-                addObject(mapTiles[x][y], offSetX + tilePosX, offSetY + tilePosY);
+                addObject(mapTiles[x][y], tilePosX - offSetX, tilePosY - offSetY);
             }
         }
     }

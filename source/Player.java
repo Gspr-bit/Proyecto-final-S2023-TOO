@@ -26,7 +26,7 @@ public class Player extends Character {
         this.effect = Effect.NONE;
         this.effectDuration = 0;
         this.visibility = 600;
-        this.v = 16;
+        this.v = 2;
         this.direction = Direction.RIGHT;
         this.posX = this.posY = 0;
 
@@ -83,19 +83,19 @@ public class Player extends Character {
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
             this.direction = Direction.RIGHT;
-            this.posX -= v;
+            this.posX += v;
         }
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
             this.direction = Direction.LEFT;
-            this.posX += v;
+            this.posX -= v;
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
             this.direction = Direction.UP;
-            this.posY += v;
+            this.posY -= v;
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
             this.direction = Direction.DOWN;
-            this.posY -= v;
+            this.posY += v;
         }
     }
 

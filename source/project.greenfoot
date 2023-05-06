@@ -1,10 +1,10 @@
 #Greenfoot project file
-class.Background1.image=fondo-verde.jpg
-class.Character.image=skull.png
+class.Background1.image=fondo-negro.png
+class.Character.image=right-0.png
 class.InitialScreen.image=space1.jpg
 class.Item.image=potion-green.png
 class.Player.image=smiley2.png
-class.Tile.image=grass.png
+class.Tile.image=grass-0.png
 dependency1.from=InitialScreen
 dependency1.to=Background1
 dependency1.type=UsesDependency
@@ -31,8 +31,8 @@ dependency8.to=Direction
 dependency8.type=UsesDependency
 editor.fx.0.height=737
 editor.fx.0.width=800
-editor.fx.0.x=276
-editor.fx.0.y=144
+editor.fx.0.x=2342
+editor.fx.0.y=146
 height=1024
 package.numDependencies=8
 package.numTargets=9
