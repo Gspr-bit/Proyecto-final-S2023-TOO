@@ -13,14 +13,22 @@ public class Background1 extends World
 {
     private static final int TILE_SIZE = 16;
     private final Random random;
+
+    // Dimensiones del mapa en Tiles
+    private static final int MAP_WIDTH = 40;
+    private static final int MAP_HEIGHT = 30;
+    private final Tile [][] mapTiles;
+
+    private final Tile.TileType [] tileTypes = {Tile.TileType.BUSH, Tile.TileType.DIRT, Tile.TileType.GRASS, Tile.TileType.MUD,
+                                           Tile.TileType.ROCK, Tile.TileType.TREE, Tile.TileType.WATER};
     // Tipos que puede haber
-    private final String [] tileTypes = {"bush", "dirt", "grass", "mud", "rock", "tree", "water"};
+    private final String [] tilePaths = {"bush", "dirt", "grass", "mud", "rock", "tree", "water"};
     // Total de imágenes de cada tipo
     private final int [] tileAmounts  = {     1,      1,      11,     1,      1,      1,       1};
     // Porcentaje total de apariciones de cada tipo. Deben sumar 100. Si no suman 100 no dibuja el fondo.
     private final int [] percentages  = {    20,      2,      70,     2,      2,      2,       2};
 
-    private Player player;
+    private static Player player;
     /**
      * Constructor for objects of class Background1.
      * 
@@ -29,7 +37,9 @@ public class Background1 extends World
     {    
         // Create a new world with 640x480 cells with a cell size of 1x1 pixels.
         super(640, 480, 1);
+
         this.random = new Random(new Date().getTime());
+        this.mapTiles = new Tile[MAP_WIDTH][MAP_HEIGHT];
 
         // Calcular la sumatoria de los porcentajes
         for (int i = 0; i < percentages.length - 1; i++)
@@ -51,6 +61,7 @@ public class Background1 extends World
         setPaintOrder(Player.class, Tile.class);
 
         generateBackground();
+        drawMap();
     }
 
     /**
@@ -58,14 +69,22 @@ public class Background1 extends World
      */
     private void generateBackground() {
         // Llenar el mapa
-        for (int y = 0; y <= getHeight(); y += TILE_SIZE) {
-            for (int x = 0; x <= getWidth(); x+= TILE_SIZE) {
+        for (int x = 0; x < MAP_WIDTH; x ++) {
+            for (int y = 0; y < MAP_HEIGHT; y ++) {
                 int imageType = getRandomType();
                 int imageIndex = random.nextInt(tileAmounts[imageType]);
 
-                GreenfootImage image = new GreenfootImage("MapTiles/" + tileTypes[imageType] + "-" + imageIndex + ".png");
+                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
 
-                addObject(new Tile(image), x, y);
+                mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
+            }
+        }
+    }
+
+    private void drawMap() {
+        for (int x = 0; x < MAP_WIDTH; x ++) {
+            for (int y = 0; y < MAP_HEIGHT; y ++) {
+                addObject(mapTiles[x][y], x*TILE_SIZE, y*TILE_SIZE);
             }
         }
     }
