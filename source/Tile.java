@@ -3,17 +3,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Tile here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Gaspar
  */
 public class Tile extends Actor {
-    TileType type;
-    boolean collidable;
-    
-    /**
-     * Act - do whatever the Tile wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    private final TileType type;
+    private final boolean collidable;
 
     public Tile(GreenfootImage image, TileType type) {
         setImage(image);

@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * Write a description of class Player here.
+ * Clase Jugador. Esta clase es instanciada desde el mundo.
  *
- * @author (your name)
+ * @author Mauricio, Montse, Gaspar
  * @version (a version number or a date)
  */
-//jaja ese wey
+
 public class Player extends Character {
     // Tipo de efecto
     private Effect effect;
@@ -81,6 +81,10 @@ public class Player extends Character {
         return posY;
     }
 
+    /**
+     * Método para cambiar la dirección y posición del jugador.
+     * @author Mauricio, Montse
+     */
     public void changeDirection() {
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
@@ -110,6 +114,12 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * Método para saber si el jugador puede moverse hacia la posición dada.
+     * @author Mauricio, Gaspar
+     * @param direction Dirección hacia donde se quiere mover el jugador.
+     * @return true si el jugador se puede mover hacia allá
+     */
     private boolean canMoveTowards(Direction direction) {
         int dx = this.getImage().getWidth() / 2 + v;
         int dy = this.getImage().getHeight() / 2 + v;
@@ -121,41 +131,14 @@ public class Player extends Character {
         Tile nextTile = (Tile) this.getOneObjectAtOffset(dxs[direction.ordinal()],
                 dys[direction.ordinal()], Tile.class);
 
-        return nextTile != null && !nextTile.collidable;
+        return nextTile != null && !nextTile.isCollidable();
     }
 
-    public void collide() {
-        if (isTouching(Item.class)) {
-            Item item = (Item) getOneIntersectingObject(Item.class);
-            this.effect = item.getEffect();
-            this.effectDuration = item.getEffectDuration();
-
-            /*
-             * TODO: Esto deberá ser reemplazado por un switch cuando implementemos
-             *  todos los efectos
-             */
-            if (Objects.requireNonNull(item.getEffect()) == Effect.SLOW) {
-                this.v = 1;
-            }
-
-            // Eliminar el item
-            removeTouching(Item.class);
-            int i = 1;
-            int front = getImage().getWidth() / 2;
-            while (i <= v) {
-                List<Actor> a = getObjectsAtOffset(front + i, 0, Actor.class);
-                Object[] toArray = a.toArray();
-                if (a.size() > 0) {
-                    for (int j = 0; j < a.size() && a.get(j) instanceof Tile; j++) {
-                        if (((Tile) toArray[j]).getType() != Tile.TileType.TREE) {
-                            changeDirection();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
+    /**
+     * Cambiar la imagen del jugador para que parezca como si se estuviera moviendo
+     * TODO Agregar las animaciones para cuando el jugador está quiero
+     * @author Gaspar
+     */
     public void updateImage() {
         setImage(images.get(this.direction).get(imageTimer / UPDATE_RATE));
 
@@ -163,6 +146,4 @@ public class Player extends Character {
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
     }
-
-
 }

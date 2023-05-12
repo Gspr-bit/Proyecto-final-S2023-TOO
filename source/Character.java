@@ -6,10 +6,9 @@ import java.util.function.Function;
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class character here.
+ * Clase padre abstracta para todos los personajes móviles del juego
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Gaspar
  */
 public abstract class Character extends Actor {
     // Velocidad del personaje
@@ -30,13 +29,10 @@ public abstract class Character extends Actor {
      */
     public void act() {
         changeDirection();
-        collide();
         updateImage();
     }
 
     public abstract void changeDirection();
-
-    public abstract void collide();
     
     public abstract void updateImage();
 }
