@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,20 +83,34 @@ public class Player extends Character {
     public void changeDirection() {
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
-            this.direction = Direction.RIGHT;
+            if(this.getOneObjectAtOffset(this.getImage().getWidth()/2 + v,0,Tile.class) != null &&
+            ((Tile)this.getOneObjectAtOffset(this.getImage().getWidth()/2 + v,0,Tile.class)).chocable == false){
+                this.direction = Direction.RIGHT;
             this.posX += v;
+            
+            }
         }
+        
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
-            this.direction = Direction.LEFT;
+            if(this.getOneObjectAtOffset(-this.getImage().getWidth()/2 +v,0,Tile.class) != null &&
+            ((Tile)this.getOneObjectAtOffset(-this.getImage().getWidth()/2 +v,0,Tile.class)).chocable == false){
+                this.direction = Direction.LEFT;
             this.posX -= v;
+            }
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
-            this.direction = Direction.UP;
-            this.posY -= v;
+            if(this.getOneObjectAtOffset(0,-this.getImage().getHeight()/2 -v ,Tile.class) != null &&
+            ((Tile)this.getOneObjectAtOffset(0,-this.getImage().getHeight()/2 -v ,Tile.class)).chocable == false){
+                           this.direction = Direction.UP;
+            this.posY -= v; 
+            }
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
-            this.direction = Direction.DOWN;
+            if(this.getOneObjectAtOffset(0,this.getImage().getHeight()/2 +v,Tile.class) != null &&
+            ((Tile)this.getOneObjectAtOffset(0,this.getImage().getHeight()/2 +v,Tile.class)).chocable == false){
+                this.direction = Direction.DOWN;
             this.posY += v;
+            }
         }
     }
 
@@ -115,6 +130,19 @@ public class Player extends Character {
 
             // Eliminar el item
             removeTouching(Item.class);
+            int i=1;
+            int front = getImage().getWidth()/2;
+            while(i<=v){
+                List<Actor> a = getObjectsAtOffset(front+i,0,Actor.class);
+                Object[] toArray= a.toArray();  
+                if(a.size() >0){
+                    for(int j=0; j<a.size() && a.get(j) instanceof Tile;j++){
+                        if(((Tile)toArray[j]).getType() != Tile.TileType.TREE ){
+                            changeDirection();
+                        }
+                    }
+                }
+            }
         }
     }
 
