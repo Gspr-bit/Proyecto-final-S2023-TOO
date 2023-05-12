@@ -1,17 +1,17 @@
 #BlueJ class context
 comment0.target=Background1
-comment0.text=\n\ Write\ a\ description\ of\ class\ Background1\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Background1\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=Background1()
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Background1.\n
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Background1.\r\n
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
 comment3.target=void\ generateBackground()
-comment3.text=\n\ Genera\ un\ fondo\ aleatorio\n
+comment3.text=\r\n\ Genera\ un\ fondo\ aleatorio\r\n
 comment4.params=
 comment4.target=void\ drawMap()
 comment5.params=
 comment5.target=int\ getRandomType()
-comment5.text=\n\ Regresa\ un\ tipo\ de\ piso\ de\ acuerdo\ a\ los\ porcentajes\ de\ probabilidad\ dados\n\n\ @return\ int\ que\ indica\ qu\u00E9\ tipo\ de\ piso\ deber\u00E1\ ser\ usado.\n
+comment5.text=\r\n\ Regresa\ un\ tipo\ de\ piso\ de\ acuerdo\ a\ los\ porcentajes\ de\ probabilidad\ dados\r\n\r\n\ @return\ int\ que\ indica\ qu\u00E9\ tipo\ de\ piso\ deber\u00E1\ ser\ usado.\r\n
 numComments=6

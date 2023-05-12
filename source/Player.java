@@ -125,4 +125,6 @@ public class Player extends Character {
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
     }
+    
+    
 }

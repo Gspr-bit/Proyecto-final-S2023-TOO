@@ -11,6 +11,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Background1 extends World {
+    
+    
+    Item item;//era solo para crear los items desde aqupi
+    
     // Dimensiones de cada Tile en pixeles
     private static final int TILE_SIZE = 16;
     // Dimensiones del mapa en Tiles
@@ -78,34 +82,69 @@ public class Background1 extends World {
                 GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
 
                 mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
+                
+                /*if(x==10){//ESTABA PROBANDO CREAR LOS ITEMS DESDE AQUÍ
+                    item = new Item(Effect.FREEZE, 900000,x*16, y*16);
+                }*/
             }
         }
     }
-
+    
     private void drawMap() {
-        // Quita todos los anteriores porque los va a volver a dibujar
-        List<Tile> tiles = getObjects(Tile.class);
-        removeObjects(tiles);
+    // Quita todos los anteriores porque los va a volver a dibujar
+    
+    // Guarda todos los objetos del tipo Tile en una lista
+    List<Tile> tiles = getObjects(Tile.class);
+    // Quita todos los tiles del mapa
+    removeObjects(tiles);
 
-        int startTileX = player.getPosX() / TILE_SIZE;
-        int startTileY = player.getPosY() / TILE_SIZE;
-        int endTileX = startTileX + getWidth() / TILE_SIZE;
-        int endTileY = startTileY + getHeight() / TILE_SIZE;
-        int offSetX = player.getPosX() % TILE_SIZE;
-        int offSetY = player.getPosY() % TILE_SIZE;
-        int tilePosX = TILE_SIZE / 2;
-        int tilePosY;
+    // Calcula el índice de la matriz a partir de donde comenzará a dibujar los tiles
+    // La posición del jugador está dada en pixeles, entonces debemos dividir entre el tamaño
+    // en pixeles de cada Tile para saber la posición de la matriz.
+    
+    // Esto es, si por ejemplo el jugador se encuentra en (20, 40)
+    // Dividimos entre el tamaño de cada Tile (16) y queda que deberemos comenzar a dibujar
+    // a partir del Tile (1, 2)
+    int startTileX = player.getPosX() / TILE_SIZE;
+    int startTileY = player.getPosY() / TILE_SIZE;
+    
+    // Para calcular en qué tile de la matriz vamos a terminar de dibujar
+    // simplemente calculamos cuántos tiles caben a lo largo y lo ancho de la ventana
+    // obteniendo su tamaño en pixeles y dividiendo entre el tamaño de cada tile.
+    int endTileX = startTileX + getWidth() / TILE_SIZE;
+    int endTileY = startTileY + getHeight() / TILE_SIZE;
+    
+    // Volviendo a startTileX y startTileY. Podemos mirar que en el ejemplo sobran 4 y 8 pixeles
+    // Debemos tomarlos en cuenta porque si no se va mirar como si fuera saltando cada 16 pixeles
+    // en lugar de como si se fuera recorriendo
+    int offSetX = player.getPosX() % TILE_SIZE;
+    int offSetY = player.getPosY() % TILE_SIZE;
+   
+    // Variables donde vamos a guardar dónde debe ir cada tile
+    // Su posición debe ir guardada en pixeles.
+    // Sus posiciones las vamos ir moviendo junto a 'x' y 'y'
+    // Comenzamos con TILE_SIZE - 8 porque si comenzamos con 0 se tapa la mitad del tile
+    int tilePosX = TILE_SIZE / 2;
+    int tilePosY;
 
-        for (int x = startTileX; x < endTileX; tilePosX += TILE_SIZE, x++) {
-            tilePosY = TILE_SIZE / 2;
-            for (int y = startTileY; y < endTileY; tilePosY += TILE_SIZE, y++) {
-                if ( x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
-                    continue;
+    // Iteramos por la matriz desde startTileX hasta endTileX (Renglones)
+    for (int x = startTileX; x < endTileX; tilePosX += TILE_SIZE, x++) {
+        tilePosY = TILE_SIZE / 2;
+        // Iteramos por la matriz desde startTileY hasta endTileY (Columnas)
+        for (int y = startTileY; y < endTileY; tilePosY += TILE_SIZE, y++) {
+            // Checamos que x y y se encuentren dentro de los límites de la matriz
+            if ( x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
+                continue;
 
-                addObject(mapTiles[x][y], tilePosX - offSetX, tilePosY - offSetY);
-            }
+            // Agregamos al tile en la posición correspondiente
+            // Aquí se puede observar cómo le restamos el residuo que calculamos anteriormente
+            // (No me preguntes por qué hay que restarlo en lugar de sumarlo)
+            addObject(mapTiles[x][y], tilePosX - offSetX, tilePosY - offSetY);
         }
     }
+}
+
+
 
     /**
      * Regresa un tipo de piso de acuerdo a los porcentajes de probabilidad dados
