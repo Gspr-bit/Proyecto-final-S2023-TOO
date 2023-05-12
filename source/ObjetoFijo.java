@@ -19,6 +19,7 @@ public class ObjetoFijo extends Actor
         /*this.posX=x;
         this.posY=y;
         setLocation(posX, posY);*/
+    
     }
     
     

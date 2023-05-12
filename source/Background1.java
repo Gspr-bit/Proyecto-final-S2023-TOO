@@ -58,8 +58,8 @@ public class Background1 extends World {
         player = new Player();
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
-        // Hacer que el jugador se muestre sobre el piso
-        setPaintOrder(Player.class, Tile.class);
+        // Hacer que el jugador Y OBJETOSse muestre sobre el piso
+        setPaintOrder(Player.class, ObjetoFijo.class,Tile.class);
 
         generateBackground();
     //    drawMap();
