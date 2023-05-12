@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
 import java.util.List;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class Player extends Character {
         this.direction = Direction.RIGHT;
         this.posX = this.posY = 0;
 
-        Direction [] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
-        String [] f = {"up", "down", "left", "right"};
+        Direction[] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
+        String[] f = {"up", "down", "left", "right"};
 
         this.images = new HashMap<>(4);
 
@@ -83,35 +84,44 @@ public class Player extends Character {
     public void changeDirection() {
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
-            if(this.getOneObjectAtOffset(this.getImage().getWidth()/2 + v,0,Tile.class) != null &&
-            ((Tile)this.getOneObjectAtOffset(this.getImage().getWidth()/2 + v,0,Tile.class)).chocable == false){
-                this.direction = Direction.RIGHT;
-            this.posX += v;
-            
+            if (canMoveTowards(Direction.RIGHT)) {
+                this.posX += v;
             }
+            this.direction = Direction.RIGHT;
         }
-        
+
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
-            if(this.getOneObjectAtOffset(-this.getImage().getWidth()/2 +v,0,Tile.class) != null &&
-            ((Tile)this.getOneObjectAtOffset(-this.getImage().getWidth()/2 +v,0,Tile.class)).chocable == false){
-                this.direction = Direction.LEFT;
-            this.posX -= v;
+            if (canMoveTowards(Direction.LEFT)) {
+                this.posX -= v;
             }
+            this.direction = Direction.LEFT;
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
-            if(this.getOneObjectAtOffset(0,-this.getImage().getHeight()/2 -v ,Tile.class) != null &&
-            ((Tile)this.getOneObjectAtOffset(0,-this.getImage().getHeight()/2 -v ,Tile.class)).chocable == false){
-                           this.direction = Direction.UP;
-            this.posY -= v; 
+            if (canMoveTowards(Direction.UP)) {
+                this.posY -= v;
             }
+            this.direction = Direction.UP;
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
-            if(this.getOneObjectAtOffset(0,this.getImage().getHeight()/2 +v,Tile.class) != null &&
-            ((Tile)this.getOneObjectAtOffset(0,this.getImage().getHeight()/2 +v,Tile.class)).chocable == false){
-                this.direction = Direction.DOWN;
-            this.posY += v;
+            if (canMoveTowards(Direction.DOWN)) {
+                this.posY += v;
             }
+            this.direction = Direction.DOWN;
         }
+    }
+
+    private boolean canMoveTowards(Direction direction) {
+        int dx = this.getImage().getWidth() / 2 + v;
+        int dy = this.getImage().getHeight() / 2 + v;
+
+        // UP, DOWN, LEFT, RIGHT
+        int[] dxs = {0, 0, -dx, dx};
+        int[] dys = {-dy, dy, 0, 0};
+
+        Tile nextTile = (Tile) this.getOneObjectAtOffset(dxs[direction.ordinal()],
+                dys[direction.ordinal()], Tile.class);
+
+        return nextTile != null && !nextTile.collidable;
     }
 
     public void collide() {
@@ -130,14 +140,14 @@ public class Player extends Character {
 
             // Eliminar el item
             removeTouching(Item.class);
-            int i=1;
-            int front = getImage().getWidth()/2;
-            while(i<=v){
-                List<Actor> a = getObjectsAtOffset(front+i,0,Actor.class);
-                Object[] toArray= a.toArray();  
-                if(a.size() >0){
-                    for(int j=0; j<a.size() && a.get(j) instanceof Tile;j++){
-                        if(((Tile)toArray[j]).getType() != Tile.TileType.TREE ){
+            int i = 1;
+            int front = getImage().getWidth() / 2;
+            while (i <= v) {
+                List<Actor> a = getObjectsAtOffset(front + i, 0, Actor.class);
+                Object[] toArray = a.toArray();
+                if (a.size() > 0) {
+                    for (int j = 0; j < a.size() && a.get(j) instanceof Tile; j++) {
+                        if (((Tile) toArray[j]).getType() != Tile.TileType.TREE) {
                             changeDirection();
                         }
                     }
@@ -153,6 +163,6 @@ public class Player extends Character {
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
     }
-    
-    
+
+
 }

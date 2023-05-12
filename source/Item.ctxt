@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Item
-comment1.params=effect\ effectDuration
-comment1.target=Item(Effect,\ int)
+comment1.params=effect\ effectDuration\ x\ y
+comment1.target=Item(Effect,\ int,\ int,\ int)
 comment2.params=
 comment2.target=Effect\ getEffect()
 comment3.params=
