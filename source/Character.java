@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.function.Function;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 

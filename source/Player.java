@@ -10,6 +10,7 @@ import java.util.Objects;
  * @author (your name)
  * @version (a version number or a date)
  */
+//jaja ese wey
 public class Player extends Character {
     // Tipo de efecto
     private Effect effect;
@@ -17,6 +18,9 @@ public class Player extends Character {
     private int effectDuration;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
+    // Posición del jugador en el mapa
+    private int posX;
+    private int posY;
 
     public Player() {
         this.effect = Effect.NONE;
@@ -24,6 +28,7 @@ public class Player extends Character {
         this.visibility = 600;
         this.v = 2;
         this.direction = Direction.RIGHT;
+        this.posX = this.posY = 0;
 
         Direction [] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
         String [] f = {"up", "down", "left", "right"};
@@ -66,23 +71,31 @@ public class Player extends Character {
         this.visibility = visibility;
     }
 
-    public void changeDirection() {
-        if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
-            move(v);
-            this.direction = Direction.RIGHT;
+    public int getPosX() {
+        return posX;
+    }
 
+    public int getPosY() {
+        return posY;
+    }
+
+    public void changeDirection() {
+        // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
+        if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
+            this.direction = Direction.RIGHT;
+            this.posX += v;
         }
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
-            move(-v);
             this.direction = Direction.LEFT;
+            this.posX -= v;
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
-            setLocation(this.getX(), this.getY() - v);
             this.direction = Direction.UP;
+            this.posY -= v;
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
-            setLocation(this.getX(), this.getY() + v);
             this.direction = Direction.DOWN;
+            this.posY += v;
         }
     }
 
