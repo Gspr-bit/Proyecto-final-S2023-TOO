@@ -21,6 +21,27 @@ public class FixedObject extends Actor
         setLocation(posX, posY);
     }
 
+    public void act() {
+        applyEffect();
+    }
+
+    /**
+     * Función que hace que los items desaparezcan cuando el jugador los toca
+     * y le aplica el efecto al jugador.
+     *
+     * @author Montse
+     */
+    public void applyEffect() {
+        if (isTouching(Player.class)) {
+            // TODO
+            // Llamar al método que va aplicar al efecto
+
+            // Hacer que el item desaparezca al chocar con el jugador
+            ((Background1) getWorld()).getFixedObjects().remove(this);
+            getWorld().removeObject(this);
+        }
+    }
+
     public int getPosX() {
         return posX;
     }

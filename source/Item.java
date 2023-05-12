@@ -27,15 +27,4 @@ public class Item extends FixedObject {
     public int getEffectDuration() {
         return effectDuration;
     }
-    
-    /*public void act(){//CON ESTA FUNCION SE ARREGLA EL HECHO DE QUE SI SE LLEGA A LAS ESQUINAS SE QUEDA FLOTANDO, PERO NOSE PQ, CUANDO LA UTILIZO, GREENFOOT SE ATONTA Y NO SIRVE, PRUEBENLO USTDS EN SUS MAQUINAS PQ NO HALLO PQ NO DAR+IA
-        //si se sale del mapa, nimodo, se acabo la posion, la perdiste
-        if(getX()==-300 || getX()==300 || getY()==-200 || getY()==200){
-            this.effectDuration=0;//si eso no funciona cambio la imgn a null pa q desaparesta
-            //this.setImage(null);
-        }
-    }*/
-    
-            
-    
 }

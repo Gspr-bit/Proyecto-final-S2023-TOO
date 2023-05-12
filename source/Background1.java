@@ -30,7 +30,6 @@ public class Background1 extends World {
     private final int[] tileAmounts = {1, 1, 11, 1, 1, 1, 1};
     // Porcentaje total de apariciones de cada tipo. Deben sumar 100. Si no suman 100 no dibuja el fondo.
     private final int[] percentages = {20, 2, 70, 2, 2, 2, 2};
-    Item item;//era solo para crear los items desde aqupi
     private ArrayList<FixedObject> fixedObjects;
 
     /**
@@ -68,6 +67,10 @@ public class Background1 extends World {
         for (int i = 0; i < 10; i++) {
             fixedObjects.add(new Item(Effect.SLOW, 10, random.nextInt(MAP_WIDTH), random.nextInt(MAP_HEIGHT)));
         }
+    }
+    
+    public ArrayList<FixedObject> getFixedObjects() {
+        return this.fixedObjects;
     }
 
     public void act() {
