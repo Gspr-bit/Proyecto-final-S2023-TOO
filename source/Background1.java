@@ -41,7 +41,7 @@ public class Background1 extends World {
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
         
-        this.addObject(new Shadow(), this.getWidth() / 2, this.getHeight() / 2);
+        //this.addObject(new Shadow(), this.getWidth() / 2, this.getHeight() / 2);
 
         map.generateBackground();
         generateItems();
@@ -62,8 +62,17 @@ public class Background1 extends World {
      * @author Gaspar
      */
     private void generateItems() {
-        for (int i = 0; i < 10; i++) {
-            fixedObjects.add(new Item(Effect.SLOW, 10, random.nextInt(Map.MAP_WIDTH), random.nextInt(Map.MAP_HEIGHT)));
+        int count = 10;
+
+        while (count > 0) {
+            int x = random.nextInt(Map.MAP_WIDTH);
+            int y = random.nextInt(Map.MAP_HEIGHT);
+
+            if (map.mapTiles[x][y].isCollidable())
+                continue;
+
+            fixedObjects.add(new Item(Effect.SLOW, 10, x, y));
+            count --;
         }
     }
 
@@ -77,7 +86,7 @@ public class Background1 extends World {
             int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight())
-                addObject(object, objectPosX, objectPosY);
+                addObject(object, objectPosX+Map.TILE_SIZE/2, objectPosY+Map.TILE_SIZE/2);
         });
     }
 }

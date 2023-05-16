@@ -16,7 +16,7 @@ public class Map
     public static final int MAP_WIDTH = 160;
     public static final int MAP_HEIGHT = 30;
 
-    private final Tile[][] mapTiles;
+    public final Tile[][] mapTiles;
     private final Tile.TileType[] tileTypes = {Tile.TileType.BUSH, Tile.TileType.DIRT, Tile.TileType.GRASS,
             Tile.TileType.MUD, Tile.TileType.ROCK, Tile.TileType.TREE, Tile.TileType.WATER};
     // Tipos que puede haber
