@@ -59,7 +59,6 @@ public class Background1 extends World {
 
     /**
      * Genera los items que serán mostrados en el mapa
-     * TODO Hacer que sólo genere objetos sobre el pasto
      * @author Gaspar
      */
     private void generateItems() {
