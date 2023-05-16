@@ -17,7 +17,7 @@ public class Background1 extends World {
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
     // Sé que podemos obtener estos valores con getWidth() y getHeight()
-    // pero necesito obtenerlos desde otras clases más fácil
+    // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
     public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
 

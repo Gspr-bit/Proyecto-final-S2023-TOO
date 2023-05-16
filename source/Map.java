@@ -125,13 +125,16 @@ public class Map
         int tilePosX = TILE_SIZE / 2;
         int tilePosY;
 
+        int centerX = (startTileX + endTileX) / 2;
+        int centerY = (startTileY + endTileY) / 2;
+
         // Iteramos por la matriz desde startTileX hasta endTileX (Renglones)
         for (int x = startTileX; x < endTileX; tilePosX += TILE_SIZE, x++) {
             tilePosY = TILE_SIZE / 2;
             // Iteramos por la matriz desde startTileY hasta endTileY (Columnas)
             for (int y = startTileY; y < endTileY; tilePosY += TILE_SIZE, y++) {
                 // Checamos que 'x', 'y' se encuentren dentro de los límites de la matriz
-                if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
+                if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT || Math.sqrt((x - centerX)*(x - centerX) + (y - centerY)*(y - centerY)) > 10)
                     continue;
 
                 // Agregamos al tile en la posición correspondiente
