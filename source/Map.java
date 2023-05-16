@@ -134,7 +134,7 @@ public class Map
             // Iteramos por la matriz desde startTileY hasta endTileY (Columnas)
             for (int y = startTileY; y < endTileY; tilePosY += TILE_SIZE, y++) {
                 // Checamos que 'x', 'y' se encuentren dentro de los límites de la matriz
-                if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT || Math.sqrt((x - centerX)*(x - centerX) + (y - centerY)*(y - centerY)) > 10)
+                if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
                     continue;
 
                 // Agregamos al tile en la posición correspondiente
