@@ -1,10 +1,16 @@
 #BlueJ class context
 comment0.target=Map
-comment0.text=\n\ Write\ a\ description\ of\ class\ Map\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
-comment1.params=
-comment1.target=Map()
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Map\n
-comment2.params=y
-comment2.target=int\ sampleMethod(int)
-comment2.text=\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\n\ \n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\ \n
-numComments=3
+comment0.text=\n\ Write\ a\ description\ of\ class\ Map\ here.\n\ \n\ @author\ Gaspar\n
+comment1.params=seed
+comment1.target=Map(long)
+comment1.text=\n\ Constructor\ para\ el\ mapa\n\n
+comment2.params=
+comment2.target=void\ generateBackground()
+comment2.text=\n\ Genera\ un\ fondo\ aleatorio\n\ @author\ Gaspar\n
+comment3.params=world
+comment3.target=void\ drawMap(Background1)
+comment3.text=\n\ Dibuja\ el\ mapa\ en\ el\ fondo\ dependiendo\ de\ la\ posici\u00F3n\ del\ jugador\n\ @author\ Gaspar\n
+comment4.params=
+comment4.target=int\ getRandomType()
+comment4.text=\n\ Regresa\ un\ tipo\ de\ piso\ de\ acuerdo\ a\ los\ porcentajes\ de\ probabilidad\ dados\n\n\ @return\ int\ que\ indica\ qu\u00E9\ tipo\ de\ piso\ deber\u00E1\ ser\ usado.\n
+numComments=5

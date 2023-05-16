@@ -12,21 +12,25 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Background1 extends World {
-    private static Player player;
+    public static Player player;
     private final Random random;
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
+    // Sé que podemos obtener estos valores con getWidth() y getHeight()
+    // pero necesito obtenerlos desde otras clases más fácil
+    public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
+    public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
 
     /**
      * Constructor for objects of class Background1.
      */
-    public Background1() {
+    public Background1() throws WrongGenerationPercentagesException {
         // Create a new world with 640x480 cells with a cell size of 1x1 pixels.
-        super(40 * Map.TILE_SIZE, 30 * Map.TILE_SIZE, 1);
+        super(WORLD_WIDTH, WORLD_HEIGHT, 1);
 
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
-        this.map = new Map(this.random);
+        this.map = new Map(new Date().getTime());
 
         // Agregar el jugador
         player = new Player();
@@ -37,6 +41,7 @@ public class Background1 extends World {
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
 
+        map.generateBackground();
         generateItems();
     }
     
@@ -45,7 +50,7 @@ public class Background1 extends World {
     }
 
     public void act() {
-        this.map.drawMap(this, player);
+        this.map.drawMap(this);
         drawFixedObjects();
     }
 

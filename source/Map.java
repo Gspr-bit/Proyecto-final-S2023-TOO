@@ -6,8 +6,7 @@ import greenfoot.GreenfootImage;
 /**
  * Write a description of class Map here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Gaspar
  */
 public class Map  
 {
@@ -30,13 +29,20 @@ public class Map
     private final Random random;
 
     /**
-     * Constructor for objects of class Map
+     * Constructor para el mapa
+     *
      */
-    public Map(Random random)
+    public Map(long seed)
     {
-        this.random = random;
+        this.random = new Random(seed);
         this.mapTiles = new Tile[MAP_WIDTH][MAP_HEIGHT];
+    }
 
+    /**
+     * Genera un fondo aleatorio
+     * @author Gaspar
+     */
+    public void generateBackground() throws WrongGenerationPercentagesException {
         // Calcular la sumatoria de los porcentajes
         for (int i = 0; i < percentages.length - 1; i++)
             percentages[i + 1] += percentages[i];
@@ -47,20 +53,28 @@ public class Map
         // Si no está dibujando el fondo deberías checar cuánto suman los porcentajes
         // assert (percentages[percentages.length -1] == 100);
         if (percentages[percentages.length - 1] != 100)
-            return;
+            throw new WrongGenerationPercentagesException("Percentages don't add 100. Please check Map.percentages");
 
-        generateBackground();
-    }
-
-    /**
-     * Genera un fondo aleatorio
-     * @author Gaspar
-     */
-    private void generateBackground() {
-        // Llenar el mapa
+        // Llenar el mapa con valores aleatorios
         for (int x = 0; x < MAP_WIDTH; x++) {
             for (int y = 0; y < MAP_HEIGHT; y++) {
                 int imageType = getRandomType();
+                int imageIndex = random.nextInt(tileAmounts[imageType]);
+
+                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
+
+                mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
+            }
+        }
+
+        // Poner un cuadro de pasto 4 x 4 en el centro donde el jugador va a aparecer
+        int startX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) - 2;
+        int startY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) - 2;
+        int endX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) + 2;
+        int endY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) + 2;
+        for (int x = startX; x < endX; x++) {
+            for (int y = startY; y < endY + 2; y++) {
+                int imageType = Tile.TileType.GRASS.ordinal();
                 int imageIndex = random.nextInt(tileAmounts[imageType]);
 
                 GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
@@ -74,7 +88,7 @@ public class Map
      * Dibuja el mapa en el fondo dependiendo de la posición del jugador
      * @author Gaspar
      */
-    public void drawMap(Background1 world, Player player) {
+    public void drawMap(Background1 world) {
         // Quita todos los anteriores porque los va a volver a dibujar
 
         // Guarda todos los objetos del tipo Tile en una lista
@@ -89,8 +103,8 @@ public class Map
         // Esto es, si por ejemplo el jugador se encuentra en (20, 40)
         // Dividimos entre el tamaño de cada Tile (16) y queda que deberemos comenzar a dibujar
         // a partir del Tile (1, 2)
-        int startTileX = player.getPosX() / TILE_SIZE;
-        int startTileY = player.getPosY() / TILE_SIZE;
+        int startTileX = Background1.player.getPosX() / TILE_SIZE;
+        int startTileY = Background1.player.getPosY() / TILE_SIZE;
 
         // Para calcular en qué tile de la matriz vamos a terminar de dibujar
         // simplemente calculamos cuántos tiles caben a lo largo y lo ancho de la ventana
@@ -101,8 +115,8 @@ public class Map
         // Volviendo a startTileX y startTileY. Podemos mirar que en el ejemplo sobran 4 y 8 píxeles
         // Debemos tomarlos en cuenta porque si no se va mirar como si fuera saltando cada 16 píxeles
         // en lugar de como si se fuera recorriendo
-        int offSetX = player.getPosX() % TILE_SIZE;
-        int offSetY = player.getPosY() % TILE_SIZE;
+        int offSetX = Background1.player.getPosX() % TILE_SIZE;
+        int offSetY = Background1.player.getPosY() % TILE_SIZE;
 
         // Variables donde vamos a guardar dónde debe ir cada tile
         // Su posición debe ir guardada en píxeles.
