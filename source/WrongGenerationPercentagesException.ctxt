@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=WrongGenerationPercentagesException
+comment0.text=\n\ Esta\ excepci\u00F3n\ se\ lanza\ cuando\ los\ porcentajes\ de\ cu\u00E1ntos\ tiles\ deber\u00EDan\ ser\ mostrados\n\ est\u00E1n\ mal\ establecidos\ y\ no\ suman\ 100.\n
+comment1.params=message
+comment1.target=WrongGenerationPercentagesException(java.lang.String)
+numComments=2
