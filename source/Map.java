@@ -13,8 +13,8 @@ public class Map
     // Dimensiones de cada Tile en pixeles
     public static final int TILE_SIZE = 16;
     // Dimensiones del mapa en Tiles
-    public static final int MAP_WIDTH = 160;
-    public static final int MAP_HEIGHT = 30;
+    public static final int MAP_WIDTH = 164;
+    public static final int MAP_HEIGHT = 40;
 
     public final Tile[][] mapTiles;
     private final Tile.TileType[] tileTypes = {Tile.TileType.BUSH, Tile.TileType.DIRT, Tile.TileType.GRASS,
@@ -39,10 +39,41 @@ public class Map
     }
 
     /**
-     * Genera un fondo aleatorio
+     * Genera un fondo aleatorio para la ciudad
+     *
      * @author Gaspar
      */
-    public void generateBackground() throws WrongGenerationPercentagesException {
+    public void generateCityMap() {
+        int blockWidth = 12;
+        int blockHeight = 8;
+        int streetWidth = 4;
+
+        for (int x = 0; x < MAP_WIDTH; x++) {
+            for (int y = 0; y < MAP_HEIGHT; y++) {
+                String imagePath;
+                Tile.TileType type = Tile.TileType.ROCK;
+
+                if (x % (streetWidth + blockWidth) < streetWidth || y % (streetWidth + blockHeight) < streetWidth) {
+                    imagePath = "pavement-0.png";
+                    type = Tile.TileType.GRASS;
+                } else if (y % (streetWidth + blockHeight) > streetWidth + blockHeight - 2) {
+                    imagePath = "wall-0.png";
+                } else {
+                    imagePath = "roof-0.png";
+                }
+
+                GreenfootImage image = new GreenfootImage("MapTiles/" + imagePath);
+
+                mapTiles[x][y] = new Tile(image, type);
+            }
+        }
+    }
+
+    /**
+     * Genera un fondo aleatorio para el campo
+     * @author Gaspar
+     */
+    public void generateCountryMap() throws WrongGenerationPercentagesException {
         // Calcular la sumatoria de los porcentajes
         for (int i = 0; i < percentages.length - 1; i++)
             percentages[i + 1] += percentages[i];
@@ -124,9 +155,6 @@ public class Map
         // Comenzamos con TILE_SIZE - 8 porque si comenzamos con 0 se tapa la mitad del tile
         int tilePosX = TILE_SIZE / 2;
         int tilePosY;
-
-        int centerX = (startTileX + endTileX) / 2;
-        int centerY = (startTileY + endTileY) / 2;
 
         // Iteramos por la matriz desde startTileX hasta endTileX (Renglones)
         for (int x = startTileX; x < endTileX; tilePosX += TILE_SIZE, x++) {
