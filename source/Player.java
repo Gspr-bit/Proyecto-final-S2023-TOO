@@ -18,17 +18,20 @@ public class Player extends Character {
     private Effect effect;
     // Duración del efecto
     private int effectDuration;
+    // Momento en que se comenzó a aplicar el efecto
+    private int effectStart;
+    // Momento en que se dejará de aplicar el efecto
+    private int effectEnd;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
-    /*// Posición del jugador en el mapa
-    private int posX;
-    private int posY;*/
+    // Modificamos esta en lugar de `v` para poder recuperar el valor anterior
+    private int currentV;
 
     public Player() {
         this.effect = Effect.NONE;
-        this.effectDuration = 0;
+        this.effectDuration = this.effectStart = this.effectEnd = 0;
         this.visibility = 600;
-        this.v = 2;
+        this.v = this.currentV = 2;
         this.direction = Direction.RIGHT;
         this.posX = this.posY = 0;
 
@@ -86,31 +89,63 @@ public class Player extends Character {
      * @author Mauricio, Montse
      */
     public void changeDirection() {
+        applyEffect();
+
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
             if (canMoveTowards(Direction.RIGHT)) {
-                this.posX += v;
+                this.posX += currentV;
             }
             this.direction = Direction.RIGHT;
         }
 
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
             if (canMoveTowards(Direction.LEFT)) {
-                this.posX -= v;
+                this.posX -= currentV;
             }
             this.direction = Direction.LEFT;
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
             if (canMoveTowards(Direction.UP)) {
-                this.posY -= v;
+                this.posY -= currentV;
             }
             this.direction = Direction.UP;
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
             if (canMoveTowards(Direction.DOWN)) {
-                this.posY += v;
+                this.posY += currentV;
             }
             this.direction = Direction.DOWN;
+        }
+    }
+
+    public void applyEffect() {
+        Item item = (Item) this.getOneIntersectingObject(Item.class);
+        if (item != null) {
+            this.effectStart = Timer.getTime();
+            this.effectEnd = effectStart + item.getEffectDuration();
+            this.effect = item.getEffect();
+            item.remove();
+        } else if (Timer.getTime() < effectEnd) {
+            switch (this.effect) {
+                case SLOW: {
+                    this.currentV /= 2;
+                }
+                case DIZZY: {
+                    this.currentV = - this.currentV;
+                }
+                case FREEZE: {
+                    this.currentV = 0;
+                }
+                case BLIND: {
+                    // TODO
+                }
+                case NONE: {
+                    // No hacer nada
+                }
+            }
+        } else {
+            this.currentV = this.v;
         }
     }
 
