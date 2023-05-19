@@ -3,6 +3,7 @@ comment0.target=Player
 comment0.text=\n\ Clase\ Jugador.\ Esta\ clase\ es\ instanciada\ desde\ el\ mundo.\n\n\ @author\ Mauricio,\ Montse,\ Gaspar\n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=
 comment1.target=Player()
+comment1.text=//\ Posici\u00F3n\ del\ jugador\ en\ el\ mapa\n\ \ \ \ private\ int\ posX;\nprivate\ int\ posY;
 comment10.params=
 comment10.target=void\ changeDirection()
 comment10.text=\n\ M\u00E9todo\ para\ cambiar\ la\ direcci\u00F3n\ y\ posici\u00F3n\ del\ jugador.\n\ @author\ Mauricio,\ Montse\n

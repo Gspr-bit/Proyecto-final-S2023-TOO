@@ -22,6 +22,10 @@ public abstract class Character extends Actor {
 
     // Update rate of the image FPS/UPDATE_RATE
     protected static final int UPDATE_RATE = 10;  // 6 images per second
+    
+    // Posición del character en el mapa
+    protected int posX;
+    protected int posY;
 
     /**
      * Act - do whatever the character wants to do. This method is called whenever
@@ -35,4 +39,5 @@ public abstract class Character extends Actor {
     public abstract void changeDirection();
     
     public abstract void updateImage();
+    
 }
