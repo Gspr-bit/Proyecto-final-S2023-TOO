@@ -14,7 +14,7 @@ public class Thief extends Character
     *@author Montse
     */
     public Thief(int x, int y){
-        this.v = 2;
+        this.v = 1;
         this.direction = Direction.RIGHT;
         this.posX=x;
         this.posY=y;
@@ -58,6 +58,7 @@ public class Thief extends Character
     public void act()
     {
         updateImage();
+        //moverRatero(); //está comentada esta linea pq ese metodo tiene un FIXME
     }
     
     
@@ -98,33 +99,36 @@ public class Thief extends Character
      * Método para cambiar la dirección y posición del ratero.
      * @author Montse
      */
-    public void changeDirection() {
-        // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
-        if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
+    public void changeDirectionn(int direccion) {
+        // Este método no mueve al ratero, solo cambia su sprite para que apunte a la dirección correspondiente
+        if (direccion==0) {
             if (canMoveTowards(Direction.RIGHT)) {
                 this.posX += v;
             }
             this.direction = Direction.RIGHT;
         }
 
-        if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
+        if (direccion==1) {
             if (canMoveTowards(Direction.LEFT)) {
                 this.posX -= v;
             }
             this.direction = Direction.LEFT;
         }
-        if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
+        if (direccion==2) {
             if (canMoveTowards(Direction.UP)) {
                 this.posY -= v;
             }
             this.direction = Direction.UP;
         }
-        if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
+        if (direccion==3) {
             if (canMoveTowards(Direction.DOWN)) {
                 this.posY += v;
             }
             this.direction = Direction.DOWN;
         }
+    }
+    public void changeDirection(){
+        return;
     }
     
     public int getPosX() {
@@ -133,6 +137,46 @@ public class Thief extends Character
 
     public int getPosY() {
         return this.posY;
+    }
+    
+    
+    /*FIXME
+     * Se supone q tal cual debe hacer q el ratero se mueva, pero algo no cuadra jajaj
+     * @Montse
+     */
+    public void moverRatero(){
+        Random random = new Random();
+        //int numero = (int)(Math.random()*4+1);
+        int numero = random.nextInt(5);
+        if(numero == 1){//DERECHA
+            if(this.canMoveTowards(Direction.RIGHT)){
+                //if(!isAtEdge()){
+                    this.changeDirectionn(0);
+                    setLocation(getPosX()+this.v,getPosY());
+                //}
+            }
+        }else if(numero ==2){//IZQUIERDA
+            if(this.canMoveTowards(Direction.LEFT)){
+                //if(!isAtEdge()){
+                    this.changeDirectionn(1);
+                    setLocation(getPosX()-this.v,getPosY());
+                //}
+            }
+        }else if(numero ==3){//ARRIBA
+            if(this.canMoveTowards(Direction.UP)){
+               //if(!isAtEdge()){
+                   this.changeDirectionn(2); 
+                   setLocation(getPosX(),getPosY()-this.v);
+                //} 
+            }
+        }else{//ABAJO
+            if(this.canMoveTowards(Direction.DOWN)){
+                //if(!isAtEdge()){
+                    this.changeDirectionn(3);
+                    setLocation(getPosX(),getPosY()+this.v);
+                //}
+            }
+        }
     }
     
     /* FIXME
