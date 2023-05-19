@@ -47,8 +47,8 @@ public class Background1 extends World {
         }
         
         //this.addObject(new Shadow(), this.getWidth() / 2, this.getHeight() / 2);
-        //map.generateCountryMap();
-        map.generateCityMap();
+        map.generateCountryMap();
+        //map.generateCityMap();
         generateItems();
     }
     
@@ -80,7 +80,7 @@ public class Background1 extends World {
             if (map.mapTiles[x][y].isCollidable())
                 continue;
 
-            fixedObjects.add(new Item(Effect.randomEffect(), 2, x, y));
+            fixedObjects.add(new Item(Effect.DIZZY, 10, x, y));
             count --;
         }
     }

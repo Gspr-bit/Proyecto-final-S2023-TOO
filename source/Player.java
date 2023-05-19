@@ -24,14 +24,14 @@ public class Player extends Character {
     private int effectEnd;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
-    // Modificamos esta en lugar de `v` para poder recuperar el valor anterior
-    private int currentV;
+    // Aquí guardamos el valor que debe tener `v` cuando no tiene ningún efecto
+    private int normalV;
 
     public Player() {
         this.effect = Effect.NONE;
         this.effectDuration = this.effectStart = this.effectEnd = 0;
         this.visibility = 600;
-        this.v = this.currentV = 2;
+        this.v = this.normalV = 2;
         this.direction = Direction.RIGHT;
         this.posX = this.posY = 0;
 
@@ -94,26 +94,26 @@ public class Player extends Character {
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
             if (canMoveTowards(Direction.RIGHT)) {
-                this.posX += currentV;
+                this.posX += v;
             }
             this.direction = Direction.RIGHT;
         }
 
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
             if (canMoveTowards(Direction.LEFT)) {
-                this.posX -= currentV;
+                this.posX -= v;
             }
             this.direction = Direction.LEFT;
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
             if (canMoveTowards(Direction.UP)) {
-                this.posY -= currentV;
+                this.posY -= v;
             }
             this.direction = Direction.UP;
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
             if (canMoveTowards(Direction.DOWN)) {
-                this.posY += currentV;
+                this.posY += v;
             }
             this.direction = Direction.DOWN;
         }
@@ -129,23 +129,27 @@ public class Player extends Character {
         } else if (Timer.getTime() < effectEnd) {
             switch (this.effect) {
                 case SLOW: {
-                    this.currentV /= 2;
+                    this.v = 1;
+                    break;
                 }
                 case DIZZY: {
-                    this.currentV = - this.currentV;
+                    this.v = -normalV;
+                    break;
                 }
                 case FREEZE: {
-                    this.currentV = 0;
+                    this.v = 0;
+                    break;
                 }
                 case BLIND: {
                     // TODO
+                    break;
                 }
                 case NONE: {
                     // No hacer nada
                 }
             }
         } else {
-            this.currentV = this.v;
+            this.v = this.normalV;
         }
     }
 
