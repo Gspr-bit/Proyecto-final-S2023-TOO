@@ -20,9 +20,9 @@ public class Player extends Character {
     private int effectDuration;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
-    // Posición del jugador en el mapa
+    /*// Posición del jugador en el mapa
     private int posX;
-    private int posY;
+    private int posY;*/
 
     public Player() {
         this.effect = Effect.NONE;

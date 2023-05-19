@@ -1,13 +1,11 @@
 #BlueJ class context
 comment0.target=Character
-comment0.text=\n\ Write\ a\ description\ of\ class\ character\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Clase\ padre\ abstracta\ para\ todos\ los\ personajes\ m\u00F3viles\ del\ juego\r\n\r\n\ @author\ Gaspar\r\n
 comment1.params=
 comment1.target=void\ act()
-comment1.text=\n\ Act\ -\ do\ whatever\ the\ character\ wants\ to\ do.\ This\ method\ is\ called\ whenever\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\n
+comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ character\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
 comment2.params=
 comment2.target=void\ changeDirection()
 comment3.params=
-comment3.target=void\ collide()
-comment4.params=
-comment4.target=void\ updateImage()
-numComments=5
+comment3.target=void\ updateImage()
+numComments=4

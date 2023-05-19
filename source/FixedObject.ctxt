@@ -1,12 +1,15 @@
 #BlueJ class context
 comment0.target=FixedObject
-comment0.text=\n\ Write\ a\ description\ of\ class\ ObjetoFijo\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Esta\ superclase\ se\ utiliza\ para\ los\ objetos\ que\ deben\ estar\ fijos\ en\ el\ mapa.\r\n\ \r\n\ @author\ Montse\r\n
 comment1.params=x\ y
 comment1.target=FixedObject(int,\ int)
 comment2.params=
-comment2.target=void\ applyEffect()
+comment2.target=void\ act()
 comment3.params=
-comment3.target=int\ getPosX()
+comment3.target=void\ applyEffect()
+comment3.text=\r\n\ Funci\u00F3n\ que\ hace\ que\ los\ items\ desaparezcan\ cuando\ el\ jugador\ los\ toca\r\n\ y\ le\ aplica\ el\ efecto\ al\ jugador.\r\n\r\n\ @author\ Montse\r\n
 comment4.params=
-comment4.target=int\ getPosY()
-numComments=5
+comment4.target=int\ getPosX()
+comment5.params=
+comment5.target=int\ getPosY()
+numComments=6

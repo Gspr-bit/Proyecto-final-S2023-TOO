@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-// hola
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -31,6 +30,7 @@ public class Background1 extends World {
     // Porcentaje total de apariciones de cada tipo. Deben sumar 100. Si no suman 100 no dibuja el fondo.
     private final int[] percentages = {20, 2, 70, 2, 2, 2, 2};
     private ArrayList<FixedObject> fixedObjects;
+    private ArrayList<Thief> thiefs;
 
     /**
      * Constructor for objects of class Background1.
@@ -59,23 +59,31 @@ public class Background1 extends World {
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
         // Hacer que el jugador Y OBJETOSse muestre sobre el piso
-        setPaintOrder(Player.class, FixedObject.class, Tile.class);
+        setPaintOrder(Player.class, Thief.class, FixedObject.class, Tile.class);
 
         generateBackground();
 
         fixedObjects = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            fixedObjects.add(new Item(Effect.SLOW, 10, random.nextInt(MAP_WIDTH), random.nextInt(MAP_HEIGHT)));
+                fixedObjects.add(new Item(Effect.SLOW, 10, random.nextInt(MAP_WIDTH), random.nextInt(MAP_HEIGHT)));    
+        }
+        thiefs = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+                thiefs.add(new Thief(random.nextInt(MAP_WIDTH), random.nextInt(MAP_HEIGHT)));    
         }
     }
     
     public ArrayList<FixedObject> getFixedObjects() {
         return this.fixedObjects;
     }
+    public ArrayList<Thief> getThiefs() {
+        return this.thiefs;
+    }
 
     public void act() {
         drawMap();
         drawFixedObjects();
+        drawThiefs();
     }
 
     /**
@@ -92,9 +100,6 @@ public class Background1 extends World {
 
                 mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
                 
-                /*if(x==10){//ESTABA PROBANDO CREAR LOS ITEMS DESDE AQUÍ
-                    item = new Item(Effect.FREEZE, 900000,x*16, y*16);
-                }*/
             }
         }
     }
@@ -105,6 +110,25 @@ public class Background1 extends World {
 
         // Pintar los objetos en el mapa
         this.fixedObjects.forEach(object -> {
+            int objectPosX = object.getPosX() * TILE_SIZE - player.getPosX();
+            int objectPosY = object.getPosY() * TILE_SIZE - player.getPosY();
+
+            if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
+                
+                //if(object.puedoIrAqui()){ le puse un FIXME a ese metodo, x eso lo comento
+                    addObject(object, objectPosX, objectPosY);    
+                //}
+            }
+                
+        });
+    }
+    
+    private void drawThiefs() {
+        List<Thief> objectsInMap = this.getObjects(Thief.class);
+        removeObjects(objectsInMap);
+
+        // Pintar los ladrones en el mapa
+        this.thiefs.forEach(object -> {
             int objectPosX = object.getPosX() * TILE_SIZE - player.getPosX();
             int objectPosY = object.getPosY() * TILE_SIZE - player.getPosY();
 
