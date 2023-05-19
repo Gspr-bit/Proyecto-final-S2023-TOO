@@ -48,8 +48,8 @@ public class Background1 extends World {
         
         //this.addObject(new Shadow(), this.getWidth() / 2, this.getHeight() / 2);
 
-        //map.generateCountryMap();
-        map.generateCityMap();
+        map.generateCountryMap();
+        //map.generateCityMap();
         generateItems();
     }
     

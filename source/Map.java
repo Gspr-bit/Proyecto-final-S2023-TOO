@@ -22,14 +22,15 @@ public class Map
     private final String[] tilePaths = {"bush", "dirt", "grass", "mud", "rock", "tree", "water", "pavement", "wall", "roof"};
     // Total de imágenes de cada tipo
     private final int[] tileAmounts = {1, 1, 11, 1, 1, 1, 1, 1, 1, 1};
-    // Porcentaje total de apariciones de cada tipo. Deben sumar 100. Si no suman 100 no dibuja el fondo.
+    // Porcentaje total de apariciones de cada tipo. Deben sumar 100
+    // Si no suman 100 no dibuja el fondo.
+    // Estos datos son utilizados en generateCountryMap()
     private final int[] percentages = {20, 2, 70, 2, 2, 2, 2, 0, 0, 0};
 
     private final Random random;
 
     /**
      * Constructor para el mapa
-     *
      */
     public Map(long seed)
     {
