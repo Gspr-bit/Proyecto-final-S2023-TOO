@@ -121,6 +121,8 @@ public class Player extends Character {
      * @return true si el jugador se puede mover hacia allá
      */
     private boolean canMoveTowards(Direction direction) {
+        boolean sePuedeMover=false;//lo agrego esto pa checar q no choque con los tiefs
+        
         int dx = this.getImage().getWidth() / 2 + v;
         int dy = this.getImage().getHeight() / 2 + v;
 
@@ -130,8 +132,31 @@ public class Player extends Character {
 
         Tile nextTile = (Tile) this.getOneObjectAtOffset(dxs[direction.ordinal()],
                 dys[direction.ordinal()], Tile.class);
-
-        return nextTile != null && !nextTile.isCollidable();
+                        
+        //return nextTile != null && !nextTile.isCollidable();
+        sePuedeMover=(nextTile != null && !nextTile.isCollidable());
+        
+        //Checar q no choque con los thiefs
+        Thief p=null;
+        int x=0,y=0;
+        if(direction ==Direction.UP){
+            y=-4;
+        }
+        if(direction ==Direction.DOWN){
+            y=4;
+        }
+        if(direction ==Direction.RIGHT){
+            x=5;
+        }
+        if(direction ==Direction.LEFT){
+            x=-5;
+        }
+        p=(Thief)this.getOneObjectAtOffset(x,y,Thief.class);
+        if(p!=null){
+            sePuedeMover=false;
+        }
+        
+        return sePuedeMover;
     }
 
     /**
