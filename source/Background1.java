@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-// hola
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -16,6 +15,7 @@ public class Background1 extends World {
     private final Random random;
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
+    private final ArrayList<Thief> thiefs;
     // Sé que podemos obtener estos valores con getWidth() y getHeight()
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
@@ -36,10 +36,15 @@ public class Background1 extends World {
         player = new Player();
 
         // Hacer que el jugador y los objetos se muestren sobre el piso
-        setPaintOrder(Shadow.class, Player.class, FixedObject.class, Tile.class);
+        setPaintOrder(Shadow.class, Player.class, Thief.class, FixedObject.class, Tile.class);
 
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
+        // Hacer que el jugador Y OBJETOSse muestre sobre el piso
+        thiefs = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+                thiefs.add(new Thief(random.nextInt(Map.MAP_WIDTH), random.nextInt(Map.MAP_HEIGHT)));    
+        }
         
         //this.addObject(new Shadow(), this.getWidth() / 2, this.getHeight() / 2);
 
@@ -51,10 +56,14 @@ public class Background1 extends World {
     public ArrayList<FixedObject> getFixedObjects() {
         return this.fixedObjects;
     }
+    public ArrayList<Thief> getThiefs() {
+        return this.thiefs;
+    }
 
     public void act() {
         this.map.drawMap(this);
         drawFixedObjects();
+        drawThiefs();
     }
 
     /**
@@ -82,6 +91,25 @@ public class Background1 extends World {
 
         // Pintar los objetos en el mapa
         this.fixedObjects.forEach(object -> {
+            int objectPosX = object.getPosX() * Map.TILE_SIZE - player.getPosX();
+            int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
+
+            if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
+                
+                //if(object.puedoIrAqui()){ le puse un FIXME a ese metodo, x eso lo comento
+                    addObject(object, objectPosX, objectPosY);    
+                //}
+            }
+                
+        });
+    }
+    
+    private void drawThiefs() {
+        List<Thief> objectsInMap = this.getObjects(Thief.class);
+        removeObjects(objectsInMap);
+
+        // Pintar los ladrones en el mapa
+        this.thiefs.forEach(object -> {
             int objectPosX = object.getPosX() * Map.TILE_SIZE - player.getPosX();
             int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
 

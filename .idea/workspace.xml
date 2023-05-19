@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="53d05cc5-afe0-4448-8902-20a4e8c97fd0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/source/Background1.class" beforeDir="false" afterPath="$PROJECT_DIR$/source/Background1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Background1.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/source/Background1.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Background1.java" beforeDir="false" afterPath="$PROJECT_DIR$/source/Background1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Character.class" beforeDir="false" afterPath="$PROJECT_DIR$/source/Character.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Character.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/source/Character.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/source/Character.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/FixedObject.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/source/FixedObject.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/InitialScreen.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/source/InitialScreen.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/source/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Player.ctxt" beforeDir="false" afterPath="$PROJECT_DIR$/source/Player.ctxt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/source/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/project.greenfoot" beforeDir="false" afterPath="$PROJECT_DIR$/source/project.greenfoot" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2PsXfQ3sWaf4ILXyP3z14IIjczA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="53d05cc5-afe0-4448-8902-20a4e8c97fd0" name="Changes" comment="" />
+      <created>1684246870598</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684246870598</updated>
+    </task>
+    <servers />
+  </component>
+</project>
