@@ -17,14 +17,13 @@ public class Map
     public static final int MAP_HEIGHT = 40;
 
     public final Tile[][] mapTiles;
-    private final Tile.TileType[] tileTypes = {Tile.TileType.BUSH, Tile.TileType.DIRT, Tile.TileType.GRASS,
-            Tile.TileType.MUD, Tile.TileType.ROCK, Tile.TileType.TREE, Tile.TileType.WATER};
+    private final Tile.TileType[] tileTypes = Tile.TileType.values();
     // Tipos que puede haber
-    private final String[] tilePaths = {"bush", "dirt", "grass", "mud", "rock", "tree", "water"};
+    private final String[] tilePaths = {"bush", "dirt", "grass", "mud", "rock", "tree", "water", "pavement", "wall", "roof"};
     // Total de imágenes de cada tipo
-    private final int[] tileAmounts = {1, 1, 11, 1, 1, 1, 1};
+    private final int[] tileAmounts = {1, 1, 11, 1, 1, 1, 1, 1, 1, 1};
     // Porcentaje total de apariciones de cada tipo. Deben sumar 100. Si no suman 100 no dibuja el fondo.
-    private final int[] percentages = {20, 2, 70, 2, 2, 2, 2};
+    private final int[] percentages = {20, 2, 70, 2, 2, 2, 2, 0, 0, 0};
 
     private final Random random;
 
@@ -50,21 +49,22 @@ public class Map
 
         for (int x = 0; x < MAP_WIDTH; x++) {
             for (int y = 0; y < MAP_HEIGHT; y++) {
-                String imagePath;
-                Tile.TileType type = Tile.TileType.ROCK;
+                Tile.TileType type;
+                int imageType;
 
                 if (x % (streetWidth + blockWidth) < streetWidth || y % (streetWidth + blockHeight) < streetWidth) {
-                    imagePath = "pavement-0.png";
-                    type = Tile.TileType.GRASS;
+                    imageType = Tile.TileType.PAVEMENT.ordinal();
                 } else if (y % (streetWidth + blockHeight) > streetWidth + blockHeight - 2) {
-                    imagePath = "wall-0.png";
+                    imageType = Tile.TileType.WALL.ordinal();
                 } else {
-                    imagePath = "roof-0.png";
+                    imageType = Tile.TileType.ROOF.ordinal();
                 }
 
-                GreenfootImage image = new GreenfootImage("MapTiles/" + imagePath);
+                int imageIndex = random.nextInt(tileAmounts[imageType]);
 
-                mapTiles[x][y] = new Tile(image, type);
+                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
+
+                mapTiles[x][y] = new Tile(image, Tile.TileType.values()[imageType]);
             }
         }
     }
