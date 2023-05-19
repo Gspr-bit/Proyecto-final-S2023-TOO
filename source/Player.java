@@ -146,10 +146,10 @@ public class Player extends Character {
             y=4;
         }
         if(direction ==Direction.RIGHT){
-            x=4;
+            x=5;
         }
         if(direction ==Direction.LEFT){
-            x=-4;
+            x=-5;
         }
         p=(Thief)this.getOneObjectAtOffset(x,y,Thief.class);
         if(p!=null){
