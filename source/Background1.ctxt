@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=Background1
-comment0.text=\n\ Write\ a\ description\ of\ class\ Background1\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Background1\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=Background1()
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Background1.\n
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Background1.\r\n
 comment2.params=
 comment2.target=java.util.ArrayList\ getFixedObjects()
 comment3.params=
@@ -12,7 +12,7 @@ comment4.params=
 comment4.target=void\ act()
 comment5.params=
 comment5.target=void\ generateItems()
-comment5.text=\n\ Genera\ los\ items\ que\ ser\u00E1n\ mostrados\ en\ el\ mapa\n\ @author\ Gaspar\n
+comment5.text=\r\n\ Genera\ los\ items\ que\ ser\u00E1n\ mostrados\ en\ el\ mapa\r\n\ @author\ Gaspar\r\n
 comment6.params=
 comment6.target=void\ drawFixedObjects()
 comment7.params=

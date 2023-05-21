@@ -113,7 +113,12 @@ public class Player extends Character {
             this.direction = Direction.DOWN;
         }
     }
-
+    
+    public void act(){
+        changeDirection();
+        updateImage();
+    }
+    
     /**
      * Método para saber si el jugador puede moverse hacia la posición dada.
      * @author Mauricio, Gaspar
