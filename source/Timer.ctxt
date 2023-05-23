@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Timer
+comment0.text=\n\ Write\ a\ description\ of\ class\ Timer\ here.\n\ \n\ @author\ Gaspar\n
+comment1.params=
+comment1.target=int\ getTime()
+comment1.text=\n\ Regresa\ el\ tiempo\ en\ segundos\n\ transcurrido\ desde\ que\ se\ inici\u00F3\ el\ juego\n\ @author\ Gaspar\n\ @return\ tiempo\ en\ segundos\n
+comment2.params=
+comment2.target=void\ update()
+comment2.text=\n\ Actualiza\ el\ temporizador\n\ Este\ m\u00E9todo\ debe\ ser\ llamado\ dentro\ de\ act()\ de\ un\ solo\ objeto\ en\ el\ juego\n\ @author\ Gaspar\n
+numComments=3

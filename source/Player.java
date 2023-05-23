@@ -18,17 +18,20 @@ public class Player extends Character {
     private Effect effect;
     // Duración del efecto
     private int effectDuration;
+    // Momento en que se comenzó a aplicar el efecto en segundos
+    private int effectStart;
+    // Momento en que se dejará de aplicar el efecto en segundos
+    private int effectEnd;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
-    /*// Posición del jugador en el mapa
-    private int posX;
-    private int posY;*/
+    // Aquí guardamos el valor que debe tener `v` cuando no tiene ningún efecto
+    private int normalV;
 
     public Player() {
         this.effect = Effect.NONE;
-        this.effectDuration = 0;
+        this.effectDuration = this.effectStart = this.effectEnd = 0;
         this.visibility = 600;
-        this.v = 2;
+        this.v = this.normalV = 2;
         this.direction = Direction.RIGHT;
         this.posX = this.posY = 0;
 
@@ -86,31 +89,83 @@ public class Player extends Character {
      * @author Mauricio, Montse
      */
     public void changeDirection() {
+        applyEffect();
+
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
-            if (canMoveTowards(Direction.RIGHT)) {
+            this.direction = Direction.RIGHT;
+            if (this.v < 0) {
+                this.direction = Direction.LEFT;
+            }
+            if (canMoveTowards(this.direction)) {
                 this.posX += v;
             }
-            this.direction = Direction.RIGHT;
         }
 
         if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("A")) {
-            if (canMoveTowards(Direction.LEFT)) {
+            this.direction = Direction.LEFT;
+            if (this.v < 0) {
+                this.direction = Direction.RIGHT;
+            }
+            if (canMoveTowards(this.direction)) {
                 this.posX -= v;
             }
-            this.direction = Direction.LEFT;
         }
         if (Greenfoot.isKeyDown("up") || Greenfoot.isKeyDown("W")) {
-            if (canMoveTowards(Direction.UP)) {
+            this.direction = Direction.UP;
+            if (this.v < 0) {
+                this.direction = Direction.DOWN;
+            }
+            if (canMoveTowards(this.direction)) {
                 this.posY -= v;
             }
-            this.direction = Direction.UP;
         }
         if (Greenfoot.isKeyDown("down") || Greenfoot.isKeyDown("S")) {
-            if (canMoveTowards(Direction.DOWN)) {
+            this.direction = Direction.DOWN;
+            if (this.v < 0) {
+                this.direction = Direction.UP;
+            }
+            if (canMoveTowards(this.direction)) {
                 this.posY += v;
             }
-            this.direction = Direction.DOWN;
+        }
+    }
+
+    public void applyEffect() {
+        Item item = (Item) this.getOneIntersectingObject(Item.class);
+        if (item != null) {
+            this.effectStart = Timer.getTime();
+            this.effectEnd = effectStart + item.getEffectDuration();
+            this.effect = item.getEffect();
+            item.remove();
+        } else if (Timer.getTime() < effectEnd) {
+            switch (this.effect) {
+                case SLOW: {
+                    this.v = 1;
+                    break;
+                }
+                case DIZZY: {
+                    this.v = -normalV;
+                    break;
+                }
+                case FREEZE: {
+                    this.v = 0;
+                    break;
+                }
+                case BLIND: {
+                    try {
+                        getWorld().addObject(new Shadow(8), getWorld().getWidth()/2, getWorld().getHeight()/2);
+                    } catch (InvalidShadowSizeExceptions e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case NONE: {
+                    // No hacer nada
+                }
+            }
+        } else {
+            this.v = this.normalV;
         }
     }
     
