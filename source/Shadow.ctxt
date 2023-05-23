@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.target=Shadow
-comment0.text=\n\ Write\ a\ description\ of\ class\ Shadow\ here.\n\ \n\ @author\ (your\ name)\ \n\ @version\ (a\ version\ number\ or\ a\ date)\n
-comment1.params=size
-comment1.target=Shadow(int)
-comment2.params=size
-comment2.target=void\ setSize(int)
-numComments=3
