@@ -18,9 +18,9 @@ public class Player extends Character {
     private Effect effect;
     // Duración del efecto
     private int effectDuration;
-    // Momento en que se comenzó a aplicar el efecto
+    // Momento en que se comenzó a aplicar el efecto en segundos
     private int effectStart;
-    // Momento en que se dejará de aplicar el efecto
+    // Momento en que se dejará de aplicar el efecto en segundos
     private int effectEnd;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
@@ -153,7 +153,11 @@ public class Player extends Character {
                     break;
                 }
                 case BLIND: {
-                    // TODO
+                    try {
+                        getWorld().addObject(new Shadow(8), getWorld().getWidth()/2, getWorld().getHeight()/2);
+                    } catch (InvalidShadowSizeExceptions e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 }
                 case NONE: {

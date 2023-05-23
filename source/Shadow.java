@@ -8,12 +8,25 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Shadow extends Actor
 {
-    /**
-     * Act - do whatever the Shadow wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act()
-    {
-        // Add your action code here.
+    public Shadow(int size) throws InvalidShadowSizeExceptions {
+        setSize(size);
+    }
+
+    public void setSize(int size) throws InvalidShadowSizeExceptions {
+        if (size < 0 || size > 14 || size % 2 != 0) {
+            throw new InvalidShadowSizeExceptions("El tamaño de la sombra sólo puede ser un número par entre 0 y 14");
+        }
+
+        if (size > 0) {
+            setImage("Shadows/shadow-" + size + ".png");
+        }
+    }
+
+
+}
+
+class InvalidShadowSizeExceptions extends Exception {
+    public InvalidShadowSizeExceptions(String message) {
+        super(message);
     }
 }
