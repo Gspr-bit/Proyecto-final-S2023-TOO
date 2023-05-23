@@ -25,6 +25,7 @@ dependency14.from=Player
 dependency14.to=Effect
 dependency14.type=UsesDependency
 dependency15.from=Player
+<<<<<<< HEAD
 dependency15.to=Item
 dependency15.type=UsesDependency
 dependency16.from=Player
@@ -39,6 +40,16 @@ dependency18.type=UsesDependency
 dependency19.from=Thief
 dependency19.to=Direction
 dependency19.type=UsesDependency
+=======
+dependency15.to=Thief
+dependency15.type=UsesDependency
+dependency16.from=Thief
+dependency16.to=Direction
+dependency16.type=UsesDependency
+dependency17.from=Thief
+dependency17.to=Tile
+dependency17.type=UsesDependency
+>>>>>>> origin/ramaPaSubirMiCommirAtteMontse
 dependency2.from=Background1
 dependency2.to=Map
 dependency2.type=UsesDependency
@@ -75,13 +86,23 @@ dependency8.type=UsesDependency
 dependency9.from=Background1
 dependency9.to=Timer
 dependency9.type=UsesDependency
-editor.fx.0.height=1048
-editor.fx.0.width=1861
-editor.fx.0.x=59
-editor.fx.0.y=32
+<<<<<<< HEAD
+editor.fx.0.height=0
+editor.fx.0.width=0
+editor.fx.0.x=0
+editor.fx.0.y=0
 height=1024
 package.numDependencies=23
 package.numTargets=17
+=======
+editor.fx.0.height=737
+editor.fx.0.width=814
+editor.fx.0.x=360
+editor.fx.0.y=26
+height=822
+package.numDependencies=17
+package.numTargets=13
+>>>>>>> origin/ramaPaSubirMiCommirAtteMontse
 project.charset=UTF-8
 publish.hasSource=false
 publish.locked=true

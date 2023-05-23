@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Clase Jugador. Esta clase es instanciada desde el mundo.
@@ -18,9 +19,9 @@ public class Player extends Character {
     private Effect effect;
     // Duración del efecto
     private int effectDuration;
-    // Momento en que se comenzó a aplicar el efecto
+    // Momento en que se comenzó a aplicar el efecto en segundos
     private int effectStart;
-    // Momento en que se dejará de aplicar el efecto
+    // Momento en que se dejará de aplicar el efecto en segundos
     private int effectEnd;
     // Visibilidad del jugador. El jugador podrá ver en el radio especificado
     private int visibility;
@@ -138,6 +139,8 @@ public class Player extends Character {
             this.effectEnd = effectStart + item.getEffectDuration();
             this.effect = item.getEffect();
             item.remove();
+            if (this.effect == Effect.BLIND)
+                this.visibility = (new Random().nextInt(6) * 2) + 2;
         } else if (Timer.getTime() < effectEnd) {
             switch (this.effect) {
                 case SLOW: {
@@ -153,7 +156,7 @@ public class Player extends Character {
                     break;
                 }
                 case BLIND: {
-                    // TODO
+                    // Ya lo hicimos arriva
                     break;
                 }
                 case NONE: {
@@ -161,10 +164,23 @@ public class Player extends Character {
                 }
             }
         } else {
+            // Regresar las cosas a la normalidad
             this.v = this.normalV;
+            this.visibility = 0;
+        }
+
+        try {
+            ((Background1) getWorld()).getShadow().setSize(visibility);
+        } catch (InvalidShadowSizeExceptions e) {
+            throw new RuntimeException(e);
         }
     }
-
+    
+    public void act(){
+        changeDirection();
+        updateImage();
+    }
+    
     /**
      * Método para saber si el jugador puede moverse hacia la posición dada.
      * @author Mauricio, Gaspar
@@ -172,6 +188,8 @@ public class Player extends Character {
      * @return true si el jugador se puede mover hacia allá
      */
     private boolean canMoveTowards(Direction direction) {
+        boolean sePuedeMover=false;//lo agrego esto pa checar q no choque con los tiefs
+        
         int dx = this.getImage().getWidth() / 2 + v;
         int dy = this.getImage().getHeight() / 2 + v;
 
@@ -181,8 +199,31 @@ public class Player extends Character {
 
         Tile nextTile = (Tile) this.getOneObjectAtOffset(dxs[direction.ordinal()],
                 dys[direction.ordinal()], Tile.class);
-
-        return nextTile != null && !nextTile.isCollidable();
+                        
+        //return nextTile != null && !nextTile.isCollidable();
+        sePuedeMover=(nextTile != null && !nextTile.isCollidable());
+        
+        //Checar q no choque con los thiefs
+        Thief p=null;
+        int x=0,y=0;
+        if(direction ==Direction.UP){
+            y=-4;
+        }
+        if(direction ==Direction.DOWN){
+            y=4;
+        }
+        if(direction ==Direction.RIGHT){
+            x=5;
+        }
+        if(direction ==Direction.LEFT){
+            x=-5;
+        }
+        p=(Thief)this.getOneObjectAtOffset(x,y,Thief.class);
+        if(p!=null){
+            sePuedeMover=false;
+        }
+        
+        return sePuedeMover;
     }
 
     /**

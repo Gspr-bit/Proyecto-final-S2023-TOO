@@ -1,6 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
+import java.util.concurrent.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
+import java.util.Random;
+
+
 /**
  * Write a description of class Thief here.
  * 
@@ -9,12 +19,14 @@ import java.util.*;
  */
 public class Thief extends Character
 {
+    char tipoLadron;
     /**
     *Constructir clase Thief
     *@author Montse
     */
     public Thief(int x, int y){
-        this.v = 1;
+        
+        this.v = 2;
         this.direction = Direction.RIGHT;
         this.posX=x;
         this.posY=y;
@@ -29,8 +41,13 @@ public class Thief extends Character
         
         //Para q haya varios tipos de ladrones, ahorita puse esos 2 unicamente como ejemplo
         String [] tipo = {"a", "b"};
+        
         Random random = new Random();
-        //
+        if(random.nextInt(2)==0){
+            this.tipoLadron='a';
+        }else{
+            this.tipoLadron='b';
+        }
         
         //Establecer las imágenes
         for (int i = 0; i < 4; i++) {
@@ -58,7 +75,7 @@ public class Thief extends Character
     public void act()
     {
         updateImage();
-        //moverRatero(); //está comentada esta linea pq ese metodo tiene un FIXME
+        moverActor(); //está comentada esta linea pq ese metodo tiene un FIXME
     }
     
     
@@ -73,6 +90,11 @@ public class Thief extends Character
         this.imageTimer++;
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
+        /*setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 0 + ".png");
+        hacerQuePaseTiempo();
+        setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 1 + ".png");            
+        hacerQuePaseTiempo();*/    
+        
     }
     
     /**
@@ -99,32 +121,40 @@ public class Thief extends Character
      * Método para cambiar la dirección y posición del ratero.
      * @author Montse
      */
-    public void changeDirectionn(int direccion) {
-        // Este método no mueve al ratero, solo cambia su sprite para que apunte a la dirección correspondiente
+    public void changeDirectionAndMove(int direccion) {
+        // Este método mueve al ratero, y cambia su sprite para que apunte a la dirección correspondiente
         if (direccion==0) {
             if (canMoveTowards(Direction.RIGHT)) {
-                this.posX += v;
+                //this.posX += v;
+                this.posX=getPosX()+v;
             }
             this.direction = Direction.RIGHT;
+            setLocation(getPosX(),getPosY());
         }
 
         if (direccion==1) {
             if (canMoveTowards(Direction.LEFT)) {
-                this.posX -= v;
+                //this.posX -= v;
+                this.posX=getPosX()-v;
             }
             this.direction = Direction.LEFT;
+            setLocation(getPosX(),getPosY());
         }
         if (direccion==2) {
             if (canMoveTowards(Direction.UP)) {
-                this.posY -= v;
+                //this.posY -= v;
+                this.posY=getPosY()-v;
             }
             this.direction = Direction.UP;
+            setLocation(getPosX(),getPosY());
         }
         if (direccion==3) {
             if (canMoveTowards(Direction.DOWN)) {
-                this.posY += v;
+                //this.posY += v;
+                this.posY=getPosY()-v;
             }
             this.direction = Direction.DOWN;
+            setLocation(getPosX(),getPosY());
         }
     }
     public void changeDirection(){
@@ -138,45 +168,46 @@ public class Thief extends Character
     public int getPosY() {
         return this.posY;
     }
+    public char getTipoLadron(){
+        return this.tipoLadron;
+    }
     
+    /**
+     * No se si el fallo en la funcion mover ratero se deba a q se ejecuta a la misma vez tantas veces  que es muy rapido el movimiento, así q pa probar si es eso, cada q se ejecuta esta funcion debería haver 1 seg de pausa
+     */
+    public void hacerQuePaseTiempo(){
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        final Runnable runnable = new Runnable() {
+            int countdownStarter = 10;
+            public void run() {
+                countdownStarter--;
+                if (countdownStarter < 0) {
+                     scheduler.shutdown();
+                }
+            }
+        };
+        scheduler.scheduleAtFixedRate(runnable, 0, 2000, MILLISECONDS);
+            
+    }
     
     /*FIXME
      * Se supone q tal cual debe hacer q el ratero se mueva, pero algo no cuadra jajaj
      * @Montse
      */
-    public void moverRatero(){
-        Random random = new Random();
-        //int numero = (int)(Math.random()*4+1);
-        int numero = random.nextInt(5);
-        if(numero == 1){//DERECHA
-            if(this.canMoveTowards(Direction.RIGHT)){
-                //if(!isAtEdge()){
-                    this.changeDirectionn(0);
-                    setLocation(getPosX()+this.v,getPosY());
-                //}
+    public void moverActor(){    
+            //hacerQuePaseTiempo();
+            
+            Random random = new Random();
+            int numero = random.nextInt(5);
+            if(numero == 1){//DERECHA
+                this.changeDirectionAndMove(0);
+            }else if(numero ==2){//IZQUIERDA
+                this.changeDirectionAndMove(1);
+            }else if(numero ==3){//ARRIBA
+                this.changeDirectionAndMove(2);                        
+            }else{//ABAJO
+                this.changeDirectionAndMove(3);
             }
-        }else if(numero ==2){//IZQUIERDA
-            if(this.canMoveTowards(Direction.LEFT)){
-                //if(!isAtEdge()){
-                    this.changeDirectionn(1);
-                    setLocation(getPosX()-this.v,getPosY());
-                //}
-            }
-        }else if(numero ==3){//ARRIBA
-            if(this.canMoveTowards(Direction.UP)){
-               //if(!isAtEdge()){
-                   this.changeDirectionn(2); 
-                   setLocation(getPosX(),getPosY()-this.v);
-                //} 
-            }
-        }else{//ABAJO
-            if(this.canMoveTowards(Direction.DOWN)){
-                //if(!isAtEdge()){
-                    this.changeDirectionn(3);
-                    setLocation(getPosX(),getPosY()+this.v);
-                //}
-            }
-        }
     }
     
     /* FIXME
