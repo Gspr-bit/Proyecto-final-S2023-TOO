@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Clase Jugador. Esta clase es instanciada desde el mundo.
@@ -138,6 +139,8 @@ public class Player extends Character {
             this.effectEnd = effectStart + item.getEffectDuration();
             this.effect = item.getEffect();
             item.remove();
+            if (this.effect == Effect.BLIND)
+                this.visibility = (new Random().nextInt(6) * 2) + 2;
         } else if (Timer.getTime() < effectEnd) {
             switch (this.effect) {
                 case SLOW: {
@@ -153,11 +156,7 @@ public class Player extends Character {
                     break;
                 }
                 case BLIND: {
-                    try {
-                        getWorld().addObject(new Shadow(8), getWorld().getWidth()/2, getWorld().getHeight()/2);
-                    } catch (InvalidShadowSizeExceptions e) {
-                        throw new RuntimeException(e);
-                    }
+                    // Ya lo hicimos arriva
                     break;
                 }
                 case NONE: {
@@ -165,7 +164,15 @@ public class Player extends Character {
                 }
             }
         } else {
+            // Regresar las cosas a la normalidad
             this.v = this.normalV;
+            this.visibility = 0;
+        }
+
+        try {
+            ((Background1) getWorld()).getShadow().setSize(visibility);
+        } catch (InvalidShadowSizeExceptions e) {
+            throw new RuntimeException(e);
         }
     }
 
