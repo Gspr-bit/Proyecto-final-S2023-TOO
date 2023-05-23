@@ -16,6 +16,7 @@ public class Background1 extends World {
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
     private final ArrayList<Thief> thiefs;
+    private final Shadow shadow;
     // Sé que podemos obtener estos valores con getWidth() y getHeight()
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
@@ -45,8 +46,16 @@ public class Background1 extends World {
         for (int i = 0; i < 10; i++) {
                 thiefs.add(new Thief(random.nextInt(Map.MAP_WIDTH), random.nextInt(Map.MAP_HEIGHT)));    
         }
-        
-        //this.addObject(new Shadow(), this.getWidth() / 2, this.getHeight() / 2);
+
+        // Agrega el objeto sombra sin poner sombra por el momento
+        try {
+            this.shadow = new Shadow(0);
+            this.addObject(this.shadow, this.getWidth() / 2, this.getHeight() / 2);
+        } catch (InvalidShadowSizeExceptions e) {
+            // No debería entrar aquí.
+            throw new RuntimeException(e);
+        }
+
         map.generateCountryMap();
         //map.generateCityMap();
         generateItems();
@@ -57,6 +66,10 @@ public class Background1 extends World {
     }
     public ArrayList<Thief> getThiefs() {
         return this.thiefs;
+    }
+
+    public Shadow getShadow() {
+        return shadow;
     }
 
     public void act() {
@@ -80,7 +93,7 @@ public class Background1 extends World {
             if (map.mapTiles[x][y].isCollidable())
                 continue;
 
-            fixedObjects.add(new Item(Effect.DIZZY, 10, x, y));
+            fixedObjects.add(new Item(Effect.SLOW, random.nextInt(8)+2, x, y));
             count --;
         }
     }
