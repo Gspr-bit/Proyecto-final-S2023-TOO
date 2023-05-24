@@ -77,14 +77,6 @@ public class Player extends Character {
         this.visibility = visibility;
     }
 
-    public int getPosX() {
-        return posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
     /**
      * Método para cambiar la dirección y posición del jugador.
      * @author Mauricio, Montse
