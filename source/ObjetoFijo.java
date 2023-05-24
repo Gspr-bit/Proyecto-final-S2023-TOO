@@ -15,9 +15,9 @@ public class ObjetoFijo extends Actor
     int posX;
     int posY;
     //CONSTRUCTOR DEL ACT0R
-    public ObjetoFijo(/*int x, int y*/){//Comento aquí pq ahorita yo solo lo estube probando así tal cual poniendo items desde el panel de greenfoot, pero pues una idea sería pasarle la posicion desde el generador del mapa y así tal cual para que funcione automaticamente,pero pues por ahora namas quedó así jeje
-        /*this.posX=x;
-        this.posY=y;
+    public ObjetoFijo(/*int i, int j*/){//Comento aquí pq ahorita yo solo lo estube probando así tal cual poniendo items desde el panel de greenfoot, pero pues una idea sería pasarle la posicion desde el generador del mapa j así tal cual para que funcione automaticamente,pero pues por ahora namas quedó así jeje
+        /*this.posX=i;
+        this.posY=j;
         setLocation(posX, posY);*/
     
     }
@@ -56,4 +56,3 @@ public class ObjetoFijo extends Actor
         
     }
 }
-

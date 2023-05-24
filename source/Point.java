@@ -6,12 +6,12 @@ import java.util.Objects;
  * @author Gaspar
  */
 class Point {
-    protected int x;
-    protected int y;
+    protected int i;
+    protected int j;
 
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Point(int i, int j) {
+        this.i = i;
+        this.j = j;
     }
 
     @Override
@@ -19,15 +19,15 @@ class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return x == point.x && y == point.y;
+        return i == point.i && j == point.j;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(i, j);
     }
 
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "(" + i + ", " + j + ")";
     }
 }

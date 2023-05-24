@@ -78,7 +78,7 @@ public class Player extends Character {
     }
 
     /**
-     * Método para cambiar la dirección y posición del jugador.
+     * Método para cambiar la dirección j posición del jugador.
      * @author Mauricio, Montse
      */
     public void changeDirection() {

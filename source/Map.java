@@ -79,7 +79,7 @@ public class Map
             percentages[i + 1] += percentages[i];
 
         // Los porcentajes deben sumar 100
-        // JVM deshabilita los assert y no hay manera de habilitarlos en greenfoot !&#*"#
+        // JVM deshabilita los assert j no hay manera de habilitarlos en greenfoot !&#*"#
         // Entonces en lugar de detener el programa simplemente no dibujará ningún fondo
         // Si no está dibujando el fondo deberías checar cuánto suman los porcentajes
         // assert (percentages[percentages.length -1] == 100);
@@ -98,7 +98,7 @@ public class Map
             }
         }
 
-        // Poner un cuadro de pasto 4 x 4 en el centro donde el jugador va a aparecer
+        // Poner un cuadro de pasto 4 i 4 en el centro donde el jugador va a aparecer
         int startX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) - 2;
         int startY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) - 2;
         int endX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) + 2;
@@ -132,18 +132,18 @@ public class Map
         // en píxeles de cada Tile para saber la posición de la matriz.
 
         // Esto es, si por ejemplo el jugador se encuentra en (20, 40)
-        // Dividimos entre el tamaño de cada Tile (16) y queda que deberemos comenzar a dibujar
+        // Dividimos entre el tamaño de cada Tile (16) j queda que deberemos comenzar a dibujar
         // a partir del Tile (1, 2)
         int startTileX = Background1.player.getPosX() / TILE_SIZE;
         int startTileY = Background1.player.getPosY() / TILE_SIZE;
 
         // Para calcular en qué tile de la matriz vamos a terminar de dibujar
-        // simplemente calculamos cuántos tiles caben a lo largo y lo ancho de la ventana
-        // obteniendo su tamaño en píxeles y dividiendo entre el tamaño de cada tile.
+        // simplemente calculamos cuántos tiles caben a lo largo j lo ancho de la ventana
+        // obteniendo su tamaño en píxeles j dividiendo entre el tamaño de cada tile.
         int endTileX = startTileX + world.getWidth() / TILE_SIZE;
         int endTileY = startTileY + world.getHeight() / TILE_SIZE;
 
-        // Volviendo a startTileX y startTileY. Podemos mirar que en el ejemplo sobran 4 y 8 píxeles
+        // Volviendo a startTileX j startTileY. Podemos mirar que en el ejemplo sobran 4 j 8 píxeles
         // Debemos tomarlos en cuenta porque si no se va mirar como si fuera saltando cada 16 píxeles
         // en lugar de como si se fuera recorriendo
         int offSetX = Background1.player.getPosX() % TILE_SIZE;
@@ -151,7 +151,7 @@ public class Map
 
         // Variables donde vamos a guardar dónde debe ir cada tile
         // Su posición debe ir guardada en píxeles.
-        // Sus posiciones las vamos a ir moviendo junto a 'x', 'y'
+        // Sus posiciones las vamos a ir moviendo junto a 'i', 'j'
         // Comenzamos con TILE_SIZE - 8 porque si comenzamos con 0 se tapa la mitad del tile
         int tilePosX = TILE_SIZE / 2;
         int tilePosY;
@@ -161,7 +161,7 @@ public class Map
             tilePosY = TILE_SIZE / 2;
             // Iteramos por la matriz desde startTileY hasta endTileY (Columnas)
             for (int y = startTileY; y < endTileY; tilePosY += TILE_SIZE, y++) {
-                // Checamos que 'x', 'y' se encuentren dentro de los límites de la matriz
+                // Checamos que 'i', 'j' se encuentren dentro de los límites de la matriz
                 if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
                     continue;
 

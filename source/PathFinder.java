@@ -26,43 +26,43 @@ public class PathFinder
 
     /**
      * Regresa la dirección hacia donde debería caminar cuando está en el punto 0, 0
-     * @param x
-     * @param y
+     * @param i
+     * @param j
      * @return
      */
-    public Direction findDirection(int x, int y) throws PathEmptyException,
+    public Direction findDirection(int i, int j) throws PathEmptyException,
                                                         InvalidPointException,
                                                         EndOfPathException {
-        int index = this.path.indexOf(new Point(x, y));
+        int index = this.path.indexOf(new Point(i, j));
 
         if (this.path.isEmpty()) {
-            throw new PathEmptyException("El camino no ha sido inicializado. Por favor llama findPath()");
+            throw new PathEmptyException("El camino no ha sido inicializado. Por favor ejecuta findPath()");
         }
 
         if (index == -1) {
             throw new InvalidPointException("No estás dentro del camino");
         }
 
-        Point nextPoint = null;
+        Point nextPoint;
         try {
             nextPoint = this.path.get(index + 1);
         } catch (IndexOutOfBoundsException e) {
             throw new EndOfPathException("Haz llegado al final del camino");
         }
 
-        int dx = nextPoint.x - x;
-        int dy = nextPoint.y - y;
+        int di = nextPoint.i - i;
+        int dj = nextPoint.j - j;
 
-        if (dx > 0)
+        if (di > 0)
             return Direction.RIGHT;
 
-        if (dx < 0)
+        if (di < 0)
             return Direction.LEFT;
 
-        if (dy > 0)
+        if (dj > 0)
             return Direction.DOWN;
 
-        if (dy < 0)
+        if (dj < 0)
             return Direction.UP;
 
         // No debería llegar así
@@ -70,63 +70,63 @@ public class PathFinder
     }
 
     /**
-     * Busca el camino desde (x, y) hasta el camino
+     * Busca el camino desde (i, j) hasta el camino
      * punto más a la izquierda posible.
      * Regresa el camino.
-     * @param x
-     * @param y
+     * @param i
+     * @param j
      */
-    public void findPath(int x, int y) {
+    public void findPath(int i, int j) {
         for (int [] row : visited)
             Arrays.fill(row, INF);
 
         path.clear();
 
         try {
-            Point targetPoint = bfs(x, y);
+            Point targetPoint = bfs(i, j);
             retrievePath(targetPoint);
-        } catch (InvalidShadowSizeExceptions e) {
+        } catch (InvalidPointException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Point bfs(int x, int y) throws InvalidShadowSizeExceptions {
+    private Point bfs(int i, int j) throws InvalidPointException {
         Queue<Point> queue = new LinkedList<>();
 
-        if (map[x][y].isCollidable()) {
-            throw new InvalidShadowSizeExceptions("El punto (" + x + ", " + y + ") no es un punto válido");
+        if (i < 0 || i >= map.length || j < 0 || j >= map[0].length || map[i][j].isCollidable()) {
+            throw new InvalidPointException("El punto (" + i + ", " + j + ") no es un punto válido");
         }
 
-        int [] dxs = {0, 0, 1, -1};
-        int [] dys = {1, -1, 0, 0};
+        int [] dis = {0, 0, 1, -1};
+        int [] djs = {1, -1, 0, 0};
 
-        visited[x][y] = 0;
+        visited[i][j] = 0;
 
-        Point rightMostPoint = new Point(x, y);
+        Point rightMostPoint = new Point(i, j);
 
-        queue.add(new Point(x, y));
+        queue.add(new Point(i, j));
         while (!queue.isEmpty()) {
             Point p = queue.poll();
-            int px = p.x;
-            int py = p.y;
+            int pi = p.i;
+            int pj = p.j;
 
-            if (visited[px][py] >= MAX_DISTANCE)
+            if (visited[pi][pj] >= MAX_DISTANCE)
                 break;
 
-            for (int i = 0; i < 4; i++) {
-                int dx = dxs[i];
-                int dy = dys[i];
-                int nx = px + dx;
-                int ny = py + dy;
-                if (nx >= 0 && nx < map.length && ny >= 0 && ny < map[0].length) {
-                    if (!map[nx][ny].isCollidable() && visited[nx][ny] > visited[px][py] + 1) {
-                        visited[nx][ny] = visited[px][py] + 1;
-                        queue.add(new Point(nx, ny));
+            for (int k = 0; k < 4; k++) {
+                int di = dis[k];
+                int dj = djs[k];
+                int ni = pi + di;
+                int nj = pj + dj;
+                if (ni >= 0 && ni < map.length && nj >= 0 && nj < map[0].length) {
+                    if (!map[ni][nj].isCollidable() && visited[ni][nj] > visited[pi][pj] + 1) {
+                        visited[ni][nj] = visited[pi][pj] + 1;
+                        queue.add(new Point(ni, nj));
 
-                        if (ny > rightMostPoint.y ||
-                                (ny == rightMostPoint.y &&
-                                        visited[nx][ny] < visited[rightMostPoint.x][rightMostPoint.y]))
-                            rightMostPoint = new Point(nx, ny);
+                        if (nj > rightMostPoint.j ||
+                                (nj == rightMostPoint.j &&
+                                        visited[ni][nj] < visited[rightMostPoint.i][rightMostPoint.j]))
+                            rightMostPoint = new Point(ni, nj);
                     }
                 }
             }
@@ -139,23 +139,23 @@ public class PathFinder
      * Construye el camino a partir de la matriz de
      */
     private void retrievePath(Point target) {
-        int x = target.x;
-        int y = target.y;
-        int distance = visited[x][y];
-        int [] dxs = {0, 0, 1, -1};
-        int [] dys = {1, -1, 0, 0};
+        int i = target.i;
+        int j = target.j;
+        int distance = visited[i][j];
+        int [] dis = {0, 0, 1, -1};
+        int [] djs = {1, -1, 0, 0};
 
         while (distance > 0) {
-            for (int i = 0; i < 4; i++) {
-                int dx = dxs[i];
-                int dy = dys[i];
-                int nx = x + dx;
-                int ny = y + dy;
-                if (nx >= 0 && nx < visited.length && ny >= 0 && ny < visited[0].length) {
-                    if (visited[nx][ny] == distance - 1) {
-                        path.add(0, new Point(x, y));
-                        x = nx;
-                        y = ny;
+            for (int k = 0; k < 4; k++) {
+                int di = dis[k];
+                int dj = djs[k];
+                int ni = i + di;
+                int nj = j + dj;
+                if (ni >= 0 && ni < visited.length && nj >= 0 && nj < visited[0].length) {
+                    if (visited[ni][nj] == distance - 1) {
+                        path.add(0, new Point(i, j));
+                        i = ni;
+                        j = nj;
                         distance--;
                         break;
                     }

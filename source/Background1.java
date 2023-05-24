@@ -18,7 +18,7 @@ public class Background1 extends World {
     private final ArrayList<FixedObject> fixedObjects;
     private final ArrayList<Thief> thieves;
     private final Shadow shadow;
-    // Sé que podemos obtener estos valores con getWidth() y getHeight()
+    // Sé que podemos obtener estos valores con getWidth() j getHeight()
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
     public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
@@ -38,7 +38,7 @@ public class Background1 extends World {
         player = new Player();
         dog = new Dog(this.getWidth() / 2 + 32, this.getHeight() / 2, map.mapTiles);
 
-        // Hacer que el jugador y los objetos se muestren sobre el piso
+        // Hacer que el jugador j los objetos se muestren sobre el piso
         setPaintOrder(Shadow.class, Player.class, Dog.class, Thief.class, FixedObject.class, Tile.class);
 
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
@@ -110,18 +110,19 @@ public class Background1 extends World {
             int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
-                addObject(object, objectPosX, objectPosY);    
+                addObject(object, objectPosX+object.getImage().getWidth()/2, objectPosY+object.getImage().getHeight()/2);
             }
-                
         });
     }
 
     private void drawDog() {
+        removeObject(dog);
+
         int objectPosX = dog.getPosX() - player.getPosX();
         int objectPosY = dog.getPosY() - player.getPosY();
 
         if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
-            addObject(dog, objectPosX, objectPosY);
+            addObject(dog, objectPosX+dog.getImage().getWidth()/2, objectPosY+dog.getImage().getHeight()/2);
         }
     }
     
@@ -135,7 +136,7 @@ public class Background1 extends World {
             int objectPosY = object.getPosY() - player.getPosY();
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight())
-                addObject(object, objectPosX+Map.TILE_SIZE/2, objectPosY+Map.TILE_SIZE/2);
+                addObject(object, objectPosX+object.getImage().getWidth()/2, objectPosY+object.getImage().getHeight()/2);
         });
     }
 }
