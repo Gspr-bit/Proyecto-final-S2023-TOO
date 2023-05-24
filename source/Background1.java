@@ -16,6 +16,7 @@ public class Background1 extends World {
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
     private final ArrayList<Thief> thieves;
+    private final ArrayList<Car> cars;
     private final Shadow shadow;
     // Sé que podemos obtener estos valores con getWidth() y getHeight()
     // pero necesito obtenerlos desde otras clases de manera más fácil
@@ -37,13 +38,21 @@ public class Background1 extends World {
         player = new Player();
 
         // Hacer que el jugador y los objetos se muestren sobre el piso
-        setPaintOrder(Shadow.class, Player.class, Thief.class, FixedObject.class, Tile.class);
+        setPaintOrder(Shadow.class, Car.class, Player.class, Thief.class, FixedObject.class, Tile.class);
 
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
-        thieves = new ArrayList<>();
+        
+        //Generar rateros
+        this.thieves = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
                 thieves.add(new Thief(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));    
+        }
+        
+        //Generar carros
+        this.cars=new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+                cars.add(new Car(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));    
         }
 
         // Agrega el objeto sombra sin poner sombra por el momento
@@ -66,7 +75,6 @@ public class Background1 extends World {
     public ArrayList<Thief> getThiefs() {
         return this.thieves;
     }
-
     public Shadow getShadow() {
         return shadow;
     }
@@ -75,6 +83,7 @@ public class Background1 extends World {
         this.map.drawMap(this);
         drawFixedObjects();
         drawThiefs();
+        drawCars();
         Timer.update();
     }
 
@@ -105,9 +114,28 @@ public class Background1 extends World {
         this.fixedObjects.forEach(object -> {
             int objectPosX = object.getPosX() * Map.TILE_SIZE - player.getPosX();
             int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
+            int unidad;
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
                 addObject(object, objectPosX, objectPosY);    
+            }
+                
+        });
+    }
+    private void drawCars() {
+        List<Car> objectsInMap = this.getObjects(Car.class);
+        removeObjects(objectsInMap);
+
+        // Pintar los carros en el mapa
+        this.cars.forEach(object -> {
+            int objectPosX = object.getPosX() - player.getPosX();
+            int objectPosY = object.getPosY() - player.getPosY();
+            
+            int yy=object.getPosY();
+            
+            //if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight() && object.puedoIrAqui(yy)){
+            if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
+                addObject(object, objectPosX+Map.TILE_SIZE/2, objectPosY+Map.TILE_SIZE/2);
             }
                 
         });
