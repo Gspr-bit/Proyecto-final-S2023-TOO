@@ -26,15 +26,27 @@ public abstract class Character extends Actor {
     // Posición del character en el mapa
     protected int posX;
     protected int posY;
+    
+    //TIEMPO Q LE VAMOS A DAR AL NIVEL
+    protected int tiempoTotal=3600;//esta en minitos
 
     /**
      * Act - do whatever the character wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() {
-        changeDirection();
-        updateImage();
+        //changeDirection();
+        //updateImage();
     }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
 
     public abstract void changeDirection();
     

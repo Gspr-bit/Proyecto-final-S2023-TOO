@@ -1,45 +1,63 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.util.concurrent.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
+import java.util.Random;
+
+
 /**
  * Write a description of class Thief here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Montse
  */
 public class Thief extends Character
 {
+    private char thiefType;
+    // Momento en que el ladrón comenzó a moverse hacia una dirección
+    private int movementStart;
+    // Tiempo en que el ladrón continúa moviendose hacia la misma dirección
+    // antes de cambiar de dirección.
+    private final static int movementDelay = 2;
+    private Random random;
+
     /**
-    *Constructir clase Thief
+    *Constructor clase Thief
     *@author Montse
     */
     public Thief(int x, int y){
-        this.v = 1;
+        this.movementStart = 0;
+        this.v = 2;
         this.direction = Direction.RIGHT;
         this.posX=x;
         this.posY=y;
-        setLocation(posX, posY);
+        this.random = new Random((long) x*y);
         
-        setImage("Thief/thieff.png");
-
         Direction[] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
         String[] f = {"up", "down", "left", "right"};
 
         this.images = new HashMap<>(4);
         
         //Para q haya varios tipos de ladrones, ahorita puse esos 2 unicamente como ejemplo
-        String [] tipo = {"a", "b"};
+        String [] type = {"a", "b"};
+        
         Random random = new Random();
-        //
+        if(random.nextInt(2)==0){
+            this.thiefType='a';
+        }else{
+            this.thiefType='b';
+        }
         
         //Establecer las imágenes
         for (int i = 0; i < 4; i++) {
             images.put(d[i], new ArrayList<>(2));
             
-            String chosenTipo = tipo[random.nextInt(tipo.length)];
+            String chosenTipo = type[random.nextInt(type.length)];
             for (int j = 0; j < 2; j++) {
-                
-                //String chosenTipo = tipo[random.nextInt(tipo.length)];
                 
                 images.get(d[i]).add("Thief/"+ chosenTipo +"-"+ f[i] + "-" + j + ".png");
                 
@@ -58,13 +76,15 @@ public class Thief extends Character
     public void act()
     {
         updateImage();
-        //moverRatero(); //está comentada esta linea pq ese metodo tiene un FIXME
+        changeDirection();
+        move();
     }
     
     
     /**
      * Cambiar la imagen del jugador para que parezca como si se estuviera moviendo
-     * TODO Agregar las animaciones para cuando el jugador está quiero
+     * TODO Agregar las animaciones para cuando el jugador está quieto
+     * TODO Mover esta función a su superclase
      * @author Gaspar
      */
     public void updateImage() {
@@ -73,6 +93,9 @@ public class Thief extends Character
         this.imageTimer++;
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
+        /*setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 0 + ".png");
+        setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 1 + ".png");
+        */
     }
     
     /**
@@ -94,102 +117,48 @@ public class Thief extends Character
 
         return nextTile != null && !nextTile.isCollidable();
     }
-    
+
     /**
-     * Método para cambiar la dirección y posición del ratero.
+     * Función que mueve al ladrón
      * @author Montse
      */
-    public void changeDirectionn(int direccion) {
-        // Este método no mueve al ratero, solo cambia su sprite para que apunte a la dirección correspondiente
-        if (direccion==0) {
-            if (canMoveTowards(Direction.RIGHT)) {
-                this.posX += v;
-            }
-            this.direction = Direction.RIGHT;
-        }
-
-        if (direccion==1) {
-            if (canMoveTowards(Direction.LEFT)) {
-                this.posX -= v;
-            }
-            this.direction = Direction.LEFT;
-        }
-        if (direccion==2) {
-            if (canMoveTowards(Direction.UP)) {
+    private void move() {
+        switch (this.direction) {
+            case UP: {
                 this.posY -= v;
+                break;
             }
-            this.direction = Direction.UP;
-        }
-        if (direccion==3) {
-            if (canMoveTowards(Direction.DOWN)) {
+            case DOWN: {
                 this.posY += v;
+                break;
             }
-            this.direction = Direction.DOWN;
+            case LEFT: {
+                this.posX -= v;
+                break;
+            }
+            case RIGHT: {
+                this.posX += v;
+                break;
+            }
         }
-    }
-    public void changeDirection(){
-        return;
-    }
-    
-    public int getPosX() {
-        return this.posX;
     }
 
-    public int getPosY() {
-        return this.posY;
-    }
-    
-    
-    /*FIXME
-     * Se supone q tal cual debe hacer q el ratero se mueva, pero algo no cuadra jajaj
-     * @Montse
+    /**
+     * Función que cambia la dirección del ladrón aleatoriamente cada 2 segundos
+     * o cuando choque con un objeto.
+     *
+     * @author Montse
      */
-    public void moverRatero(){
-        Random random = new Random();
-        //int numero = (int)(Math.random()*4+1);
-        int numero = random.nextInt(5);
-        if(numero == 1){//DERECHA
-            if(this.canMoveTowards(Direction.RIGHT)){
-                //if(!isAtEdge()){
-                    this.changeDirectionn(0);
-                    setLocation(getPosX()+this.v,getPosY());
-                //}
-            }
-        }else if(numero ==2){//IZQUIERDA
-            if(this.canMoveTowards(Direction.LEFT)){
-                //if(!isAtEdge()){
-                    this.changeDirectionn(1);
-                    setLocation(getPosX()-this.v,getPosY());
-                //}
-            }
-        }else if(numero ==3){//ARRIBA
-            if(this.canMoveTowards(Direction.UP)){
-               //if(!isAtEdge()){
-                   this.changeDirectionn(2); 
-                   setLocation(getPosX(),getPosY()-this.v);
-                //} 
-            }
-        }else{//ABAJO
-            if(this.canMoveTowards(Direction.DOWN)){
-                //if(!isAtEdge()){
-                    this.changeDirectionn(3);
-                    setLocation(getPosX(),getPosY()+this.v);
-                //}
-            }
+    @Override
+    public void changeDirection() {
+        // Determinar si el momento en que debe de cambiar su dirección ha llegado.
+        // O si está a punto de chocar
+        if (Timer.getTime() >= this.movementStart + movementDelay ||
+            !canMoveTowards(this.direction))
+        {
+            this.movementStart = Timer.getTime();
+            this.direction = Direction.values()[random.nextInt(4)];
         }
     }
-    
-    /* FIXME
-     * Método para saber si el ratero puede instanciarse ahí, es decir, solo puede instanciarse en el pastito, no en los otros lados (q x cierto, tmb podríamos usar esto en los items pa q se instancien solo en lugares donde el player pueda ir)
-     * @Montse
-     * 
-     * public boolean puedoIrAqui(){
-        Tile t = this.getOneIntersectingObject(Tile.class);//Lo q falla en esta funcion es esta linea, no se pq no me deja usar esta funcion
-        if(t.isCollidable() == false){
-            return true;
-        }else{
-            return false;
-        }
-    }*/
 }
 

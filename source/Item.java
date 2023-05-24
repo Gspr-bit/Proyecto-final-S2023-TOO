@@ -3,8 +3,8 @@ import java.util.Random;
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Item extends FixedObject {
-    private Effect effect;
-    private int effectDuration;
+    private final Effect effect;
+    private final int effectDuration;
 
     public Item(Effect effect, int effectDuration, int x, int y) {
         super(x,y);//constructor de objeto fijo

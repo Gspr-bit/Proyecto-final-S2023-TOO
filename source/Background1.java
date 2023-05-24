@@ -15,7 +15,8 @@ public class Background1 extends World {
     private final Random random;
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
-    private final ArrayList<Thief> thiefs;
+    private final ArrayList<Thief> thieves;
+    private final Shadow shadow;
     // Sé que podemos obtener estos valores con getWidth() y getHeight()
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
@@ -40,13 +41,19 @@ public class Background1 extends World {
 
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
-        // Hacer que el jugador Y OBJETOSse muestre sobre el piso
-        thiefs = new ArrayList<>();
+        thieves = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-                thiefs.add(new Thief(random.nextInt(Map.MAP_WIDTH), random.nextInt(Map.MAP_HEIGHT)));    
+                thieves.add(new Thief(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));    
         }
-        
-        //this.addObject(new Shadow(), this.getWidth() / 2, this.getHeight() / 2);
+
+        // Agrega el objeto sombra sin poner sombra por el momento
+        try {
+            this.shadow = new Shadow(0);
+            this.addObject(this.shadow, this.getWidth() / 2, this.getHeight() / 2);
+        } catch (InvalidShadowSizeExceptions e) {
+            // No debería entrar aquí.
+            throw new RuntimeException(e);
+        }
 
         map.generateCountryMap();
         //map.generateCityMap();
@@ -57,13 +64,18 @@ public class Background1 extends World {
         return this.fixedObjects;
     }
     public ArrayList<Thief> getThiefs() {
-        return this.thiefs;
+        return this.thieves;
+    }
+
+    public Shadow getShadow() {
+        return shadow;
     }
 
     public void act() {
         this.map.drawMap(this);
         drawFixedObjects();
         drawThiefs();
+        Timer.update();
     }
 
     /**
@@ -80,7 +92,7 @@ public class Background1 extends World {
             if (map.mapTiles[x][y].isCollidable())
                 continue;
 
-            fixedObjects.add(new Item(Effect.SLOW, 10, x, y));
+            fixedObjects.add(new Item(Effect.SLOW, random.nextInt(8)+2, x, y));
             count --;
         }
     }
@@ -95,10 +107,7 @@ public class Background1 extends World {
             int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
-                
-                //if(object.puedoIrAqui()){ le puse un FIXME a ese metodo, x eso lo comento
-                    addObject(object, objectPosX, objectPosY);    
-                //}
+                addObject(object, objectPosX, objectPosY);    
             }
                 
         });
@@ -109,9 +118,9 @@ public class Background1 extends World {
         removeObjects(objectsInMap);
 
         // Pintar los ladrones en el mapa
-        this.thiefs.forEach(object -> {
-            int objectPosX = object.getPosX() * Map.TILE_SIZE - player.getPosX();
-            int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
+        this.thieves.forEach(object -> {
+            int objectPosX = object.getPosX() - player.getPosX();
+            int objectPosY = object.getPosY() - player.getPosY();
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight())
                 addObject(object, objectPosX+Map.TILE_SIZE/2, objectPosY+Map.TILE_SIZE/2);
