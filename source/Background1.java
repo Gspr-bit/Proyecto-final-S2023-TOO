@@ -92,7 +92,7 @@ public class Background1 extends World {
             if (map.mapTiles[x][y].isCollidable())
                 continue;
 
-            fixedObjects.add(new Item(Effect.SLOW, random.nextInt(8)+2, x, y));
+            fixedObjects.add(new Item(Effect.randomEffect(), random.nextInt(8)+2, x, y));
             count --;
         }
     }
