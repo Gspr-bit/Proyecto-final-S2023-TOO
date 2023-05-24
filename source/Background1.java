@@ -12,6 +12,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Background1 extends World {
     public static Player player;
+    public static Dog dog;
     private final Random random;
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
@@ -35,9 +36,10 @@ public class Background1 extends World {
 
         // Agregar el jugador
         player = new Player();
+        dog = new Dog(this.getWidth() / 2 + 32, this.getHeight() / 2, map.mapTiles);
 
         // Hacer que el jugador y los objetos se muestren sobre el piso
-        setPaintOrder(Shadow.class, Player.class, Thief.class, FixedObject.class, Tile.class);
+        setPaintOrder(Shadow.class, Player.class, Dog.class, Thief.class, FixedObject.class, Tile.class);
 
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
@@ -63,7 +65,7 @@ public class Background1 extends World {
     public ArrayList<FixedObject> getFixedObjects() {
         return this.fixedObjects;
     }
-    public ArrayList<Thief> getThiefs() {
+    public ArrayList<Thief> getThieves() {
         return this.thieves;
     }
 
@@ -74,7 +76,8 @@ public class Background1 extends World {
     public void act() {
         this.map.drawMap(this);
         drawFixedObjects();
-        drawThiefs();
+        drawThieves();
+        drawDog();
         Timer.update();
     }
 
@@ -112,8 +115,17 @@ public class Background1 extends World {
                 
         });
     }
+
+    private void drawDog() {
+        int objectPosX = dog.getPosX() - player.getPosX();
+        int objectPosY = dog.getPosY() - player.getPosY();
+
+        if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
+            addObject(dog, objectPosX, objectPosY);
+        }
+    }
     
-    private void drawThiefs() {
+    private void drawThieves() {
         List<Thief> objectsInMap = this.getObjects(Thief.class);
         removeObjects(objectsInMap);
 
