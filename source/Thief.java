@@ -20,11 +20,19 @@ import java.util.Random;
 public class Thief extends Character
 {
     char tipoLadron;
+    int delayActual;
+    int delayMAX;
+    int iteradorEnVezDeWhile;
+    int iteradorEnVezDeWhileMAX;
     /**
     *Constructir clase Thief
     *@author Montse
     */
     public Thief(int x, int y){
+        this.delayActual=0;
+        this.delayMAX=10;
+        this.iteradorEnVezDeWhile=0;
+        this.iteradorEnVezDeWhileMAX=5;
         
         this.v = 2;
         this.direction = Direction.RIGHT;
@@ -91,9 +99,8 @@ public class Thief extends Character
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
         /*setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 0 + ".png");
-        hacerQuePaseTiempo();
-        setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 1 + ".png");            
-        hacerQuePaseTiempo();*/    
+        setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 1 + ".png");
+        */
         
     }
     
@@ -122,39 +129,69 @@ public class Thief extends Character
      * @author Montse
      */
     public void changeDirectionAndMove(int direccion) {
+        World mundo=getWorld();
+        Background1 mundoActual= (Background1)mundo;
+
+        int objectPosX = this.getPosX() * Map.TILE_SIZE - mundoActual.player.getPosX();
+        int objectPosY = this.getPosY() * Map.TILE_SIZE - mundoActual.player.getPosY();
+
+        int vPorTileSize=v*Map.TILE_SIZE/4;
         // Este método mueve al ratero, y cambia su sprite para que apunte a la dirección correspondiente
+
         if (direccion==0) {
             if (canMoveTowards(Direction.RIGHT)) {
-                //this.posX += v;
-                this.posX=getPosX()+v;
-            }
-            this.direction = Direction.RIGHT;
-            setLocation(getPosX(),getPosY());
-        }
+            //while(canMoveTowards(Direction.RIGHT)){
+                if(this.delayActual==this.delayMAX){
+                    this.direction = Direction.RIGHT;
+                    this.posX += v;  
+                    this.delayActual=0;
+                }else{
+                    this.delayActual++;
+                }
 
+                
+            }
+            setLocation(objectPosX+vPorTileSize,objectPosY);
+        }
         if (direccion==1) {
             if (canMoveTowards(Direction.LEFT)) {
-                //this.posX -= v;
-                this.posX=getPosX()-v;
+            //while (canMoveTowards(Direction.LEFT)) {
+                if(this.delayActual==this.delayMAX){
+                    this.direction = Direction.LEFT;
+                    this.posX -= v;
+                    this.delayActual=0;
+                }else{
+                    this.delayActual++;
+                }
             }
-            this.direction = Direction.LEFT;
-            setLocation(getPosX(),getPosY());
+            setLocation(objectPosX-vPorTileSize,objectPosY);
         }
         if (direccion==2) {
             if (canMoveTowards(Direction.UP)) {
-                //this.posY -= v;
-                this.posY=getPosY()-v;
+            //while(canMoveTowards(Direction.UP)) {
+                if(this.delayActual==this.delayMAX){
+                    this.direction = Direction.UP;
+                    this.posY -= v;
+                    this.delayActual=0;
+                }else{
+                    this.delayActual++;
+                }
             }
-            this.direction = Direction.UP;
-            setLocation(getPosX(),getPosY());
+            setLocation(objectPosX,objectPosY-vPorTileSize);
         }
         if (direccion==3) {
-            if (canMoveTowards(Direction.DOWN)) {
-                //this.posY += v;
-                this.posY=getPosY()-v;
+            //if (canMoveTowards(Direction.DOWN)) {
+            while(canMoveTowards(Direction.DOWN)) {
+                if(this.delayActual==this.delayMAX){
+                    this.direction = Direction.DOWN;
+                    this.posY += v;
+                    this.delayActual=0;
+                }else{
+                    this.delayActual++;
+                }
             }
-            this.direction = Direction.DOWN;
-            setLocation(getPosX(),getPosY());
+            setLocation(objectPosX,objectPosY+vPorTileSize);
+
         }
     }
     public void changeDirection(){
@@ -171,42 +208,45 @@ public class Thief extends Character
     public char getTipoLadron(){
         return this.tipoLadron;
     }
-    
-    /**
-     * No se si el fallo en la funcion mover ratero se deba a q se ejecuta a la misma vez tantas veces  que es muy rapido el movimiento, así q pa probar si es eso, cada q se ejecuta esta funcion debería haver 1 seg de pausa
-     */
-    public void hacerQuePaseTiempo(){
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        final Runnable runnable = new Runnable() {
-            int countdownStarter = 10;
-            public void run() {
-                countdownStarter--;
-                if (countdownStarter < 0) {
-                     scheduler.shutdown();
-                }
-            }
-        };
-        scheduler.scheduleAtFixedRate(runnable, 0, 2000, MILLISECONDS);
-            
-    }
+
     
     /*FIXME
      * Se supone q tal cual debe hacer q el ratero se mueva, pero algo no cuadra jajaj
      * @Montse
      */
     public void moverActor(){    
-            //hacerQuePaseTiempo();
             
             Random random = new Random();
             int numero = random.nextInt(5);
             if(numero == 1){//DERECHA
-                this.changeDirectionAndMove(0);
+                //if(this.iteradorEnVezDeWhile==this.iteradorEnVezDeWhileMAX){
+                    this.changeDirectionAndMove(0);
+                    //this.iteradorEnVezDeWhile=0;
+                //}else{
+                //    this.iteradorEnVezDeWhile++;
+                //}
+                
             }else if(numero ==2){//IZQUIERDA
-                this.changeDirectionAndMove(1);
+                //if(this.iteradorEnVezDeWhile==this.iteradorEnVezDeWhileMAX){
+                    this.changeDirectionAndMove(1);
+                //    this.iteradorEnVezDeWhile=0;
+                //}else{
+                //    this.iteradorEnVezDeWhile++;
+                //}
             }else if(numero ==3){//ARRIBA
-                this.changeDirectionAndMove(2);                        
+                //if(this.iteradorEnVezDeWhile==this.iteradorEnVezDeWhileMAX){
+                    this.changeDirectionAndMove(2);
+                //    this.iteradorEnVezDeWhile=0;
+                //}else{
+                //  this.iteradorEnVezDeWhile++;
+                //}                       
             }else{//ABAJO
-                this.changeDirectionAndMove(3);
+                //if(this.iteradorEnVezDeWhile==this.iteradorEnVezDeWhileMAX){
+                    this.changeDirectionAndMove(3);
+                //    this.iteradorEnVezDeWhile=0;
+                //}else{
+                //    this.iteradorEnVezDeWhile++;
+                //}
             }
     }
     
