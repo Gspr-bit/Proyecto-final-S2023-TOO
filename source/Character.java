@@ -39,6 +39,15 @@ public abstract class Character extends Actor {
         //updateImage();
     }
 
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+
     public abstract void changeDirection();
     
     public abstract void updateImage();
