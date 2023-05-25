@@ -10,7 +10,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Dog extends Character {
     private Tile[][] map;
-    private final PathFinder pathFinder;
+    private PathFinder pathFinder;
 
     public Dog(int x, int y, Tile[][] map) {
         this.v = 2;
@@ -31,8 +31,8 @@ public class Dog extends Character {
 
     @Override
     public void changeDirection() {
-        int i = this.posX / Map.TILE_SIZE;
-        int j = this.posY / Map.TILE_SIZE;
+        int i = this.posX / Map.TILE_SIZE - this.getImage().getWidth() / 2;
+        int j = this.posY / Map.TILE_SIZE - this.getImage().getHeight() / 2;
         try {
             this.direction = pathFinder.findDirection(i, j);
         } catch (PathEmptyException | EndOfPathException | InvalidPointException e) {

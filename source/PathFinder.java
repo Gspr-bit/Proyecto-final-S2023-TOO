@@ -66,7 +66,7 @@ public class PathFinder
             return Direction.UP;
 
         // No debería llegar así
-        return Direction.RIGHT;
+        throw new RuntimeException("Algo extraño sucedió");
     }
 
     /**
@@ -94,7 +94,7 @@ public class PathFinder
         Queue<Point> queue = new LinkedList<>();
 
         if (i < 0 || i >= map.length || j < 0 || j >= map[0].length || map[i][j].isCollidable()) {
-            throw new InvalidPointException("El punto (" + i + ", " + j + ") no es un punto válido, map[0].length = " + map[0].length);
+            throw new InvalidPointException("El punto (" + i + ", " + j + ") no es un punto válido. path = " + path);
         }
 
         int [] dis = {0, 0, 1, -1};
