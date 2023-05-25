@@ -57,8 +57,8 @@ public class Background1 extends World {
             throw new RuntimeException(e);
         }
 
-        //map.generateCountryMap();
-        map.generateCityMap();
+        map.generateCountryMap();
+        //map.generateCityMap();
         generateItems();
     }
     

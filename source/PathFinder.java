@@ -94,7 +94,7 @@ public class PathFinder
         Queue<Point> queue = new LinkedList<>();
 
         if (i < 0 || i >= map.length || j < 0 || j >= map[0].length || map[i][j].isCollidable()) {
-            throw new InvalidPointException("El punto (" + i + ", " + j + ") no es un punto válido");
+            throw new InvalidPointException("El punto (" + i + ", " + j + ") no es un punto válido, map[0].length = " + map[0].length);
         }
 
         int [] dis = {0, 0, 1, -1};
@@ -123,8 +123,8 @@ public class PathFinder
                         visited[ni][nj] = visited[pi][pj] + 1;
                         queue.add(new Point(ni, nj));
 
-                        if (nj > rightMostPoint.j ||
-                                (nj == rightMostPoint.j &&
+                        if (ni > rightMostPoint.i ||
+                                (ni == rightMostPoint.i &&
                                         visited[ni][nj] < visited[rightMostPoint.i][rightMostPoint.j]))
                             rightMostPoint = new Point(ni, nj);
                     }
