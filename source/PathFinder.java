@@ -76,7 +76,7 @@ public class PathFinder
      * @param i
      * @param j
      */
-    public void findPath(int i, int j) {
+    public Direction findPath(int i, int j) {
         for (int [] row : visited)
             Arrays.fill(row, INF);
 
@@ -85,8 +85,11 @@ public class PathFinder
         try {
             Point targetPoint = bfs(i, j);
             retrievePath(targetPoint);
-        } catch (InvalidPointException e) {
-            throw new RuntimeException(e);
+            path.add(0, new Point(i, j));
+
+            return this.findDirection(i, j);
+        } catch (InvalidPointException | PathEmptyException | EndOfPathException e) {
+            throw new RuntimeException(e + " (i, j) = " + i + ", " + j + " path = " + path);
         }
     }
 
@@ -132,8 +135,32 @@ public class PathFinder
             }
         }
 
+        printDistances();
+
         return rightMostPoint;
     }
+
+    /**
+     * REMOVE ME
+     */
+    private void printDistances() {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j].isCollidable()) {
+                    System.out.print("####");
+                } else if (visited[i][j] == (int) 10e6) {
+                    System.out.print("    ");
+                } else {
+                    if (visited[i][j] < 10) {
+                        System.out.print(" ");
+                    }
+                    System.out.printf(" %d ", visited[i][j]);
+                }
+            }
+            System.out.println();
+        }
+    }
+
 
     /**
      * Construye el camino a partir de la matriz de

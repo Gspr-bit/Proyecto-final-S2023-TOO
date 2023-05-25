@@ -32,11 +32,10 @@ public class Background1 extends World {
 
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
-        this.map = new Map(new Date().getTime());
+        this.map = new Map(1000);
 
         // Agregar el jugador
         player = new Player();
-        dog = new Dog(this.getWidth() / 2 + 32, this.getHeight() / 2, map.mapTiles);
 
         // Hacer que el jugador j los objetos se muestren sobre el piso
         setPaintOrder(Shadow.class, Player.class, Dog.class, Thief.class, FixedObject.class, Tile.class);
@@ -45,7 +44,7 @@ public class Background1 extends World {
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
         thieves = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-                thieves.add(new Thief(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));    
+                thieves.add(new Thief(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));
         }
 
         // Agrega el objeto sombra sin poner sombra por el momento
@@ -57,9 +56,11 @@ public class Background1 extends World {
             throw new RuntimeException(e);
         }
 
-        //map.generateCountryMap();
-        map.generateCityMap();
+        map.generateCountryMap();
+        //map.generateCityMap();
         generateItems();
+
+        dog = new Dog(this.getWidth() / 2 + 32, this.getHeight() / 2, map.mapTiles);
     }
     
     public ArrayList<FixedObject> getFixedObjects() {

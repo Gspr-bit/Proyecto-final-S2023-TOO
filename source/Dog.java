@@ -31,12 +31,12 @@ public class Dog extends Character {
 
     @Override
     public void changeDirection() {
-        int i = this.posX / Map.TILE_SIZE - this.getImage().getWidth() / 2;
-        int j = this.posY / Map.TILE_SIZE - this.getImage().getHeight() / 2;
+        int j = (this.posY / Map.TILE_SIZE);
+        int i = (this.posX / Map.TILE_SIZE);
         try {
             this.direction = pathFinder.findDirection(i, j);
-        } catch (PathEmptyException | EndOfPathException | InvalidPointException e) {
-            pathFinder.findPath(i, j);
+        } catch (PathEmptyException | InvalidPointException | EndOfPathException e) {
+            this.direction = pathFinder.findPath(i, j);
         }
     }
 
