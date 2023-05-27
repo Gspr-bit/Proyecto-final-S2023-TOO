@@ -13,6 +13,8 @@ public class Dog extends Character {
     private int movementStartTime;
     private int movementEndTime;
 
+    private static final int distanceThreshold = 30;
+
     private boolean hide;
 
     public Dog(int x, int y, Tile[][] map) {
@@ -63,8 +65,9 @@ public class Dog extends Character {
             return;
         }
 
-        if (time == this.movementStartTime) {
+        if (time == this.movementStartTime || distanceToPlayer() < distanceThreshold) {
             this.movementEndTime = time + movementDuration;
+            System.out.printf("Distance to player = %d\n", distanceToPlayer());
         } else if (time == this.movementEndTime) {
             this.movementStartTime = time + idleDuration;
         }
@@ -114,6 +117,11 @@ public class Dog extends Character {
                 return true;
 
         return false;
+    }
+
+    private int distanceToPlayer() {
+        int pixelsDistance = Math.abs(this.posX - Background1.player.getPosX()) + Math.abs(this.posY - Background1.player.getPosY());
+        return pixelsDistance / Map.TILE_SIZE; // Tiles distance
     }
 
     @Override
