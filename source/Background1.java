@@ -119,6 +119,10 @@ public class Background1 extends World {
     private void drawDog() {
         removeObject(dog);
 
+        // No dibujar al perro si está oculto
+        //if (dog.isHidden())
+        //    return;
+
         int objectPosX = dog.getPosX() - player.getPosX();
         int objectPosY = dog.getPosY() - player.getPosY();
 

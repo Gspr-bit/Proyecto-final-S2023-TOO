@@ -1,8 +1,3 @@
-import java.util.HashMap;
-import java.util.spi.AbstractResourceBundleProvider;
-
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
 /**
  * Write a description of class Dog here.
  *
@@ -10,20 +5,29 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Dog extends Character {
+    private final Tile[][] map;
+    private final PathFinder pathFinder;
+
     private static final int movementDuration = 3;
     private static final int idleDuration = 3;
-    private final PathFinder pathFinder;
-    private Tile[][] map;
     private int movementStartTime;
     private int movementEndTime;
 
+    private boolean hide;
+
     public Dog(int x, int y, Tile[][] map) {
+        this.map = map;
         this.v = 1;
         this.posX = x;
         this.posY = y;
-        this.pathFinder = new PathFinder(map);
+        this.pathFinder = new PathFinder(this.map);
         this.direction = pathFinder.findPath((this.posX / Map.TILE_SIZE), (this.posY / Map.TILE_SIZE));
         this.movementStartTime = 0;
+        this.hide = false;
+    }
+
+    public boolean isHidden() {
+        return hide;
     }
 
     /**
@@ -42,8 +46,8 @@ public class Dog extends Character {
         if (this.posX % Map.TILE_SIZE != 0 || this.posY % Map.TILE_SIZE != 0)
             return;
 
-        int j = (this.posY / Map.TILE_SIZE);
         int i = (this.posX / Map.TILE_SIZE);
+        int j = (this.posY / Map.TILE_SIZE);
         try {
             this.direction = pathFinder.findDirection(i, j);
         } catch (PathEmptyException | InvalidPointException | EndOfPathException e) {
@@ -55,6 +59,7 @@ public class Dog extends Character {
         int time = Timer.getTime();
         if (time > this.movementEndTime && time < this.movementStartTime) {
             this.direction = Direction.NONE;
+            this.hide = canHide();
             return;
         }
 
@@ -63,6 +68,8 @@ public class Dog extends Character {
         } else if (time == this.movementEndTime) {
             this.movementStartTime = time + idleDuration;
         }
+
+        this.hide = false;
     }
 
     /**
@@ -93,6 +100,20 @@ public class Dog extends Character {
                 break;
             }
         }
+    }
+
+    private boolean canHide() {
+        int i = (this.posX / Map.TILE_SIZE);
+        int j = (this.posY / Map.TILE_SIZE);
+
+        int [] dis = {0, 0, 1, -1};
+        int [] djs = {1, -1, 0, 0};
+
+        for (int k = 0; k < 4; k++)
+            if (map[i+dis[k]][j+djs[k]].isCollidable())
+                return true;
+
+        return false;
     }
 
     @Override
