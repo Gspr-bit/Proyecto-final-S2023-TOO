@@ -13,7 +13,7 @@ public class Dog extends Character {
     private int movementStartTime;
     private int movementEndTime;
 
-    private static final int distanceThreshold = 30;
+    private static final int distanceThreshold = 40;
 
     private boolean hide;
 
@@ -120,8 +120,7 @@ public class Dog extends Character {
     }
 
     private int distanceToPlayer() {
-        int pixelsDistance = Math.abs(this.posX - Background1.player.getPosX()) + Math.abs(this.posY - Background1.player.getPosY());
-        return pixelsDistance / Map.TILE_SIZE; // Tiles distance
+        return Math.abs(this.posX - Background1.player.getPosX()) / Map.TILE_SIZE + Math.abs(this.posY - Background1.player.getPosY()) / Map.TILE_SIZE;
     }
 
     @Override
