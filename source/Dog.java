@@ -37,26 +37,10 @@ public class Dog extends Character {
 
     @Override
     public void changeDirection() {
-        // Cambia su dirección solo cuando es momento
-        int time = Timer.getTime();
-        if (time > this.movementEndTime && time < this.movementStartTime) {
-            this.direction = Direction.NONE;
-            System.out.printf("Not moving t = %d, ms = %d, me = %d\n", time, movementStartTime, movementEndTime);
-            return;
-        }
-
-        if (time == this.movementStartTime) {
-            this.movementEndTime = time + movementDuration;
-            System.out.printf("Updated me t = %d, ms = %d, me = %d\n", time, movementStartTime, movementEndTime);
-        } else if (time == this.movementEndTime) {
-            this.movementStartTime = time + idleDuration;
-            System.out.printf("Updated ms t = %d, ms = %d, me = %d\n", time, movementStartTime, movementEndTime);
-        }
-
         // Solo cambia su dirección cuando está justo en medio de un Tile
         // De otra manera puede suceder un desfase extraño
-        //if (this.posX % Map.TILE_SIZE != 0 || this.posY % Map.TILE_SIZE != 0)
-        //    return;
+        if (this.posX % Map.TILE_SIZE != 0 || this.posY % Map.TILE_SIZE != 0)
+            return;
 
         int j = (this.posY / Map.TILE_SIZE);
         int i = (this.posX / Map.TILE_SIZE);
@@ -65,6 +49,19 @@ public class Dog extends Character {
         } catch (PathEmptyException | InvalidPointException | EndOfPathException e) {
             this.direction = pathFinder.findPath(i, j);
             System.err.println("Advertencia: El camino ha sido recalculado, esto puede causar problemas de rendimiento");
+        }
+
+        // Cambia su dirección solo cuando es momento
+        int time = Timer.getTime();
+        if (time > this.movementEndTime && time < this.movementStartTime) {
+            this.direction = Direction.NONE;
+            return;
+        }
+
+        if (time == this.movementStartTime) {
+            this.movementEndTime = time + movementDuration;
+        } else if (time == this.movementEndTime) {
+            this.movementStartTime = time + idleDuration;
         }
     }
 
