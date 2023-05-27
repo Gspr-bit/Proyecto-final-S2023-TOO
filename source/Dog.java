@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.spi.AbstractResourceBundleProvider;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
@@ -13,11 +14,11 @@ public class Dog extends Character {
     private PathFinder pathFinder;
 
     public Dog(int x, int y, Tile[][] map) {
-        this.v = 2;
-        this.direction = Direction.RIGHT;
+        this.v = 1;
         this.posX = x;
         this.posY = y;
         this.pathFinder = new PathFinder(map);
+        this.direction = pathFinder.findPath((this.posX / Map.TILE_SIZE), (this.posY / Map.TILE_SIZE));
     }
 
     /**
@@ -31,12 +32,19 @@ public class Dog extends Character {
 
     @Override
     public void changeDirection() {
+        // Solo cambia su dirección cuando está justo en medio de un Tile
+        // De otra manera puede suceder un desfase extraño
+
+        if (this.posX % Map.TILE_SIZE != 0 || this.posY % Map.TILE_SIZE != 0)
+            return;
+
         int j = (this.posY / Map.TILE_SIZE);
         int i = (this.posX / Map.TILE_SIZE);
         try {
             this.direction = pathFinder.findDirection(i, j);
         } catch (PathEmptyException | InvalidPointException | EndOfPathException e) {
             this.direction = pathFinder.findPath(i, j);
+            System.err.println("Advertencia: El camino ha sido recalculado, esto puede causar problemas de rendimiento");
         }
     }
 

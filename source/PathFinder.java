@@ -10,8 +10,6 @@ import java.util.Queue;
  */
 public class PathFinder  
 {
-    // Distancia máxima del camino
-    private static final int MAX_DISTANCE = 15;
     private static final int INF = (int) 10e9;
     private ArrayList<Point> path;
     private Tile [][] map;
@@ -113,9 +111,6 @@ public class PathFinder
             int pi = p.i;
             int pj = p.j;
 
-            if (visited[pi][pj] >= MAX_DISTANCE)
-                break;
-
             for (int k = 0; k < 4; k++) {
                 int di = dis[k];
                 int dj = djs[k];
@@ -135,32 +130,8 @@ public class PathFinder
             }
         }
 
-        printDistances();
-
         return rightMostPoint;
     }
-
-    /**
-     * REMOVE ME
-     */
-    private void printDistances() {
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j].isCollidable()) {
-                    System.out.print("####");
-                } else if (visited[i][j] == (int) 10e6) {
-                    System.out.print("    ");
-                } else {
-                    if (visited[i][j] < 10) {
-                        System.out.print(" ");
-                    }
-                    System.out.printf(" %d ", visited[i][j]);
-                }
-            }
-            System.out.println();
-        }
-    }
-
 
     /**
      * Construye el camino a partir de la matriz de
