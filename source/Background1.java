@@ -120,8 +120,11 @@ public class Background1 extends World {
         removeObject(dog);
 
         // No dibujar al perro si está oculto
-        //if (dog.isHidden())
-        //    return;
+        if (dog.isHidden()) {
+            dog.setImage("Dogs/dog-invisible.png");
+        } else {
+            dog.setImage("Dogs/dog-right-0.png");
+        }
 
         int objectPosX = dog.getPosX() - player.getPosX();
         int objectPosY = dog.getPosY() - player.getPosY();
