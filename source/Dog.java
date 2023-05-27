@@ -10,8 +10,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Dog extends Character {
+    private static final int movementDuration = 3;
+    private static final int idleDuration = 3;
+    private final PathFinder pathFinder;
     private Tile[][] map;
-    private PathFinder pathFinder;
+    private int movementStartTime;
+    private int movementEndTime;
 
     public Dog(int x, int y, Tile[][] map) {
         this.v = 1;
@@ -19,6 +23,7 @@ public class Dog extends Character {
         this.posY = y;
         this.pathFinder = new PathFinder(map);
         this.direction = pathFinder.findPath((this.posX / Map.TILE_SIZE), (this.posY / Map.TILE_SIZE));
+        this.movementStartTime = 0;
     }
 
     /**
@@ -32,11 +37,26 @@ public class Dog extends Character {
 
     @Override
     public void changeDirection() {
+        // Cambia su dirección solo cuando es momento
+        int time = Timer.getTime();
+        if (time > this.movementEndTime && time < this.movementStartTime) {
+            this.direction = Direction.NONE;
+            System.out.printf("Not moving t = %d, ms = %d, me = %d\n", time, movementStartTime, movementEndTime);
+            return;
+        }
+
+        if (time == this.movementStartTime) {
+            this.movementEndTime = time + movementDuration;
+            System.out.printf("Updated me t = %d, ms = %d, me = %d\n", time, movementStartTime, movementEndTime);
+        } else if (time == this.movementEndTime) {
+            this.movementStartTime = time + idleDuration;
+            System.out.printf("Updated ms t = %d, ms = %d, me = %d\n", time, movementStartTime, movementEndTime);
+        }
+
         // Solo cambia su dirección cuando está justo en medio de un Tile
         // De otra manera puede suceder un desfase extraño
-
-        if (this.posX % Map.TILE_SIZE != 0 || this.posY % Map.TILE_SIZE != 0)
-            return;
+        //if (this.posX % Map.TILE_SIZE != 0 || this.posY % Map.TILE_SIZE != 0)
+        //    return;
 
         int j = (this.posY / Map.TILE_SIZE);
         int i = (this.posX / Map.TILE_SIZE);
@@ -69,6 +89,10 @@ public class Dog extends Character {
             }
             case RIGHT: {
                 this.posX += v;
+                break;
+            }
+            case NONE: {
+                // No hacer nada
                 break;
             }
         }
