@@ -47,9 +47,30 @@ public abstract class Character extends Actor {
         return posY;
     }
 
-
     public abstract void changeDirection();
     
     public abstract void updateImage();
-    
+
+    /**
+     * Método para saber si el jugador puede moverse hacia la posición dada.
+     * @author Mauricio, Gaspar, Montse
+     * @param direction Dirección hacia donde se quiere mover el jugador.
+     * @return true si el jugador se puede mover hacia allá
+     */
+    protected boolean canMoveTowards(Direction direction) {
+        int dx = this.getImage().getWidth() / 2 + v;
+        int dy = this.getImage().getHeight() / 2 + v;
+
+        // UP, DOWN, LEFT, RIGHT
+        int[] dxs = {0, 0, -dx, dx};
+        int[] dys = {-dy, dy, 0, 0};
+
+        Tile nextTile = (Tile) this.getOneObjectAtOffset(dxs[direction.ordinal()],
+                dys[direction.ordinal()], Tile.class);
+
+        Character nextCharacter = (Character) this.getOneObjectAtOffset(dxs[direction.ordinal()],
+                dys[direction.ordinal()], Character.class);
+
+        return nextTile != null && nextCharacter == null && !nextTile.isCollidable();
+    }
 }

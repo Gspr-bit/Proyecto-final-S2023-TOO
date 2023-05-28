@@ -31,7 +31,7 @@ public class Player extends Character {
     public Player() {
         this.effect = Effect.NONE;
         this.effectDuration = this.effectStart = this.effectEnd = 0;
-        this.visibility = 600;
+        this.visibility = 0;
         this.v = this.normalV = 2;
         this.direction = Direction.RIGHT;
         this.posX = this.posY = 0;
@@ -77,16 +77,8 @@ public class Player extends Character {
         this.visibility = visibility;
     }
 
-    public int getPosX() {
-        return posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
     /**
-     * Método para cambiar la dirección y posición del jugador.
+     * Método para cambiar la dirección j posición del jugador.
      * @author Mauricio, Montse
      */
     public void changeDirection() {
@@ -179,51 +171,6 @@ public class Player extends Character {
     public void act(){
         changeDirection();
         updateImage();
-    }
-    
-    /**
-     * Método para saber si el jugador puede moverse hacia la posición dada.
-     * @author Mauricio, Gaspar
-     * @param direction Dirección hacia donde se quiere mover el jugador.
-     * @return true si el jugador se puede mover hacia allá
-     */
-    private boolean canMoveTowards(Direction direction) {
-        boolean sePuedeMover=false;//lo agrego esto pa checar q no choque con los tiefs
-        
-        int dx = this.getImage().getWidth() / 2 + v;
-        int dy = this.getImage().getHeight() / 2 + v;
-
-        // UP, DOWN, LEFT, RIGHT
-        int[] dxs = {0, 0, -dx, dx};
-        int[] dys = {-dy, dy, 0, 0};
-
-        Tile nextTile = (Tile) this.getOneObjectAtOffset(dxs[direction.ordinal()],
-                dys[direction.ordinal()], Tile.class);
-                        
-        //return nextTile != null && !nextTile.isCollidable();
-        sePuedeMover=(nextTile != null && !nextTile.isCollidable());
-        
-        //Checar q no choque con los thiefs
-        Thief p=null;
-        int x=0,y=0;
-        if(direction ==Direction.UP){
-            y=-4;
-        }
-        if(direction ==Direction.DOWN){
-            y=4;
-        }
-        if(direction ==Direction.RIGHT){
-            x=5;
-        }
-        if(direction ==Direction.LEFT){
-            x=-5;
-        }
-        p=(Thief)this.getOneObjectAtOffset(x,y,Thief.class);
-        if(p!=null){
-            sePuedeMover=false;
-        }
-        
-        return sePuedeMover;
     }
 
     /**
