@@ -6,10 +6,9 @@ import java.util.function.Function;
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class character here.
+ * Clase padre abstracta para todos los personajes móviles del juego
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Gaspar
  */
 public abstract class Character extends Actor {
     // Velocidad del personaje
@@ -23,20 +22,34 @@ public abstract class Character extends Actor {
 
     // Update rate of the image FPS/UPDATE_RATE
     protected static final int UPDATE_RATE = 10;  // 6 images per second
+    
+    // Posición del character en el mapa
+    protected int posX;
+    protected int posY;
+    
+    //TIEMPO Q LE VAMOS A DAR AL NIVEL
+    protected int tiempoTotal=3600;//esta en minitos
 
     /**
      * Act - do whatever the character wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() {
-        changeDirection();
-        collide();
-        updateImage();
+        //changeDirection();
+        //updateImage();
     }
 
-    public abstract void changeDirection();
+    public int getPosX() {
+        return posX;
+    }
 
-    public abstract void collide();
+    public int getPosY() {
+        return posY;
+    }
+
+
+    public abstract void changeDirection();
     
     public abstract void updateImage();
+    
 }

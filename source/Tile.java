@@ -3,25 +3,31 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Tile here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Gaspar
  */
 public class Tile extends Actor {
-    TileType type;
-
-    /**
-     * Act - do whatever the Tile wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    private final TileType type;
+    private final boolean collidable;
 
     public Tile(GreenfootImage image, TileType type) {
         setImage(image);
         this.type = type;
+        this.collidable =
+                this.type == TileType.BUSH ||
+                        this.type == TileType.WATER ||
+                        this.type == TileType.TREE ||
+                        this.type == TileType.ROCK ||
+                        this.type == TileType.WALL ||
+                        this.type == TileType.ROOF;
     }
 
     public TileType getType() {
         return type;
     }
 
-    public enum TileType {BUSH, DIRT, GRASS, MUD, ROCK, TREE, WATER}
+    public boolean isCollidable() {
+        return collidable;
+    }
+
+    public enum TileType {BUSH, DIRT, GRASS, MUD, ROCK, TREE, WATER, PAVEMENT, WALL, ROOF}
 }

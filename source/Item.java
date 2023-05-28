@@ -1,12 +1,14 @@
 import java.util.Random;
 
-import greenfoot.Actor;
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-public class Item extends Actor {
-    private Effect effect;
-    private int effectDuration;
+public class Item extends FixedObject {
+    private final Effect effect;
+    private final int effectDuration;
 
-    public Item(Effect effect, int effectDuration) {
+    public Item(Effect effect, int effectDuration, int x, int y) {
+        super(x,y);//constructor de objeto fijo
+        
         this.effect = effect;
         this.effectDuration = effectDuration;
         
@@ -15,6 +17,7 @@ public class Item extends Actor {
         Random random = new Random();
         String chosenColor = colors[random.nextInt(colors.length)];
         setImage("Items/potion-" + chosenColor + ".png");
+        
     }
 
     public Effect getEffect() {
