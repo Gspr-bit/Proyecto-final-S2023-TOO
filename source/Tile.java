@@ -14,11 +14,11 @@ public class Tile extends Actor {
         this.type = type;
         this.collidable =
                 this.type == TileType.BUSH ||
-                this.type == TileType.DIRT ||
-                this.type == TileType.MUD ||
-                this.type == TileType.WATER ||
-                this.type == TileType.TREE ||
-                this.type == TileType.ROCK;
+                        this.type == TileType.WATER ||
+                        this.type == TileType.TREE ||
+                        this.type == TileType.ROCK ||
+                        this.type == TileType.WALL ||
+                        this.type == TileType.ROOF;
     }
 
     public TileType getType() {
@@ -29,5 +29,5 @@ public class Tile extends Actor {
         return collidable;
     }
 
-    public enum TileType {BUSH, DIRT, GRASS, MUD, ROCK, TREE, WATER}
+    public enum TileType {BUSH, DIRT, GRASS, MUD, ROCK, TREE, WATER, PAVEMENT, WALL, ROOF}
 }
