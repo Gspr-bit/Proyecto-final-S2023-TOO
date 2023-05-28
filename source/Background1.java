@@ -40,7 +40,7 @@ public class Background1 extends World {
         player = new Player();
 
         // Hacer que el jugador y los objetos se muestren sobre el piso
-        setPaintOrder(Shadow.class, Car.class, Player.class, Dog.class Thief.class, FixedObject.class, Tile.class);
+        setPaintOrder(Shadow.class, Car.class, Player.class, Dog.class, Thief.class, FixedObject.class, Tile.class);
 
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
@@ -96,7 +96,6 @@ public class Background1 extends World {
         drawFixedObjects();
         drawThieves();
         drawDog();
-        drawThiefs();
         drawCars();
         Timer.update();
     }
