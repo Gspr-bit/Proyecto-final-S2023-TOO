@@ -11,6 +11,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Background1 extends World {
+    int i;
     public static Player player;
     private final Random random;
     private final Map map;
@@ -51,8 +52,16 @@ public class Background1 extends World {
         
         //Generar carros
         this.cars=new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-                cars.add(new Car(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));    
+        //this.shadowsCars=new ArrayList<>();
+        for (int i = 0; i < 25; i++) {
+                int x=random.nextInt(Map.MAP_WIDTH*16);
+                int y=random.nextInt(Map.MAP_HEIGHT*16);
+                Car carro = new Car(x,y);
+                carro.xOriginal=x;
+                cars.add(carro);    
+                
+                //shadow car
+                //shadowsCars.add(new ShadowCar(x,y));
         }
 
         // Agrega el objeto sombra sin poner sombra por el momento
@@ -125,19 +134,18 @@ public class Background1 extends World {
     private void drawCars() {
         List<Car> objectsInMap = this.getObjects(Car.class);
         removeObjects(objectsInMap);
-
+        
         // Pintar los carros en el mapa
         this.cars.forEach(object -> {
             int objectPosX = object.getPosX() - player.getPosX();
             int objectPosY = object.getPosY() - player.getPosY();
-            
-            int yy=object.getPosY();
-            
-            //if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight() && object.puedoIrAqui(yy)){
-            if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
+                 
+       if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
                 addObject(object, objectPosX+Map.TILE_SIZE/2, objectPosY+Map.TILE_SIZE/2);
+                if(!object.puedoIniciarAqui()){
+                    removeObject(object);
+                }
             }
-                
         });
     }
     
