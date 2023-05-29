@@ -11,14 +11,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Background1 extends World {
+    int i;
     public static Player player;
+    public static Dog dog;
     private final Random random;
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
     private final ArrayList<Thief> thieves;
+    private final ArrayList<Car> cars;
     private final Shadow shadow;
-   // private final TimerImage Ti;
-    // Sé que podemos obtener estos valores con getWidth() y getHeight()
+    // Sé que podemos obtener estos valores con getWidth() j getHeight()
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
     public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
@@ -32,19 +34,35 @@ public class Background1 extends World {
         //this.Ti=new TimerImage ();
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
-        this.map = new Map(new Date().getTime());
+        this.map = new Map(1000);
 
         // Agregar el jugador
         player = new Player();
 
         // Hacer que el jugador y los objetos se muestren sobre el piso
-        setPaintOrder(Shadow.class, Player.class, Thief.class, FixedObject.class, Tile.class);
+        setPaintOrder(Shadow.class, Car.class, Player.class, Dog.class, Thief.class, FixedObject.class, Tile.class);
 
         player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
-        thieves = new ArrayList<>();
+        
+        //Generar rateros
+        this.thieves = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-                thieves.add(new Thief(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));    
+                thieves.add(new Thief(random.nextInt(Map.MAP_WIDTH*16), random.nextInt(Map.MAP_HEIGHT*16)));
+        }
+        
+        //Generar carros
+        this.cars=new ArrayList<>();
+        //this.shadowsCars=new ArrayList<>();
+        for (int i = 0; i < 25; i++) {
+                int x=random.nextInt(Map.MAP_WIDTH*16);
+                int y=random.nextInt(Map.MAP_HEIGHT*16);
+                Car carro = new Car(x,y);
+                carro.xOriginal=x;
+                cars.add(carro);    
+                
+                //shadow car
+                //shadowsCars.add(new ShadowCar(x,y));
         }
 
         // Agrega el objeto sombra sin poner sombra por el momento
@@ -59,15 +77,16 @@ public class Background1 extends World {
         map.generateCountryMap();
         //map.generateCityMap();
         generateItems();
+
+        dog = new Dog(this.getWidth() / 2 + 32, this.getHeight() / 2, map.mapTiles);
     }
     
     public ArrayList<FixedObject> getFixedObjects() {
         return this.fixedObjects;
     }
-    public ArrayList<Thief> getThiefs() {
+    public ArrayList<Thief> getThieves() {
         return this.thieves;
     }
-
     public Shadow getShadow() {
         return shadow;
     }
@@ -76,7 +95,9 @@ public class Background1 extends World {
         
         this.map.drawMap(this);
         drawFixedObjects();
-        drawThiefs();
+        drawThieves();
+        drawDog();
+        drawCars();
         Timer.update();
         String s = player.getEffect() + " "  + (player.getEffectEnd()-Timer.getTime());
         if(player.getEffectEnd()-Timer.getTime()==0){
@@ -117,15 +138,51 @@ public class Background1 extends World {
         this.fixedObjects.forEach(object -> {
             int objectPosX = object.getPosX() * Map.TILE_SIZE - player.getPosX();
             int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
+            int unidad;
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
-                addObject(object, objectPosX, objectPosY);    
+                addObject(object, objectPosX+object.getImage().getWidth()/2, objectPosY+object.getImage().getHeight()/2);
             }
-                
+        });
+    }
+
+    private void drawDog() {
+        removeObject(dog);
+
+        // No dibujar al perro si está oculto
+        if (dog.isHidden()) {
+            dog.setImage("Dogs/dog-invisible.png");
+        } else {
+            dog.setImage("Dogs/dog-right-0.png");
+        }
+
+        int objectPosX = dog.getPosX() - player.getPosX();
+        int objectPosY = dog.getPosY() - player.getPosY();
+
+        if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
+            addObject(dog, objectPosX+dog.getImage().getWidth()/2, objectPosY+dog.getImage().getHeight()/2);
+        }
+    }
+
+        private void drawCars() {
+        List<Car> objectsInMap = this.getObjects(Car.class);
+        removeObjects(objectsInMap);
+        
+        // Pintar los carros en el mapa
+        this.cars.forEach(object -> {
+            int objectPosX = object.getPosX() - player.getPosX();
+            int objectPosY = object.getPosY() - player.getPosY();
+                 
+       if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()){
+                addObject(object, objectPosX+Map.TILE_SIZE/2, objectPosY+Map.TILE_SIZE/2);
+                if(!object.puedoIniciarAqui()){
+                    removeObject(object);
+                }
+            }
         });
     }
     
-    private void drawThiefs() {
+    private void drawThieves() {
         List<Thief> objectsInMap = this.getObjects(Thief.class);
         removeObjects(objectsInMap);
 
@@ -135,7 +192,7 @@ public class Background1 extends World {
             int objectPosY = object.getPosY() - player.getPosY();
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight())
-                addObject(object, objectPosX+Map.TILE_SIZE/2, objectPosY+Map.TILE_SIZE/2);
+                addObject(object, objectPosX+object.getImage().getWidth()/2, objectPosY+object.getImage().getHeight()/2);
         });
     }
 }

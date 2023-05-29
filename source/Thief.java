@@ -97,26 +97,6 @@ public class Thief extends Character
         setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 1 + ".png");
         */
     }
-    
-    /**
-     * Método para saber si el jugador puede moverse hacia la posición dada.
-     * @author Mauricio, Gaspar
-     * @param direction Dirección hacia donde se quiere mover el jugador.
-     * @return true si el jugador se puede mover hacia allá
-     */
-    private boolean canMoveTowards(Direction direction) {
-        int dx = this.getImage().getWidth() / 2 + v;
-        int dy = this.getImage().getHeight() / 2 + v;
-
-        // UP, DOWN, LEFT, RIGHT
-        int[] dxs = {0, 0, -dx, dx};
-        int[] dys = {-dy, dy, 0, 0};
-
-        Tile nextTile = (Tile) this.getOneObjectAtOffset(dxs[direction.ordinal()],
-                dys[direction.ordinal()], Tile.class);
-
-        return nextTile != null && !nextTile.isCollidable();
-    }
 
     /**
      * Función que mueve al ladrón
@@ -161,4 +141,3 @@ public class Thief extends Character
         }
     }
 }
-

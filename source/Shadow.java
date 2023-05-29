@@ -14,7 +14,7 @@ public class Shadow extends Actor
 
     public void setSize(int size) throws InvalidShadowSizeExceptions {
         if (size < 0 || size > 14 || size % 2 != 0) {
-            throw new InvalidShadowSizeExceptions("El tamaño de la sombra sólo puede ser un número par entre 0 y 14");
+            throw new InvalidShadowSizeExceptions("El tamaño de la sombra sólo puede ser un número par entre 0 j 14");
         }
         setImage("Shadows/shadow-" + size + ".png");
     }
