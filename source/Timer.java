@@ -1,14 +1,16 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
 /**
  * Write a description of class Timer here.
  * 
- * @author Gaspar
+ * @author (your name) 
+ * @version (a version number or a date)
  */
-public class Timer  
+public class Timer extends Actor 
 {
     private static final int FPS = 60;
 
     private static int time = 0;
-
     /**
      * Regresa el tiempo en segundos
      * transcurrido desde que se inició el juego
@@ -26,5 +28,6 @@ public class Timer
      */
     public static void update() {
         time ++;
+        
     }
 }

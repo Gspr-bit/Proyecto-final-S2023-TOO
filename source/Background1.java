@@ -24,14 +24,14 @@ public class Background1 extends World {
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
     public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
-
+    //public static Timer timer;
     /**
      * Constructor for objects of class Background1.
      */
     public Background1() throws WrongGenerationPercentagesException {
         // Create a new world with 640x480 cells with a cell size of 1x1 pixels.
         super(WORLD_WIDTH, WORLD_HEIGHT, 1);
-
+        //this.Ti=new TimerImage ();
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
         this.map = new Map(1000);
@@ -92,12 +92,23 @@ public class Background1 extends World {
     }
 
     public void act() {
+        
         this.map.drawMap(this);
         drawFixedObjects();
         drawThieves();
         drawDog();
         drawCars();
         Timer.update();
+        String s = player.getEffect() + " "  + (player.getEffectEnd()-Timer.getTime());
+        if(player.getEffectEnd()-Timer.getTime()==0){
+               s=""; 
+            }
+        if(player.getEffect() != Effect.NONE){
+            this.showText(s,60,30);
+            
+        }
+        
+      // this.Ti.act();
     }
 
     /**
@@ -114,7 +125,7 @@ public class Background1 extends World {
             if (map.mapTiles[x][y].isCollidable())
                 continue;
 
-            fixedObjects.add(new Item(Effect.SLOW, random.nextInt(8)+2, x, y));
+            fixedObjects.add(new Item(Effect.randomEffect(), random.nextInt(8)+2, x, y));
             count --;
         }
     }

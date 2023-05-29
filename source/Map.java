@@ -58,12 +58,19 @@ public class Map
                 } else if (y % (streetWidth + blockHeight) > streetWidth + blockHeight - 2) {
                     imageType = Tile.TileType.WALL.ordinal();
                 } else {
-                    imageType = Tile.TileType.ROOF.ordinal();
+                    imageType = Tile.TileType.WALL.ordinal();
                 }
 
                 int imageIndex = random.nextInt(tileAmounts[imageType]);
-
-                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
+               int i = x % (streetWidth+blockWidth) -streetWidth+1;
+               int j = y %(streetWidth+blockHeight)-streetWidth +1;
+                GreenfootImage image=null;
+                if(i >=1 && i <=12 && j >= 1 && j <= 12 ){
+                         image = new GreenfootImage("MapTiles/House/house" +  "-" + j + "," + i +".png");
+                }
+                else{
+                     image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
+                }
 
                 mapTiles[x][y] = new Tile(image, Tile.TileType.values()[imageType]);
             }
@@ -115,7 +122,47 @@ public class Map
             }
         }
     }
+public void generateCountrMap() throws WrongGenerationPercentagesException {
+        // Calcular la sumatoria de los porcentajes
+        for (int i = 0; i < percentages.length - 1; i++)
+            percentages[i + 1] += percentages[i];
 
+        // Los porcentajes deben sumar 100
+        // JVM deshabilita los assert y no hay manera de habilitarlos en greenfoot !&#*"#
+        // Entonces en lugar de detener el programa simplemente no dibujará ningún fondo
+        // Si no está dibujando el fondo deberías checar cuánto suman los porcentajes
+        // assert (percentages[percentages.length -1] == 100);
+        if (percentages[percentages.length - 1] != 100)
+            throw new WrongGenerationPercentagesException("Percentages don't add 100. Please check Map.percentages");
+
+        // Llenar el mapa con valores aleatorios
+        for (int x = 0; x < MAP_WIDTH; x++) {
+            for (int y = 0; y < MAP_HEIGHT; y++) {
+                int imageType = getRandomType();
+                int imageIndex = random.nextInt(tileAmounts[imageType]);
+
+                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
+
+                mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
+            }
+        }
+
+        // Poner un cuadro de pasto 4 x 4 en el centro donde el jugador va a aparecer
+        int startX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) - 2;
+        int startY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) - 2;
+        int endX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) + 2;
+        int endY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) + 2;
+        for (int x = startX; x < endX; x++) {
+            for (int y = startY; y < endY + 2; y++) {
+                int imageType = Tile.TileType.GRASS.ordinal();
+                int imageIndex = random.nextInt(tileAmounts[imageType]);
+
+                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
+
+                mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
+            }
+        }
+    }
     /**
      * Dibuja el mapa en el fondo dependiendo de la posición del jugador
      * @author Gaspar
@@ -127,7 +174,6 @@ public class Map
         List<Tile> tiles = world.getObjects(Tile.class);
         // Quita todos los tiles del mapa
         world.removeObjects(tiles);
-
         // Calcula el índice de la matriz a partir de donde comenzará a dibujar los tiles
         // La posición del jugador está dada en píxeles, entonces debemos dividir entre el tamaño
         // en píxeles de cada Tile para saber la posición de la matriz.
@@ -172,6 +218,7 @@ public class Map
                 world.addObject(mapTiles[x][y], tilePosX - offSetX, tilePosY - offSetY);
             }
         }
+      
     }
 
     /**

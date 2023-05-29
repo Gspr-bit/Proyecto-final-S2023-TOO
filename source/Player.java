@@ -76,6 +76,9 @@ public class Player extends Character {
     public void setVisibility(int visibility) {
         this.visibility = visibility;
     }
+    public int getEffectEnd(){
+        return this.effectEnd;
+    }
 
     /**
      * Método para cambiar la dirección j posición del jugador.
@@ -159,6 +162,7 @@ public class Player extends Character {
             // Regresar las cosas a la normalidad
             this.v = this.normalV;
             this.visibility = 0;
+            this.effect=Effect.NONE;
         }
 
         try {

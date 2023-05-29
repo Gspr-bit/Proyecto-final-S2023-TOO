@@ -19,9 +19,13 @@ public class InitialScreen extends World
         super(600,400,1); 
     }
     public void act(){
-        if(Greenfoot.mouseClicked(this)){
-            //Background1 world = new Background1();
-            //Greenfoot.setWorld(world);
+        if(Greenfoot.isKeyDown("ENTER")){
+            InstructionsScreen1 world = new InstructionsScreen1();
+            Greenfoot.delay(10);
+            Greenfoot.setWorld(world);
         }
-    }
+
 }
+}
+
+
