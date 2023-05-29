@@ -174,7 +174,6 @@ public void generateCountrMap() throws WrongGenerationPercentagesException {
         List<Tile> tiles = world.getObjects(Tile.class);
         // Quita todos los tiles del mapa
         world.removeObjects(tiles);
-
         // Calcula el índice de la matriz a partir de donde comenzará a dibujar los tiles
         // La posición del jugador está dada en píxeles, entonces debemos dividir entre el tamaño
         // en píxeles de cada Tile para saber la posición de la matriz.
@@ -219,6 +218,7 @@ public void generateCountrMap() throws WrongGenerationPercentagesException {
                 world.addObject(mapTiles[x][y], tilePosX - offSetX, tilePosY - offSetY);
             }
         }
+      
     }
 
     /**

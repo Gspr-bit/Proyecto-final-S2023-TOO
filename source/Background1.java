@@ -17,18 +17,19 @@ public class Background1 extends World {
     private final ArrayList<FixedObject> fixedObjects;
     private final ArrayList<Thief> thieves;
     private final Shadow shadow;
+   // private final TimerImage Ti;
     // Sé que podemos obtener estos valores con getWidth() y getHeight()
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
     public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
-
+    //public static Timer timer;
     /**
      * Constructor for objects of class Background1.
      */
     public Background1() throws WrongGenerationPercentagesException {
         // Create a new world with 640x480 cells with a cell size of 1x1 pixels.
         super(WORLD_WIDTH, WORLD_HEIGHT, 1);
-
+        //this.Ti=new TimerImage ();
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
         this.map = new Map(new Date().getTime());
@@ -72,10 +73,21 @@ public class Background1 extends World {
     }
 
     public void act() {
+        
         this.map.drawMap(this);
         drawFixedObjects();
         drawThiefs();
         Timer.update();
+        String s = player.getEffect() + " "  + (player.getEffectEnd()-Timer.getTime());
+        if(player.getEffectEnd()-Timer.getTime()==0){
+               s=""; 
+            }
+        if(player.getEffect() != Effect.NONE){
+            this.showText(s,60,30);
+            
+        }
+        
+      // this.Ti.act();
     }
 
     /**

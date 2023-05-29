@@ -19,13 +19,10 @@ public class InitialScreen extends World
         super(600,400,1); 
     }
     public void act(){
-        try{
-           if(Greenfoot.isKeyDown("ENTER")){
-          Background1 world = new Background1() ;
+        if(Greenfoot.isKeyDown("ENTER")){
+            InstructionsScreen1 world = new InstructionsScreen1();
+            Greenfoot.delay(10);
             Greenfoot.setWorld(world);
-        } 
-        }catch(WrongGenerationPercentagesException e){
-            throw new RuntimeException(e);
         }
 
 }
