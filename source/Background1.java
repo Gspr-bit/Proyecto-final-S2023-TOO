@@ -24,13 +24,21 @@ public class Background1 extends World {
     // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
     public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
-    //public static Timer timer;
+
+    private int level;
+
     /**
      * Constructor for objects of class Background1.
      */
-    public Background1() throws WrongGenerationPercentagesException {
+    public Background1(int level) throws WrongGenerationPercentagesException {
         // Create a new world with 640x480 cells with a cell size of 1x1 pixels.
         super(WORLD_WIDTH, WORLD_HEIGHT, 1);
+
+        if (level <= 0 || level > 3) {
+            throw new RuntimeException("El nivel debe ir de 1 a 3");
+        }
+        this.level = level;
+
         //this.Ti=new TimerImage ();
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
@@ -74,8 +82,11 @@ public class Background1 extends World {
             throw new RuntimeException(e);
         }
 
-        map.generateCountryMap();
-        //map.generateCityMap();
+        if (this.level == 1) {
+            map.generateCityMap();
+        } else {
+            map.generateCountryMap();
+        }
         generateItems();
 
         dog = new Dog(this.getWidth() / 2 + 32, this.getHeight() / 2, map.mapTiles);
@@ -107,8 +118,6 @@ public class Background1 extends World {
             this.showText(s,60,30);
             
         }
-        
-      // this.Ti.act();
     }
 
     /**

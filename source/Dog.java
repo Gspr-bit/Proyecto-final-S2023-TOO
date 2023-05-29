@@ -9,7 +9,7 @@ public class Dog extends Character {
     private final PathFinder pathFinder;
 
     private static final int movementDuration = 3;
-    private static final int idleDuration = 3;
+    private static final int idleDuration = 10;
     private int movementStartTime;
     private int movementEndTime;
 
@@ -19,7 +19,7 @@ public class Dog extends Character {
 
     public Dog(int x, int y, Tile[][] map) {
         this.map = map;
-        this.v = 1;
+        this.v = 2;
         this.posX = x;
         this.posY = y;
         this.pathFinder = new PathFinder(this.map);

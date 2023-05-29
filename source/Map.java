@@ -87,47 +87,6 @@ public class Map
             percentages[i + 1] += percentages[i];
 
         // Los porcentajes deben sumar 100
-        // JVM deshabilita los assert j no hay manera de habilitarlos en greenfoot !&#*"#
-        // Entonces en lugar de detener el programa simplemente no dibujará ningún fondo
-        // Si no está dibujando el fondo deberías checar cuánto suman los porcentajes
-        // assert (percentages[percentages.length -1] == 100);
-        if (percentages[percentages.length - 1] != 100)
-            throw new WrongGenerationPercentagesException("Percentages don't add 100. Please check Map.percentages");
-
-        // Llenar el mapa con valores aleatorios
-        for (int x = 0; x < MAP_WIDTH; x++) {
-            for (int y = 0; y < MAP_HEIGHT; y++) {
-                int imageType = getRandomType();
-                int imageIndex = random.nextInt(tileAmounts[imageType]);
-
-                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
-
-                mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
-            }
-        }
-
-        // Poner un cuadro de pasto 4 i 4 en el centro donde el jugador va a aparecer
-        int startX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) - 2;
-        int startY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) - 2;
-        int endX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) + 2;
-        int endY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) + 2;
-        for (int x = startX; x < endX; x++) {
-            for (int y = startY; y < endY + 2; y++) {
-                int imageType = Tile.TileType.GRASS.ordinal();
-                int imageIndex = random.nextInt(tileAmounts[imageType]);
-
-                GreenfootImage image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
-
-                mapTiles[x][y] = new Tile(image, tileTypes[imageType]);
-            }
-        }
-    }
-public void generateCountrMap() throws WrongGenerationPercentagesException {
-        // Calcular la sumatoria de los porcentajes
-        for (int i = 0; i < percentages.length - 1; i++)
-            percentages[i + 1] += percentages[i];
-
-        // Los porcentajes deben sumar 100
         // JVM deshabilita los assert y no hay manera de habilitarlos en greenfoot !&#*"#
         // Entonces en lugar de detener el programa simplemente no dibujará ningún fondo
         // Si no está dibujando el fondo deberías checar cuánto suman los porcentajes
@@ -163,6 +122,7 @@ public void generateCountrMap() throws WrongGenerationPercentagesException {
             }
         }
     }
+
     /**
      * Dibuja el mapa en el fondo dependiendo de la posición del jugador
      * @author Gaspar

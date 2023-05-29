@@ -21,7 +21,7 @@ public class InstructionsSreen2 extends World
     public void act(){
         try{
            if(Greenfoot.isKeyDown("ENTER")){
-          Background1 world = new Background1() ;
+          Background1 world = new Background1(1) ;
           Greenfoot.delay(10);
             Greenfoot.setWorld(world);
         } 
