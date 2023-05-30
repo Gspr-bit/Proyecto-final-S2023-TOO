@@ -1,7 +1,3 @@
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -28,7 +24,7 @@ public abstract class FixedObject extends Actor {
      * @author Montse
      */
     public void remove() {
-        ((Background1) getWorld()).getFixedObjects().remove(this);
+        ((MyWorld) getWorld()).getFixedObjects().remove(this);
         getWorld().removeObject(this);
     }
 

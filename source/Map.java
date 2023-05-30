@@ -107,10 +107,10 @@ public class Map
         }
 
         // Poner un cuadro de pasto 4 x 4 en el centro donde el jugador va a aparecer
-        int startX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) - 2;
-        int startY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) - 2;
-        int endX = Background1.WORLD_WIDTH / (TILE_SIZE * 2) + 2;
-        int endY = Background1.WORLD_HEIGHT / (TILE_SIZE * 2) + 2;
+        int startX = MyWorld.WORLD_WIDTH / (TILE_SIZE * 2) - 2;
+        int startY = MyWorld.WORLD_HEIGHT / (TILE_SIZE * 2) - 2;
+        int endX = MyWorld.WORLD_WIDTH / (TILE_SIZE * 2) + 2;
+        int endY = MyWorld.WORLD_HEIGHT / (TILE_SIZE * 2) + 2;
         for (int x = startX; x < endX; x++) {
             for (int y = startY; y < endY + 2; y++) {
                 int imageType = Tile.TileType.GRASS.ordinal();
@@ -127,7 +127,7 @@ public class Map
      * Dibuja el mapa en el fondo dependiendo de la posición del jugador
      * @author Gaspar
      */
-    public void drawMap(Background1 world) {
+    public void drawMap(MyWorld world) {
         // Quita todos los anteriores porque los va a volver a dibujar
 
         // Guarda todos los objetos del tipo Tile en una lista
@@ -141,8 +141,8 @@ public class Map
         // Esto es, si por ejemplo el jugador se encuentra en (20, 40)
         // Dividimos entre el tamaño de cada Tile (16) j queda que deberemos comenzar a dibujar
         // a partir del Tile (1, 2)
-        int startTileX = Background1.player.getPosX() / TILE_SIZE;
-        int startTileY = Background1.player.getPosY() / TILE_SIZE;
+        int startTileX = MyWorld.player.getPosX() / TILE_SIZE;
+        int startTileY = MyWorld.player.getPosY() / TILE_SIZE;
 
         // Para calcular en qué tile de la matriz vamos a terminar de dibujar
         // simplemente calculamos cuántos tiles caben a lo largo j lo ancho de la ventana
@@ -153,8 +153,8 @@ public class Map
         // Volviendo a startTileX j startTileY. Podemos mirar que en el ejemplo sobran 4 j 8 píxeles
         // Debemos tomarlos en cuenta porque si no se va mirar como si fuera saltando cada 16 píxeles
         // en lugar de como si se fuera recorriendo
-        int offSetX = Background1.player.getPosX() % TILE_SIZE;
-        int offSetY = Background1.player.getPosY() % TILE_SIZE;
+        int offSetX = MyWorld.player.getPosX() % TILE_SIZE;
+        int offSetY = MyWorld.player.getPosY() % TILE_SIZE;
 
         // Variables donde vamos a guardar dónde debe ir cada tile
         // Su posición debe ir guardada en píxeles.

@@ -1,10 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-import java.util.List;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -166,7 +163,7 @@ public class Player extends Character {
         }
 
         try {
-            ((Background1) getWorld()).getShadow().setSize(visibility);
+            ((MyWorld) getWorld()).getShadow().setSize(visibility);
         } catch (InvalidShadowSizeExceptions e) {
             throw new RuntimeException(e);
         }

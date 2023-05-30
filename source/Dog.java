@@ -9,7 +9,7 @@ public class Dog extends Character {
     private final PathFinder pathFinder;
 
     private static final int movementDuration = 3;
-    private static final int idleDuration = 10;
+    private static final int idleDuration = 0;
     private int movementStartTime;
     private int movementEndTime;
 
@@ -120,7 +120,8 @@ public class Dog extends Character {
     }
 
     private int distanceToPlayer() {
-        return Math.abs(this.posX - Background1.player.getPosX()) / Map.TILE_SIZE + Math.abs(this.posY - Background1.player.getPosY()) / Map.TILE_SIZE;
+        System.out.printf("this x = %d, p.x = %d, this y = %d, p.y = %d\n", this.posX, MyWorld.player.getPosX(), this.posY, MyWorld.player.getPosY());
+        return Math.abs(this.posX - MyWorld.player.getPosX()) / Map.TILE_SIZE + Math.abs(this.posY - MyWorld.player.getPosY()) / Map.TILE_SIZE;
     }
 
     @Override
