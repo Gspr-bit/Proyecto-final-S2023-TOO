@@ -10,7 +10,7 @@ import greenfoot.GreenfootImage;
  *
  * @author Gaspar
  */
-public class Map {
+public class WorldMap {
     // Dimensiones de cada Tile en pixeles
     public static final int TILE_SIZE = 16;
     // Dimensiones del mapa en Tiles
@@ -33,7 +33,7 @@ public class Map {
     /**
      * Constructor para el mapa
      */
-    public Map(long seed, int level) {
+    public WorldMap(long seed, int level) {
         this.random = new Random(seed);
         this.mapTiles = new Tile[MAP_WIDTH][MAP_HEIGHT];
 
@@ -112,7 +112,7 @@ public class Map {
         // Si no está dibujando el fondo deberías checar cuánto suman los porcentajes
         // assert (percentages[percentages.length -1] == 100);
         if (percentages[percentages.length - 1] != 100)
-            throw new WrongGenerationPercentagesException("Percentages don't add 100. Please check Map.percentages");
+            throw new WrongGenerationPercentagesException("Percentages don't add 100. Please check WorldMap.percentages");
 
         // Llenar el mapa con valores aleatorios
         for (int x = 0; x < MAP_WIDTH; x++) {

@@ -100,8 +100,8 @@ public class Thief extends Character
      */
     private void dropItem() {
         Item item = new Item(Effect.randomEffect(), 3,
-                (this.posX + this.getImage().getWidth()) / Map.TILE_SIZE,
-                (this.posY + this.getImage().getHeight()) / Map.TILE_SIZE);
+                (this.posX + this.getImage().getWidth()) / WorldMap.TILE_SIZE,
+                (this.posY + this.getImage().getHeight()) / WorldMap.TILE_SIZE);
         ((MyWorld)(this.getWorld())).getFixedObjects().add(item);
     }
 }

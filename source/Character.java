@@ -130,4 +130,13 @@ public abstract class Character extends Actor {
     public boolean isTouchingPlayer() {
         return this.getOneIntersectingObject(Player.class) != null;
     }
+
+    public void drawCharacter(MyWorld world) {
+        int objectPosX = this.getPosX() - world.getPlayer().getPosX();
+        int objectPosY = this.getPosY() - world.getPlayer().getPosY();
+
+        if (objectPosX >= 0 && objectPosX < world.getWidth() && objectPosY >= 0 && objectPosY < world.getHeight()) {
+            world.addObject(this, objectPosX + WorldMap.TILE_SIZE / 2, objectPosY + WorldMap.TILE_SIZE / 2);
+        }
+    }
 }

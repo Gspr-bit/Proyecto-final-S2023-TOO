@@ -56,16 +56,16 @@ public class Car extends Character {
         int dx = this.getImage().getWidth() / 2 + v;
         int dy = this.getImage().getHeight() / 2 + v;
 
-        int dx1 = dx + Map.TILE_SIZE * 1;
-        int dx2 = dx + Map.TILE_SIZE * 2;
-        int dx3 = dx + Map.TILE_SIZE * 3;
-        int dx4 = dx + Map.TILE_SIZE * 4;
-        int dx5 = dx + Map.TILE_SIZE * 5;
-        int dx6 = dx + Map.TILE_SIZE * 6;
-        int dx7 = dx + Map.TILE_SIZE * 7;
-        //int dx8=dx-Map.TILE_SIZE*8;
+        int dx1 = dx + WorldMap.TILE_SIZE * 1;
+        int dx2 = dx + WorldMap.TILE_SIZE * 2;
+        int dx3 = dx + WorldMap.TILE_SIZE * 3;
+        int dx4 = dx + WorldMap.TILE_SIZE * 4;
+        int dx5 = dx + WorldMap.TILE_SIZE * 5;
+        int dx6 = dx + WorldMap.TILE_SIZE * 6;
+        int dx7 = dx + WorldMap.TILE_SIZE * 7;
+        //int dx8=dx-WorldMap.TILE_SIZE*8;
 
-        int dya = dy + Map.TILE_SIZE * 1;
+        int dya = dy + WorldMap.TILE_SIZE * 1;
 
         // UP, DOWN, LEFT, RIGHT
         int[] dxs = {0, 0, -dx, dx};
@@ -116,7 +116,7 @@ public class Car extends Character {
 
         if (nextTile == null || nextTile1 == null || nextTile2 == null) {
             //posX=xOriginal;
-            posX = posX + Map.TILE_SIZE * 37;
+            posX = posX + WorldMap.TILE_SIZE * 37;
         }
 
         //return nextTile != null && !nextTile.isCollidable() && nextTile1!=null && !nextTile1.isCollidable() && nextTile2!=null && !nextTile2.isCollidable() && nextTile3!=null && !nextTile3.isCollidable() && nextTile4!=null && !nextTile4.isCollidable();

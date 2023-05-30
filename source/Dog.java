@@ -13,7 +13,7 @@ public class Dog extends Character {
     private static final int movementDuration = 1;
     private static final int idleDuration = 3;
     // Límite de distancia a la que se puede acercar el jugador antes de que el perro corra de nuevo
-    private static final int DISTANCE_THRESHOLD = 4 * Map.TILE_SIZE;
+    private static final int DISTANCE_THRESHOLD = 4 * WorldMap.TILE_SIZE;
     private final Tile[][] map;
     private final PathFinder pathFinder;
     private int movementStartTime;
@@ -83,11 +83,11 @@ public class Dog extends Character {
     public void changeDirection() {
         // Solo cambia su dirección cuando está justo en medio de un Tile
         // De otra manera puede suceder un desfase extraño
-        if (this.posX % Map.TILE_SIZE != 0 || this.posY % Map.TILE_SIZE != 0)
+        if (this.posX % WorldMap.TILE_SIZE != 0 || this.posY % WorldMap.TILE_SIZE != 0)
             return;
 
-        int i = (this.posX / Map.TILE_SIZE);
-        int j = (this.posY / Map.TILE_SIZE);
+        int i = (this.posX / WorldMap.TILE_SIZE);
+        int j = (this.posY / WorldMap.TILE_SIZE);
         try {
             this.direction = pathFinder.findDirection(i, j);
         } catch (PathEmptyException | InvalidPointException | EndOfPathException e) {
@@ -114,8 +114,8 @@ public class Dog extends Character {
     }
 
     private boolean canHide() {
-        int i = (this.posX / Map.TILE_SIZE);
-        int j = (this.posY / Map.TILE_SIZE);
+        int i = (this.posX / WorldMap.TILE_SIZE);
+        int j = (this.posY / WorldMap.TILE_SIZE);
 
         int[] dis = {0, 0, 1, -1};
         int[] djs = {1, -1, 0, 0};
@@ -132,6 +132,6 @@ public class Dog extends Character {
     }
 
     private boolean isTouchingThief() {
-        return !this.getObjectsInRange(Map.TILE_SIZE, Thief.class).isEmpty();
+        return !this.getObjectsInRange(WorldMap.TILE_SIZE, Thief.class).isEmpty();
     }
 }

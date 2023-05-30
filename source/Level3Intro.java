@@ -22,7 +22,7 @@ public class Level3Intro extends World {
                 MyWorld world = new MyWorld(3);
                 Greenfoot.delay(10);
                 Greenfoot.setWorld(world);
-            } catch (Map.WrongGenerationPercentagesException e) {
+            } catch (WorldMap.WrongGenerationPercentagesException e) {
                 throw new RuntimeException(e);
             }
         }

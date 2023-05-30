@@ -28,7 +28,7 @@ public class Level1Intro extends World
                 MyWorld world = new MyWorld(1);
                 Greenfoot.delay(10);
                 Greenfoot.setWorld(world);
-            } catch (Map.WrongGenerationPercentagesException e) {
+            } catch (WorldMap.WrongGenerationPercentagesException e) {
                 throw new RuntimeException(e);
             }
         }
