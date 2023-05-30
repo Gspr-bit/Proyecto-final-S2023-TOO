@@ -23,7 +23,7 @@ public class Thief extends Character
     // Tiempo en que el ladrón continúa moviendose hacia la misma dirección
     // antes de cambiar de dirección.
     private final static int movementDelay = 2;
-    private Random random;
+    private final Random random;
 
     /**
     *Constructor clase Thief

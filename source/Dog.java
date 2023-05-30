@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import greenfoot.Greenfoot;
@@ -30,6 +32,24 @@ public class Dog extends Character {
         this.direction = pathFinder.findPath((this.posX / Map.TILE_SIZE), (this.posY / Map.TILE_SIZE));
         this.movementStartTime = 0;
         this.hide = false;
+
+        this.direction = Direction.RIGHT;
+        Direction[] d = {Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT};
+        String[] f = {"up", "down", "left", "right"};
+
+        this.images = new HashMap<>(4);
+
+        //Establecer las imágenes
+        for (int i = 0; i < 4; i++) {
+            images.put(d[i], new ArrayList<>(3));
+
+            for (int j = 0; j < 3; j++) {
+
+                images.get(d[i]).add("Dogs/dog-"+ f[i] + "-" + j + ".png");
+
+
+            }
+        }
     }
 
     public boolean isHidden() {
@@ -43,11 +63,14 @@ public class Dog extends Character {
     public void act() {
         changeDirection();
         move();
+        updateImage();
 
         if (isTouchingThief()) {
             WindowSwitcher.nextLevel(((MyWorld)getWorld()).getLevel());
         }
     }
+
+
 
     @Override
     public void changeDirection() {
@@ -135,8 +158,19 @@ public class Dog extends Character {
         return !this.getObjectsInRange(Map.TILE_SIZE, Thief.class).isEmpty();
     }
 
-    @Override
+    /**
+     * Cambiar la imagen del jugador para que parezca como si se estuviera moviendo
+     * TODO Agregar las animaciones para cuando el jugador está quieto
+     * TODO Mover esta función a su superclase
+     * @author Gaspar
+     */
     public void updateImage() {
-        // TODO
+        if (this.direction == Direction.NONE) return;
+
+        setImage(images.get(this.direction).get(imageTimer / UPDATE_RATE));
+
+        this.imageTimer++;
+        if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
+            this.imageTimer = 0;
     }
 }

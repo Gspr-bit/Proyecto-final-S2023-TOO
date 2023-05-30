@@ -34,7 +34,7 @@ public class Car extends Character
 
         Random random = new Random();
         String chosenCarType = carType[random.nextInt(carType.length)];
-        setImage("Car/car-" + chosenCarType + ".png");
+        setImage("Cars/car-" + chosenCarType + ".png");
     }
 
     /**
