@@ -185,9 +185,7 @@ public class MyWorld extends World {
         removeObjects(objectsInMap);
 
         // Pintar los carros en el mapa
-        this.cars.forEach(object -> {
-            object.drawCharacter(this);
-        });
+        this.cars.forEach(object -> object.drawCharacter(this));
     }
 
     private void drawThieves() {
@@ -195,9 +193,7 @@ public class MyWorld extends World {
         removeObjects(objectsInMap);
 
         // Pintar los ladrones en el mapa
-        this.thieves.forEach(object -> {
-            object.drawCharacter(this);
-        });
+        this.thieves.forEach(object -> object.drawCharacter(this));
     }
 
     public void showTimer() {
