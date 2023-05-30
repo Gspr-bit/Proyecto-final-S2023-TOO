@@ -93,9 +93,6 @@ public class Thief extends Character
         this.imageTimer++;
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
-        /*setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 0 + ".png");
-        setImage("THIEFF/"+ getTipoLadron() +"-"+ this.direction + "-" + 1 + ".png");
-        */
     }
 
     /**

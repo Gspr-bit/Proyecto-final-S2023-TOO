@@ -1,3 +1,7 @@
+import java.util.List;
+
+import greenfoot.Greenfoot;
+
 /**
  * Write a description of class Dog here.
  *
@@ -39,6 +43,11 @@ public class Dog extends Character {
     public void act() {
         changeDirection();
         move();
+
+        if (isTouchingThief()) {
+            GameOverScreen gameOver = new GameOverScreen();
+            Greenfoot.setWorld(gameOver);
+        }
     }
 
     @Override
@@ -122,6 +131,12 @@ public class Dog extends Character {
     private int distanceToPlayer() {
         System.out.printf("this x = %d, p.x = %d, this y = %d, p.y = %d\n", this.posX, MyWorld.player.getPosX(), this.posY, MyWorld.player.getPosY());
         return Math.abs(this.posX - MyWorld.player.getPosX()) / Map.TILE_SIZE + Math.abs(this.posY - MyWorld.player.getPosY()) / Map.TILE_SIZE;
+    }
+
+    private boolean isTouchingThief() {
+        List<Thief> thiefs = this.getObjectsInRange(Map.TILE_SIZE, Thief.class);
+
+        return !thiefs.isEmpty();
     }
 
     @Override
