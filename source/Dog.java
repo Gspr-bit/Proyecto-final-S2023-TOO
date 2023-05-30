@@ -69,12 +69,11 @@ public class Dog extends Character {
         updateImage();
 
         if (isTouchingThief()) {
-            WindowSwitcher.nextLevel(((MyWorld) getWorld()).getLevel());
+            WindowSwitcher.lose();
         }
 
         if (isTouchingPlayer()) {
-            WinScreen winScreen = new WinScreen();
-            Greenfoot.setWorld(winScreen);
+            WindowSwitcher.win();
         }
     }
 

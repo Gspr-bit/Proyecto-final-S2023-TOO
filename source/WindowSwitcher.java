@@ -24,9 +24,26 @@ public class WindowSwitcher
             }
             case 3:
             {
-                GameOverScreen gameOver = new GameOverScreen();
-                Greenfoot.setWorld(gameOver);
+                lose();
             }
         }
     }
+
+    /**
+     * Muestra la ventana de victoria.
+     */
+    public static void win() {
+        WinScreen winScreen = new WinScreen();
+        Greenfoot.setWorld(winScreen);
+    }
+
+    /**
+     * Muestra la ventana de derrota.
+     */
+    public static void lose() {
+        GameOverScreen gameOver = new GameOverScreen();
+        Greenfoot.setWorld(gameOver);
+    }
+
+
 }

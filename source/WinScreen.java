@@ -40,5 +40,6 @@ public class WinScreen extends World
      */
     private void prepare() {
         setBackground("Screens/win-screen.jpeg");
+        showText("Tu tiempo: " + Timer.getTime() + " segundos", getWidth() / 2, 3 * getHeight() / 4);
     }
 }

@@ -1,3 +1,5 @@
+import greenfoot.Greenfoot;
+
 import java.util.*;
 
 /**
@@ -38,6 +40,9 @@ public class Car extends Character {
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() {
+        if (this.isTouchingPlayer() || isTouchingDog()) {
+            WindowSwitcher.lose();
+        }
     }
 
     /**

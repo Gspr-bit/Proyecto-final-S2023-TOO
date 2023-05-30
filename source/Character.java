@@ -131,6 +131,14 @@ public abstract class Character extends Actor {
         return this.getOneIntersectingObject(Player.class) != null;
     }
 
+    /**
+     *
+     * @return si el ladrón está tocando al perro.
+     */
+    public boolean isTouchingDog() {
+        return this.getOneIntersectingObject(Dog.class) != null;
+    }
+
     public void drawCharacter(MyWorld world) {
         int objectPosX = this.getPosX() - world.getPlayer().getPosX();
         int objectPosY = this.getPosY() - world.getPlayer().getPosY();
