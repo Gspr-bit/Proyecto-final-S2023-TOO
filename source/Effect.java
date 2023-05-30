@@ -6,6 +6,6 @@ public enum Effect {
     public static Effect randomEffect() {
         Random random = new Random();
         Effect [] effects = Effect.values();
-        return effects[random.nextInt(effects.length)];
+        return effects[random.nextInt(effects.length - 1) + 1];
     }
 }

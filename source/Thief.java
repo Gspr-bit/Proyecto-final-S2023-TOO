@@ -31,7 +31,7 @@ public class Thief extends Character
     */
     public Thief(int x, int y){
         this.movementStart = 0;
-        this.v = 2;
+        this.v = 1;
         this.direction = Direction.RIGHT;
         this.posX=x;
         this.posY=y;
@@ -75,6 +75,10 @@ public class Thief extends Character
      */
     public void act()
     {
+        if (isTouchingPlayer()) {
+            dropItem();
+        }
+
         updateImage();
         changeDirection();
         move();
@@ -136,5 +140,14 @@ public class Thief extends Character
             this.movementStart = Timer.getTime();
             this.direction = Direction.values()[random.nextInt(4)];
         }
+    }
+
+    private boolean isTouchingPlayer() {
+        return !this.getObjectsInRange(Map.TILE_SIZE, Player.class).isEmpty();
+    }
+
+    private void dropItem() {
+        Item item = new Item(Effect.randomEffect(), 3, (this.posX + this.getImage().getWidth()) / Map.TILE_SIZE, (this.posY + this.getImage().getHeight()) / Map.TILE_SIZE);
+        ((MyWorld)(this.getWorld())).getFixedObjects().add(item);
     }
 }

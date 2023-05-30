@@ -13,11 +13,11 @@ public class Dog extends Character {
     private final PathFinder pathFinder;
 
     private static final int movementDuration = 3;
-    private static final int idleDuration = 0;
+    private static final int idleDuration = 3;
     private int movementStartTime;
     private int movementEndTime;
 
-    private static final int distanceThreshold = 40;
+    private static final int distanceThreshold = 4 * Map.TILE_SIZE;
 
     private boolean hide;
 
@@ -74,9 +74,8 @@ public class Dog extends Character {
             return;
         }
 
-        if (time == this.movementStartTime || distanceToPlayer() < distanceThreshold) {
+        if (time == this.movementStartTime || isNearToPlayer()) {
             this.movementEndTime = time + movementDuration;
-            System.out.printf("Distance to player = %d\n", distanceToPlayer());
         } else if (time == this.movementEndTime) {
             this.movementStartTime = time + idleDuration;
         }
@@ -128,15 +127,12 @@ public class Dog extends Character {
         return false;
     }
 
-    private int distanceToPlayer() {
-        System.out.printf("this x = %d, p.x = %d, this y = %d, p.y = %d\n", this.posX, MyWorld.player.getPosX(), this.posY, MyWorld.player.getPosY());
-        return Math.abs(this.posX - MyWorld.player.getPosX()) / Map.TILE_SIZE + Math.abs(this.posY - MyWorld.player.getPosY()) / Map.TILE_SIZE;
+    private boolean isNearToPlayer() {
+        return !this.getObjectsInRange(distanceThreshold, Player.class).isEmpty();
     }
 
     private boolean isTouchingThief() {
-        List<Thief> thiefs = this.getObjectsInRange(Map.TILE_SIZE, Thief.class);
-
-        return !thiefs.isEmpty();
+        return !this.getObjectsInRange(Map.TILE_SIZE, Thief.class).isEmpty();
     }
 
     @Override
