@@ -96,14 +96,6 @@ public class Thief extends Character
     }
 
     /**
-     *
-     * @return si el ladrón está tocando al jugador.
-     */
-    private boolean isTouchingPlayer() {
-        return !this.getObjectsInRange(Map.TILE_SIZE, Player.class).isEmpty();
-    }
-
-    /**
      * Suelta un item aleatorio en su posición actual.
      */
     private void dropItem() {

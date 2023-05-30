@@ -33,6 +33,7 @@ public class MyWorld extends World {
         // Create a new world with 640x480 cells with a cell size of 1x1 pixels.
         super(WORLD_WIDTH, WORLD_HEIGHT, 1);
 
+
         this.level = level;
 
         //this.Ti=new TimerImage ();
@@ -41,7 +42,9 @@ public class MyWorld extends World {
         this.map = new Map(new Date().getTime(), level);
         TimerImage timerImage = new TimerImage();
 
-        this.addObject(timerImage, 8, 8);
+        dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, map.mapTiles);
+
+        this.addObject(timerImage, 0, 0);
 
         // Agregar el jugador
         player = new Player();
@@ -85,8 +88,6 @@ public class MyWorld extends World {
         }
 
         generateItems();
-
-        dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, map.mapTiles);
     }
 
     public int getLevel() {

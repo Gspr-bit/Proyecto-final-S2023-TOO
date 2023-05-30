@@ -122,4 +122,12 @@ public abstract class Character extends Actor {
         if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
             this.imageTimer = 0;
     }
+
+    /**
+     *
+     * @return si el ladrón está tocando al jugador.
+     */
+    public boolean isTouchingPlayer() {
+        return this.getOneIntersectingObject(Player.class) != null;
+    }
 }

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import greenfoot.Greenfoot;
+
 
 /**
  * Write a description of class Dog here.
@@ -8,7 +10,7 @@ import java.util.HashMap;
  * @author Gaspar
  */
 public class Dog extends Character {
-    private static final int movementDuration = 3;
+    private static final int movementDuration = 1;
     private static final int idleDuration = 3;
     // Límite de distancia a la que se puede acercar el jugador antes de que el perro corra de nuevo
     private static final int DISTANCE_THRESHOLD = 4 * Map.TILE_SIZE;
@@ -69,6 +71,11 @@ public class Dog extends Character {
         if (isTouchingThief()) {
             WindowSwitcher.nextLevel(((MyWorld) getWorld()).getLevel());
         }
+
+        if (isTouchingPlayer()) {
+            WinScreen winScreen = new WinScreen();
+            Greenfoot.setWorld(winScreen);
+        }
     }
 
 
@@ -90,16 +97,17 @@ public class Dog extends Character {
 
         // Cambia su dirección solo cuando es momento
         int time = Timer.getTime();
-        if (time > this.movementEndTime && time < this.movementStartTime) {
-            this.direction = Direction.NONE;
-            this.hide = canHide();
-            return;
-        }
 
         if (time == this.movementStartTime || isNearToPlayer()) {
             this.movementEndTime = time + movementDuration;
         } else if (time == this.movementEndTime) {
             this.movementStartTime = time + idleDuration;
+        }
+
+        if (time > this.movementEndTime && time < this.movementStartTime) {
+            this.direction = Direction.NONE;
+            this.hide = canHide();
+            return;
         }
 
         this.hide = false;
