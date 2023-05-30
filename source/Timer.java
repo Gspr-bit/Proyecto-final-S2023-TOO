@@ -1,12 +1,10 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
 /**
  * Temporizador del juego.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Timer extends Actor {
+public class Timer {
     private static final int FPS = 60;
 
     private static int time = 0;

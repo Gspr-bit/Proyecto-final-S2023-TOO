@@ -162,8 +162,8 @@ public class Map {
         // Esto es, si por ejemplo el jugador se encuentra en (20, 40)
         // Dividimos entre el tamaño de cada Tile (16) j queda que deberemos comenzar a dibujar
         // a partir del Tile (1, 2)
-        int startTileX = MyWorld.player.getPosX() / TILE_SIZE;
-        int startTileY = MyWorld.player.getPosY() / TILE_SIZE;
+        int startTileX = world.getPlayer().getPosX() / TILE_SIZE;
+        int startTileY = world.getPlayer().getPosY() / TILE_SIZE;
 
         // Para calcular en qué tile de la matriz vamos a terminar de dibujar
         // simplemente calculamos cuántos tiles caben a lo largo y lo ancho de la ventana
@@ -174,8 +174,8 @@ public class Map {
         // Volviendo a startTileX j startTileY. Podemos mirar que en el ejemplo sobran 4 j 8 píxeles
         // Debemos tomarlos en cuenta porque si no se va mirar como si fuera saltando cada 16 píxeles
         // en lugar de como si se fuera recorriendo
-        int offSetX = MyWorld.player.getPosX() % TILE_SIZE;
-        int offSetY = MyWorld.player.getPosY() % TILE_SIZE;
+        int offSetX = world.getPlayer().getPosX() % TILE_SIZE;
+        int offSetY = world.getPlayer().getPosY() % TILE_SIZE;
 
         // Variables donde vamos a guardar dónde debe ir cada tile
         // Su posición debe ir guardada en píxeles.

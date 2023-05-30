@@ -6,24 +6,21 @@ import java.util.Random;
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class MyWorld here.
+ * Mundo principal del juego.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Mau, Montse, Gaspar
  */
 public class MyWorld extends World {
-    // Sé que podemos obtener estos valores con getWidth() j getHeight()
-    // pero necesito obtenerlos desde otras clases de manera más fácil
     public static final int WORLD_WIDTH = 40 * Map.TILE_SIZE;
     public static final int WORLD_HEIGHT = 30 * Map.TILE_SIZE;
-    public static Player player;
-    public static Dog dog;
+    private final Player player;
+    private final Dog dog;
     private final Random random;
     private final Map map;
     private final ArrayList<FixedObject> fixedObjects;
     private final ArrayList<Thief> thieves;
     private final ArrayList<Car> cars;
-    private final Shadow shadow;
+    private Shadow shadow;
     private final int level;
 
     /**
@@ -35,35 +32,23 @@ public class MyWorld extends World {
 
 
         this.level = level;
-
-        //this.Ti=new TimerImage ();
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
         this.map = new Map(new Date().getTime(), level);
-        TimerImage timerImage = new TimerImage();
+        this.dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, map.mapTiles);
+        this.player = new Player();
+        this.cars = new ArrayList<>();
+        this.thieves = new ArrayList<>();
 
-        dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, map.mapTiles);
+        prepare();
+    }
 
-        this.addObject(timerImage, 0, 0);
-
-        // Agregar el jugador
-        player = new Player();
-
-        // Hacer que el jugador y los objetos se muestren sobre el piso
+    private void prepare() {
         setPaintOrder(Shadow.class, Car.class, Player.class, Dog.class, Thief.class, FixedObject.class, Tile.class);
 
-        player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
+        this.player.setLocation(this.getWidth() / 2, this.getHeight() / 2);
         this.addObject(player, this.getWidth() / 2, this.getHeight() / 2);
 
-        this.cars = new ArrayList<>();
-
-        //Generar rateros
-        this.thieves = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            thieves.add(new Thief(random.nextInt(Map.MAP_WIDTH * 16), random.nextInt(Map.MAP_HEIGHT * 16)));
-        }
-
-        // Agrega el objeto sombra sin poner sombra por el momento
         try {
             this.shadow = new Shadow(level == 3 ? 8 : 0);
             this.addObject(this.shadow, this.getWidth() / 2, this.getHeight() / 2);
@@ -72,22 +57,13 @@ public class MyWorld extends World {
             throw new RuntimeException(e);
         }
 
-        if (this.level == 1) {
-            //Generar carros
-            //this.shadowsCars=new ArrayList<>();
-            for (int i = 0; i < 20; i++) {
-                int x = random.nextInt(Map.MAP_WIDTH * 16);
-                int y = random.nextInt(Map.MAP_HEIGHT * 16);
-                Car carro = new Car(x, y);
-                carro.xOriginal = x;
-                cars.add(carro);
-
-                //shadow car
-                //shadowsCars.add(new ShadowCar(x,y));
-            }
-        }
-
         generateItems();
+        generateThieves();
+        generateCars();
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public int getLevel() {
@@ -114,8 +90,10 @@ public class MyWorld extends World {
         drawDog();
         drawCars();
         Timer.update();
+        showTimer();
+
         // revisar si el perro ya llegó al otro lado
-        if (MyWorld.dog.getPosX() + MyWorld.dog.getImage().getWidth() >= Map.MAP_WIDTH * Map.TILE_SIZE) {
+        if (this.dog.getPosX() + this.dog.getImage().getWidth() >= Map.MAP_WIDTH * Map.TILE_SIZE) {
             WindowSwitcher.nextLevel(this.level);
         }
     }
@@ -137,6 +115,39 @@ public class MyWorld extends World {
 
             fixedObjects.add(new Item(Effect.randomEffect(), random.nextInt(8) + 2, x, y));
             count--;
+        }
+    }
+
+    /**
+     * Genera a los ladrones
+     *
+     * @author Montse
+     */
+    private void generateThieves() {
+        int count = 10;
+
+        while (count > 0) {
+            int x = random.nextInt(Map.MAP_WIDTH);
+            int y = random.nextInt(Map.MAP_HEIGHT);
+
+            if (map.mapTiles[x][y].isCollidable())
+                continue;
+
+            System.out.printf("Adding thief at (%d, %d)\nTile at that position: %s\n\n", x, y, map.mapTiles[x][y].getType().toString());
+            thieves.add(new Thief(x * Map.TILE_SIZE, y * Map.TILE_SIZE));
+            count--;
+        }
+    }
+
+    private void generateCars() {
+        if (this.level == 1) {
+            for (int i = 0; i < 20; i++) {
+                int x = random.nextInt(Map.MAP_WIDTH * 16);
+                int y = random.nextInt(Map.MAP_HEIGHT * 16);
+                Car car = new Car(x, y);
+                car.xOriginal = x;
+                cars.add(car);
+            }
         }
     }
 
@@ -203,5 +214,16 @@ public class MyWorld extends World {
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight())
                 addObject(object, objectPosX + object.getImage().getWidth() / 2, objectPosY + object.getImage().getHeight() / 2);
         });
+    }
+
+    public void showTimer() {
+        String s = player.getEffect() + " " + (player.getEffectEnd() - Timer.getTime());
+        if (player.getEffectEnd() - Timer.getTime() == 0) {
+            s = "";
+        }
+        if (player.getEffect() != Effect.NONE) {
+            this.showText(s, MyWorld.WORLD_WIDTH / 2, 60);
+        }
+        this.showText("Tiempo: " + Timer.getTime(), MyWorld.WORLD_WIDTH / 2, 30);
     }
 }
