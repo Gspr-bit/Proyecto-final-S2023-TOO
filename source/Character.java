@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.Future;
-import java.util.function.Function;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
@@ -11,51 +9,56 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Gaspar
  */
 public abstract class Character extends Actor {
-    // Velocidad del personaje
-    protected int v;
-
-    protected int imageTimer;
-
-    protected Map<Direction, ArrayList<String>> images;
-
-    protected Direction direction;
-
     // Update rate of the image FPS/UPDATE_RATE
     protected static final int UPDATE_RATE = 10;  // 6 images per second
-    
+    // Velocidad del personaje
+    protected int v;
+    protected int imageTimer;
+    protected Map<Direction, ArrayList<String>> images;
+    protected Direction direction;
     // Posición del character en el mapa
     protected int posX;
     protected int posY;
-    
-    //TIEMPO Q LE VAMOS A DAR AL NIVEL
-    protected int tiempoTotal=3600;//esta en minitos
 
     /**
      * Act - do whatever the character wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public void act() {
-        //changeDirection();
-        //updateImage();
-    }
+    public abstract void act();
 
+    /**
+     * Regresa la posición en píxeles en X del personaje.
+     * La posición (x, y) comienza en (0, 0). X se incrementa hacia la derecha.
+     * Esta no es la posición en la ventana, sino en el mapa.
+     *
+     * @return La posición en X del personaje
+     */
     public int getPosX() {
         return posX;
     }
 
+    /**
+     * Regresa la posición en píxeles en Y del personaje.
+     * La posición (x, y) comienza en (0, 0). Y se incrementa hacia abajo.
+     * Esta no es la posición en la ventana, sino en el mapa.
+     *
+     * @return La posición en Y del personaje
+     */
     public int getPosY() {
         return posY;
     }
 
+    /**
+     * Cambia la dirección del personaje
+     */
     public abstract void changeDirection();
-    
-    public abstract void updateImage();
 
     /**
-     *Método para que los carros corran siempre de derecha izquierda
-     *@Montse
+     * Mueve al personaje de acuerdo a su dirección y velocidad.
+     *
+     * @author Montse, Gaspar
      */
-    public void move(){
+    public void move() {
         switch (this.direction) {
             case UP: {
                 this.posY -= v;
@@ -79,12 +82,16 @@ public abstract class Character extends Actor {
     }
 
     /**
-     * Método para saber si el jugador puede moverse hacia la posición dada.
-     * @author Mauricio, Gaspar, Montse
+     * Método para saber si el personaje puede moverse hacia la posición dada.
+     *
      * @param direction Dirección hacia donde se quiere mover el jugador.
      * @return true si el jugador se puede mover hacia allá
+     * @author Mauricio, Gaspar, Montse
      */
     protected boolean canMoveTowards(Direction direction) {
+        // Siempre se puede quedar donde ya está
+        if (direction == Direction.NONE) return true;
+
         int dx = this.getImage().getWidth() / 2 + v;
         int dy = this.getImage().getHeight() / 2 + v;
 
@@ -99,5 +106,20 @@ public abstract class Character extends Actor {
                 dys[direction.ordinal()], Character.class);
 
         return nextTile != null && nextCharacter == null && !nextTile.isCollidable();
+    }
+
+    /**
+     * Cambiar la imagen del jugador para que parezca como si se estuviera moviendo
+     *
+     * @author Gaspar
+     */
+    public void updateImage() {
+        if (this.direction == Direction.NONE) return;
+
+        setImage(images.get(this.direction).get(imageTimer / UPDATE_RATE));
+
+        this.imageTimer++;
+        if (this.imageTimer / UPDATE_RATE >= images.get(this.direction).size())
+            this.imageTimer = 0;
     }
 }

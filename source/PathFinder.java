@@ -11,22 +11,22 @@ import java.util.Queue;
 public class PathFinder  
 {
     private static final int INF = (int) 10e9;
-    private ArrayList<Point> path;
-    private Tile [][] map;
-    private int [][] visited;
+    private final ArrayList<Point> path;
+    private final Tile [][] map;
+    private final int [][] distances;
 
     public PathFinder(Tile [][] map)
     {
         this.path = new ArrayList<>();
         this.map = map;
-        this.visited = new int[map.length][map[0].length];
+        this.distances = new int[map.length][map[0].length];
     }
 
     /**
      * Regresa la dirección hacia donde debería caminar cuando está en el punto 0, 0
-     * @param i
-     * @param j
-     * @return
+     * @param i Posición x del jugador en Tiles
+     * @param j Posición y del jugador en Tiles
+     * @return Dirección hacia donde debería caminar
      */
     public Direction findDirection(int i, int j) throws PathEmptyException,
                                                         InvalidPointException,
@@ -71,11 +71,12 @@ public class PathFinder
      * Busca el camino desde (i, j) hasta el camino
      * punto más a la izquierda posible.
      * Regresa el camino.
-     * @param i
-     * @param j
+     * @param i Posición x del jugador en Tiles
+     * @param j Posición y del jugador en Tiles
+     * @return Dirección hacia donde debería caminar.
      */
     public Direction findPath(int i, int j) {
-        for (int [] row : visited)
+        for (int [] row : distances)
             Arrays.fill(row, INF);
 
         path.clear();
@@ -91,6 +92,14 @@ public class PathFinder
         }
     }
 
+    /**
+     * Implementación de BFS para encontrar el camino más corto.
+     * Nota que esta función es bastante costosa por lo que solo debería ser llamada una sola vez.
+     * @param i Posición x del jugador en Tiles
+     * @param j Posición Y del jugador en Tiles
+     * @return El punto más a la izquierda más cercano.
+     * @throws InvalidPointException cuando queremos comenzar la búsqueda en un punto donde no puede estar el personaje
+     */
     private Point bfs(int i, int j) throws InvalidPointException {
         Queue<Point> queue = new LinkedList<>();
 
@@ -101,7 +110,7 @@ public class PathFinder
         int [] dis = {0, 0, 1, -1};
         int [] djs = {1, -1, 0, 0};
 
-        visited[i][j] = 0;
+        distances[i][j] = 0;
 
         Point rightMostPoint = new Point(i, j);
 
@@ -117,13 +126,13 @@ public class PathFinder
                 int ni = pi + di;
                 int nj = pj + dj;
                 if (ni >= 0 && ni < map.length && nj >= 0 && nj < map[0].length) {
-                    if (!map[ni][nj].isCollidable() && visited[ni][nj] > visited[pi][pj] + 1) {
-                        visited[ni][nj] = visited[pi][pj] + 1;
+                    if (!map[ni][nj].isCollidable() && distances[ni][nj] > distances[pi][pj] + 1) {
+                        distances[ni][nj] = distances[pi][pj] + 1;
                         queue.add(new Point(ni, nj));
 
                         if (ni > rightMostPoint.i ||
                                 (ni == rightMostPoint.i &&
-                                        visited[ni][nj] < visited[rightMostPoint.i][rightMostPoint.j]))
+                                        distances[ni][nj] < distances[rightMostPoint.i][rightMostPoint.j]))
                             rightMostPoint = new Point(ni, nj);
                     }
                 }
@@ -134,12 +143,12 @@ public class PathFinder
     }
 
     /**
-     * Construye el camino a partir de la matriz de
+     * Construye el camino a partir de la matriz `distances` que genera el BFS.
      */
     private void retrievePath(Point target) {
         int i = target.i;
         int j = target.j;
-        int distance = visited[i][j];
+        int distance = distances[i][j];
         int [] dis = {0, 0, 1, -1};
         int [] djs = {1, -1, 0, 0};
 
@@ -149,8 +158,8 @@ public class PathFinder
                 int dj = djs[k];
                 int ni = i + di;
                 int nj = j + dj;
-                if (ni >= 0 && ni < visited.length && nj >= 0 && nj < visited[0].length) {
-                    if (visited[ni][nj] == distance - 1) {
+                if (ni >= 0 && ni < distances.length && nj >= 0 && nj < distances[0].length) {
+                    if (distances[ni][nj] == distance - 1) {
                         path.add(0, new Point(i, j));
                         i = ni;
                         j = nj;

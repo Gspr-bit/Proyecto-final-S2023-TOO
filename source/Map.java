@@ -4,12 +4,13 @@ import java.util.Random;
 import greenfoot.GreenfootImage;
 
 /**
- * Write a description of class Map here.
- * 
+ * Representación del mapa del juego.
+ * El mapa es una matriz formada por cuadrados llamados Tiles.
+ * Al instanciar esta clase hay que
+ *
  * @author Gaspar
  */
-public class Map  
-{
+public class Map {
     // Dimensiones de cada Tile en pixeles
     public static final int TILE_SIZE = 16;
     // Dimensiones del mapa en Tiles
@@ -32,25 +33,44 @@ public class Map
     /**
      * Constructor para el mapa
      */
-    public Map(long seed)
-    {
+    public Map(long seed, int level) {
         this.random = new Random(seed);
         this.mapTiles = new Tile[MAP_WIDTH][MAP_HEIGHT];
+
+        prepare(level);
+    }
+
+    /**
+     * Llena el mapa de acuerdo al nivel
+     *
+     * @param level Nivel del juego.
+     */
+    private void prepare(int level) {
+        if (level == 1) {
+            generateCityMap();
+        } else if (level == 2 || level == 3) {
+            try {
+                generateCountryMap();
+            } catch (WrongGenerationPercentagesException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            throw new RuntimeException("El nivel debe ser de 1 a 3");
+        }
     }
 
     /**
      * Genera un fondo aleatorio para la ciudad
      *
-     * @author Gaspar
+     * @author Gaspar, Mau
      */
-    public void generateCityMap() {
+    private void generateCityMap() {
         int blockWidth = 12;
         int blockHeight = 8;
         int streetWidth = 4;
 
         for (int x = 0; x < MAP_WIDTH; x++) {
             for (int y = 0; y < MAP_HEIGHT; y++) {
-                Tile.TileType type;
                 int imageType;
 
                 if (x % (streetWidth + blockWidth) < streetWidth || y % (streetWidth + blockHeight) < streetWidth) {
@@ -62,14 +82,13 @@ public class Map
                 }
 
                 int imageIndex = random.nextInt(tileAmounts[imageType]);
-               int i = x % (streetWidth+blockWidth) -streetWidth+1;
-               int j = y %(streetWidth+blockHeight)-streetWidth +1;
-                GreenfootImage image=null;
-                if(i >=1 && i <=12 && j >= 1 && j <= 12 ){
-                         image = new GreenfootImage("MapTiles/House/house" +  "-" + j + "," + i +".png");
-                }
-                else{
-                     image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
+                int i = x % (streetWidth + blockWidth) - streetWidth + 1;
+                int j = y % (streetWidth + blockHeight) - streetWidth + 1;
+                GreenfootImage image;
+                if (i >= 1 && j >= 1) {
+                    image = new GreenfootImage("MapTiles/House/house" + "-" + j + "," + i + ".png");
+                } else {
+                    image = new GreenfootImage("MapTiles/" + tilePaths[imageType] + "-" + imageIndex + ".png");
                 }
 
                 mapTiles[x][y] = new Tile(image, Tile.TileType.values()[imageType]);
@@ -79,9 +98,10 @@ public class Map
 
     /**
      * Genera un fondo aleatorio para el campo
+     *
      * @author Gaspar
      */
-    public void generateCountryMap() throws WrongGenerationPercentagesException {
+    private void generateCountryMap() throws WrongGenerationPercentagesException {
         // Calcular la sumatoria de los porcentajes
         for (int i = 0; i < percentages.length - 1; i++)
             percentages[i + 1] += percentages[i];
@@ -125,6 +145,7 @@ public class Map
 
     /**
      * Dibuja el mapa en el fondo dependiendo de la posición del jugador
+     *
      * @author Gaspar
      */
     public void drawMap(MyWorld world) {
@@ -145,8 +166,8 @@ public class Map
         int startTileY = MyWorld.player.getPosY() / TILE_SIZE;
 
         // Para calcular en qué tile de la matriz vamos a terminar de dibujar
-        // simplemente calculamos cuántos tiles caben a lo largo j lo ancho de la ventana
-        // obteniendo su tamaño en píxeles j dividiendo entre el tamaño de cada tile.
+        // simplemente calculamos cuántos tiles caben a lo largo y lo ancho de la ventana
+        // obteniendo su tamaño en píxeles y dividiendo entre el tamaño de cada tile.
         int endTileX = startTileX + world.getWidth() / TILE_SIZE;
         int endTileY = startTileY + world.getHeight() / TILE_SIZE;
 
@@ -178,7 +199,7 @@ public class Map
                 world.addObject(mapTiles[x][y], tilePosX - offSetX, tilePosY - offSetY);
             }
         }
-      
+
     }
 
     /**
@@ -197,5 +218,15 @@ public class Map
 
         // Should not get here
         return -1;
+    }
+
+    /**
+     * Esta excepción se lanza cuando los porcentajes de cuántos tiles deberían ser mostrados
+     * están mal establecidos j no suman 100.
+     */
+    static class WrongGenerationPercentagesException extends Exception {
+        public WrongGenerationPercentagesException(String message) {
+            super(message);
+        }
     }
 }

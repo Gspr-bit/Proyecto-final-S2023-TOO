@@ -1,7 +1,7 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
 /**
- * Write a description of class Tile here.
+ * Cuadros por los que está formado el mapa.
  *
  * @author Gaspar
  */
@@ -12,6 +12,7 @@ public class Tile extends Actor {
     public Tile(GreenfootImage image, TileType type) {
         setImage(image);
         this.type = type;
+        // Tipos de tile donde no se puede pisar.
         this.collidable =
                 this.type == TileType.BUSH ||
                         this.type == TileType.WATER ||
@@ -21,10 +22,18 @@ public class Tile extends Actor {
                         this.type == TileType.ROOF;
     }
 
+    /**
+     * Regresa el tipo de piso.
+     * @return Tipo de piso
+     */
     public TileType getType() {
         return type;
     }
 
+    /**
+     * Regresa si no se puede pisar sobre este Tile.
+     * @return 'True' si no se puede pisar en este Tile. 'False' de otro modo
+     */
     public boolean isCollidable() {
         return collidable;
     }

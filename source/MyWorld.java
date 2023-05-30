@@ -24,25 +24,24 @@ public class MyWorld extends World {
     private final ArrayList<Thief> thieves;
     private final ArrayList<Car> cars;
     private final Shadow shadow;
-    int i;
-    private int level;
+    private final int level;
 
     /**
      * Constructor for objects of class MyWorld.
      */
-    public MyWorld(int level) throws WrongGenerationPercentagesException {
+    public MyWorld(int level) throws Map.WrongGenerationPercentagesException {
         // Create a new world with 640x480 cells with a cell size of 1x1 pixels.
         super(WORLD_WIDTH, WORLD_HEIGHT, 1);
 
-        if (level <= 0 || level > 3) {
-            throw new RuntimeException("El nivel debe ir de 1 a 3");
-        }
         this.level = level;
 
         //this.Ti=new TimerImage ();
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
-        this.map = new Map(new Date().getTime());
+        this.map = new Map(new Date().getTime(), level);
+        TimerImage timerImage = new TimerImage();
+
+        this.addObject(timerImage, 8, 8);
 
         // Agregar el jugador
         player = new Player();
@@ -63,7 +62,7 @@ public class MyWorld extends World {
 
         // Agrega el objeto sombra sin poner sombra por el momento
         try {
-            this.shadow = new Shadow(0);
+            this.shadow = new Shadow(level == 3 ? 8 : 0);
             this.addObject(this.shadow, this.getWidth() / 2, this.getHeight() / 2);
         } catch (InvalidShadowSizeExceptions e) {
             // No debería entrar aquí.
@@ -71,7 +70,6 @@ public class MyWorld extends World {
         }
 
         if (this.level == 1) {
-            map.generateCityMap();
             //Generar carros
             //this.shadowsCars=new ArrayList<>();
             for (int i = 0; i < 20; i++) {
@@ -84,9 +82,8 @@ public class MyWorld extends World {
                 //shadow car
                 //shadowsCars.add(new ShadowCar(x,y));
             }
-        } else {
-            map.generateCountryMap();
         }
+
         generateItems();
 
         dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, map.mapTiles);
@@ -116,15 +113,8 @@ public class MyWorld extends World {
         drawDog();
         drawCars();
         Timer.update();
-        String s = player.getEffect() + " " + (player.getEffectEnd() - Timer.getTime());
-        if (player.getEffectEnd() - Timer.getTime() == 0) {
-            s = "";
-        }
-        if (player.getEffect() != Effect.NONE) {
-            this.showText(s, 60, 30);
-        }
         // revisar si el perro ya llegó al otro lado
-        if (dog.getPosX() + dog.getImage().getWidth() >= Map.MAP_WIDTH * Map.TILE_SIZE) {
+        if (MyWorld.dog.getPosX() + MyWorld.dog.getImage().getWidth() >= Map.MAP_WIDTH * Map.TILE_SIZE) {
             WindowSwitcher.nextLevel(this.level);
         }
     }
@@ -157,7 +147,6 @@ public class MyWorld extends World {
         this.fixedObjects.forEach(object -> {
             int objectPosX = object.getPosX() * Map.TILE_SIZE - player.getPosX();
             int objectPosY = object.getPosY() * Map.TILE_SIZE - player.getPosY();
-            int unidad;
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()) {
                 addObject(object, objectPosX + object.getImage().getWidth() / 2, objectPosY + object.getImage().getHeight() / 2);

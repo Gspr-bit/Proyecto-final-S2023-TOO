@@ -1,7 +1,7 @@
 import greenfoot.Greenfoot;
 
 /**
- * Write a description of class WindowSwitcher here.
+ * Función que cambia de nivel.
  * 
  * @author (your name) 
  * @version (a version number or a date)

@@ -10,29 +10,44 @@ public abstract class FixedObject extends Actor {
     protected int posX;
     protected int posY;
 
-    //CONSTRUCTOR DEL ACT0R
-    protected FixedObject(int x, int y) {//Comento aquí pq ahorita yo solo lo estuve probando así tal cual poniendo items desde el panel de greenfoot, pero pues una idea sería pasarle la posicion desde el generador del mapa j así tal cual para que funcione automaticamente,pero pues por ahora namas quedó así jeje
+    protected FixedObject(int x, int y) {
         this.posX = x;
         this.posY = y;
         setLocation(posX, posY);
     }
 
     /**
-     * Función que hace que los items desaparezcan cuando el jugador los toca
-     * j le aplica el efecto al jugador.
+     * Regresa la posición en Tiles en X del personaje.
+     * La posición (x, y) comienza en (0, 0). X se incrementa hacia la derecha.
+     * Esta no es la posición en la ventana, sino en el mapa.
+     *
+     * @return La posición en X del personaje
+     */
+    public int getPosX() {
+        return posX;
+    }
+
+    /**
+     * Regresa la posición en Tiles en Y del personaje.
+     * La posición (x, y) comienza en (0, 0). Y se incrementa hacia abajo.
+     * Esta no es la posición en la ventana, sino en el mapa.
+     *
+     * @return La posición en X del personaje
+     */
+    public int getPosY() {
+        return posY;
+    }
+
+    /**
+     * Función que hace que los items desaparezcan cuando el jugador los toca.
+     * Los objetos están guardados dentro en MyWorld FixedObjects
+     * Entonces si queremos eliminar un objeto, no solo lo borramos del mundo,
+     * también del ArrayList.
      *
      * @author Montse
      */
     public void remove() {
         ((MyWorld) getWorld()).getFixedObjects().remove(this);
         getWorld().removeObject(this);
-    }
-
-    public int getPosX() {
-        return posX;
-    }
-
-    public int getPosY() {
-        return posY;
     }
 }
