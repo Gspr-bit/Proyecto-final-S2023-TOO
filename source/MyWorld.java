@@ -74,7 +74,7 @@ public class MyWorld extends World {
             map.generateCityMap();
             //Generar carros
             //this.shadowsCars=new ArrayList<>();
-            for (int i = 0; i < 0; i++) {
+            for (int i = 0; i < 20; i++) {
                 int x = random.nextInt(Map.MAP_WIDTH * 16);
                 int y = random.nextInt(Map.MAP_HEIGHT * 16);
                 Car carro = new Car(x, y);
@@ -194,7 +194,7 @@ public class MyWorld extends World {
 
             if (objectPosX >= 0 && objectPosX < getWidth() && objectPosY >= 0 && objectPosY < getHeight()) {
                 addObject(object, objectPosX + Map.TILE_SIZE / 2, objectPosY + Map.TILE_SIZE / 2);
-                if (!object.puedoIniciarAqui()) {
+                if (!object.canStartHere()) {
                     removeObject(object);
                 }
             }

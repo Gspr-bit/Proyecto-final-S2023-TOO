@@ -100,31 +100,6 @@ public class Thief extends Character
     }
 
     /**
-     * Función que mueve al ladrón
-     * @author Montse
-     */
-    private void move() {
-        switch (this.direction) {
-            case UP: {
-                this.posY -= v;
-                break;
-            }
-            case DOWN: {
-                this.posY += v;
-                break;
-            }
-            case LEFT: {
-                this.posX -= v;
-                break;
-            }
-            case RIGHT: {
-                this.posX += v;
-                break;
-            }
-        }
-    }
-
-    /**
      * Función que cambia la dirección del ladrón aleatoriamente cada 2 segundos
      * o cuando choque con un objeto.
      *

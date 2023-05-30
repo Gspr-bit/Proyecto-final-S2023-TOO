@@ -1,4 +1,3 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
 /**
@@ -23,59 +22,36 @@ public class Car extends Character
     
     /**
      * Constructor de la clase actor
-     * @Montse
+     * @author Montse
      */
     public Car(int x, int y){
         this.v = 4;
         this.posX=x;
         this.posY=y;
         this.direction = Direction.LEFT;
-        
-        //String [] carType = {"a", "b", "c", "d", "e"};
+
         String [] carType = {"a", "b", "c"};
 
         Random random = new Random();
         String chosenCarType = carType[random.nextInt(carType.length)];
         setImage("Car/car-" + chosenCarType + ".png");
     }
-    
+
     /**
-    *Método para que los carros corran siempre de derecha izquierda
-    *@Montse
-    */
-    public void move(){
-        switch (this.direction) {
-            case UP: {
-                this.posY -= v;
-                break;
-            }
-            case DOWN: {
-                this.posY += v;
-                break;
-            }
-            case LEFT: {
-                this.posX -= v;
-                break;
-            }
-            case RIGHT: {
-                this.posX += v;
-                break;
-            }
-        }
-    }
-   
-   
-    public void changeDirection(){
-        return;
-    }
-    public void updateImage(){
-        return;
-    }
-    public boolean puedoIrAqui(int y){
-        return ((y>4 && y<Map.TILE_SIZE*8) ||(y>(Map.TILE_SIZE*16) && y<Map.TILE_SIZE*20) ||(y<(-4) && y>-(Map.TILE_SIZE*8)) ||(y<(-Map.TILE_SIZE*16) && y>(-Map.TILE_SIZE*20)));
-    }
-    
-    public boolean puedoIniciarAqui() {
+     * El carro no necesita cambiar su dirección
+     */
+    public void changeDirection(){}
+
+    /**
+     * El carro no necesita cambiar su imagen
+     */
+    public void updateImage(){}
+
+    /**
+     * @author MONTSE
+     * @return
+     */
+    public boolean canStartHere() {
         Direction direction=Direction.LEFT;
         int dx = this.getImage().getWidth() / 2 + v;
         int dy = this.getImage().getHeight() / 2 + v;

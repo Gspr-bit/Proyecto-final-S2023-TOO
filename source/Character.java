@@ -52,6 +52,33 @@ public abstract class Character extends Actor {
     public abstract void updateImage();
 
     /**
+     *Método para que los carros corran siempre de derecha izquierda
+     *@Montse
+     */
+    public void move(){
+        switch (this.direction) {
+            case UP: {
+                this.posY -= v;
+                break;
+            }
+            case DOWN: {
+                this.posY += v;
+                break;
+            }
+            case LEFT: {
+                this.posX -= v;
+                break;
+            }
+            case RIGHT: {
+                this.posX += v;
+                break;
+            }
+            case NONE:
+                break;
+        }
+    }
+
+    /**
      * Método para saber si el jugador puede moverse hacia la posición dada.
      * @author Mauricio, Gaspar, Montse
      * @param direction Dirección hacia donde se quiere mover el jugador.

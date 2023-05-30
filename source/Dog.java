@@ -87,7 +87,8 @@ public class Dog extends Character {
      *
      * @author Montse
      */
-    private void move() {
+    @Override
+    public void move() {
         switch (this.direction) {
             case UP: {
                 this.posY -= v;
