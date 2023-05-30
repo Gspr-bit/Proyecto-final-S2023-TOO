@@ -33,7 +33,7 @@ public class MyWorld extends World {
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
         this.worldMap = new WorldMap(new Date().getTime(), level);
-        this.dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, worldMap.mapTiles);
+        this.dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, worldMap.getMapTiles());
         this.player = new Player();
         this.cars = new ArrayList<>();
         this.thieves = new ArrayList<>();
@@ -110,7 +110,7 @@ public class MyWorld extends World {
             int x = random.nextInt(WorldMap.MAP_WIDTH);
             int y = random.nextInt(WorldMap.MAP_HEIGHT);
 
-            if (worldMap.mapTiles[x][y].isCollidable())
+            if (worldMap.getMapTiles()[x][y].isCollidable())
                 continue;
 
             fixedObjects.add(new Item(Effect.randomEffect(), random.nextInt(8) + 2, x, y));
@@ -130,7 +130,7 @@ public class MyWorld extends World {
             int x = random.nextInt(WorldMap.MAP_WIDTH);
             int y = random.nextInt(WorldMap.MAP_HEIGHT);
 
-            if (worldMap.mapTiles[x][y].isCollidable())
+            if (worldMap.getMapTiles()[x][y].isCollidable())
                 continue;
 
             thieves.add(new Thief(x * WorldMap.TILE_SIZE, y * WorldMap.TILE_SIZE));

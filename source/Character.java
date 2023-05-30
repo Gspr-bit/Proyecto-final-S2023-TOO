@@ -88,7 +88,7 @@ public abstract class Character extends Actor {
      * @return true si el jugador se puede mover hacia allá
      * @author Mauricio, Gaspar, Montse
      */
-    protected boolean canMoveTowards(Direction direction) {
+    public boolean canMoveTowards(Direction direction) {
         // Siempre se puede quedar donde ya está
         if (direction == Direction.NONE) return true;
 
