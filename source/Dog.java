@@ -45,8 +45,7 @@ public class Dog extends Character {
         move();
 
         if (isTouchingThief()) {
-            GameOverScreen gameOver = new GameOverScreen();
-            Greenfoot.setWorld(gameOver);
+            WindowSwitcher.nextLevel(((MyWorld)getWorld()).getLevel());
         }
     }
 

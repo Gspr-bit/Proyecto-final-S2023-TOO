@@ -92,6 +92,10 @@ public class MyWorld extends World {
         dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, map.mapTiles);
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     public ArrayList<FixedObject> getFixedObjects() {
         return this.fixedObjects;
     }
@@ -121,25 +125,7 @@ public class MyWorld extends World {
         }
         // revisar si el perro ya llegó al otro lado
         if (dog.getPosX() + dog.getImage().getWidth() >= Map.MAP_WIDTH * Map.TILE_SIZE) {
-            switch (this.level) {
-                case 1:
-                {
-                    Level2Intro intro = new Level2Intro();
-                    Greenfoot.setWorld(intro);
-                    break;
-                }
-                case 2:
-                {
-                    Level3Intro intro = new Level3Intro();
-                    Greenfoot.setWorld(intro);
-                    break;
-                }
-                case 3:
-                {
-                    GameOverScreen gameOver = new GameOverScreen();
-                    Greenfoot.setWorld(gameOver);
-                }
-            }
+            WindowSwitcher.nextLevel(this.level);
         }
     }
 
