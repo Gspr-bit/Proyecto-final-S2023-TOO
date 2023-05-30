@@ -148,6 +148,9 @@ public class Player extends Character {
                     this.v = 0;
                     break;
                 }
+                case FAST: {
+                    this.v = 4;
+                }
                 case BLIND: {
                     // Ya lo hicimos arriba
                     break;
