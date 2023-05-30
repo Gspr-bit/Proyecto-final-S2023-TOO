@@ -57,7 +57,8 @@ public class MyWorld extends World {
 
         generateItems();
         generateThieves();
-        generateCars();
+        if (this.level == 1)
+            generateCars();
     }
 
     public Player getPlayer() {
@@ -89,6 +90,11 @@ public class MyWorld extends World {
         if (this.dog.getPosX() + this.dog.getImage().getWidth() >= WorldMap.MAP_WIDTH * WorldMap.TILE_SIZE) {
             WindowSwitcher.nextLevel(this.level);
         }
+
+        this.cars.forEach(car -> {
+            car.move();
+            car.changeDirection();
+        });
     }
 
     /**
@@ -132,14 +138,17 @@ public class MyWorld extends World {
     }
 
     private void generateCars() {
-        if (this.level == 1) {
-            for (int i = 0; i < 20; i++) {
-                int x = random.nextInt(WorldMap.MAP_WIDTH * 16);
-                int y = random.nextInt(WorldMap.MAP_HEIGHT * 16);
-                Car car = new Car(x, y);
-                car.xOriginal = x;
-                cars.add(car);
-            }
+        int numberOfVerticalStreets = WorldMap.MAP_WIDTH / 16 + (WorldMap.MAP_WIDTH % 16 > 0 ? 1 : 0);
+
+        for (int i = 0; i < 10; i++) {
+            int randomStreet = random.nextInt(numberOfVerticalStreets);
+            int y = random.nextInt(WorldMap.MAP_HEIGHT * WorldMap.TILE_SIZE);
+            int x = randomStreet * 16 * WorldMap.TILE_SIZE + 32;
+
+            Car car = new Car(x, y);
+            car.startPositionY = 0;
+
+            this.cars.add(car);
         }
     }
 
