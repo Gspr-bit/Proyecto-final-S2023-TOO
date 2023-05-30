@@ -44,7 +44,7 @@ public class Car extends Character {
     }
 
     /**
-     * El carro no necesita cambiar su dirección
+     * Hace que el carro regrese a su posición original cuando llega al final del mapa.
      */
     public void changeDirection() {
         if (this.posY >= WorldMap.MAP_HEIGHT * WorldMap.TILE_SIZE) {
