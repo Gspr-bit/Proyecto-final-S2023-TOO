@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import greenfoot.Greenfoot;
-
-
 /**
  * Write a description of class Dog here.
  *

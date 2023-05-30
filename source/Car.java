@@ -1,5 +1,3 @@
-import greenfoot.Greenfoot;
-
 import java.util.*;
 
 /**
