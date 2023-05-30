@@ -18,9 +18,8 @@ public class InstructionsScreen2 extends World {
 
     public void act() {
         if (Greenfoot.isKeyDown("ENTER")) {
-            Level1Intro intro = new Level1Intro();
             Greenfoot.delay(10);
-            Greenfoot.setWorld(intro);
+            WindowSwitcher.showLevel(1);
         }
     }
 

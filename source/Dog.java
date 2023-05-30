@@ -70,7 +70,7 @@ public class Dog extends Character {
         }
 
         if (isTouchingPlayer()) {
-            WindowSwitcher.win();
+            WindowSwitcher.nextLevel(((MyWorld) this.getWorld()).getLevel());
         }
     }
 
