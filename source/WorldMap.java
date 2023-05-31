@@ -17,7 +17,7 @@ public class WorldMap {
     public static final int MAP_WIDTH = 164;
     public static final int MAP_HEIGHT = 40;
 
-    public final Tile[][] mapTiles;
+    private final Tile[][] mapTiles;
     private final Tile.TileType[] tileTypes = Tile.TileType.values();
     // Tipos que puede haber
     private final String[] tilePaths = {"bush", "dirt", "grass", "mud", "rock", "tree", "water", "pavement", "wall", "roof"};
@@ -57,6 +57,10 @@ public class WorldMap {
         } else {
             throw new RuntimeException("El nivel debe ser de 1 a 3");
         }
+    }
+    
+    public Tile[][] getMapTiles() {
+        return this.mapTiles;
     }
 
     /**

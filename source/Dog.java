@@ -7,8 +7,8 @@ import java.util.HashMap;
  * @author Gaspar
  */
 public class Dog extends Character {
-    private static final int movementDuration = 1;
-    private static final int idleDuration = 3;
+    private static final int MOVEMENT_DURATION = 1;
+    private static final int IDLE_DURATION = 3;
     // Límite de distancia a la que se puede acercar el jugador antes de que el perro corra de nuevo
     private static final int DISTANCE_THRESHOLD = 4 * WorldMap.TILE_SIZE;
     private final Tile[][] map;
@@ -70,7 +70,7 @@ public class Dog extends Character {
         }
 
         if (isTouchingPlayer()) {
-            WindowSwitcher.win();
+            WindowSwitcher.nextLevel(((MyWorld) this.getWorld()).getLevel());
         }
     }
 
@@ -95,9 +95,9 @@ public class Dog extends Character {
         int time = Timer.getTime();
 
         if (time == this.movementStartTime || isNearToPlayer()) {
-            this.movementEndTime = time + movementDuration;
+            this.movementEndTime = time + MOVEMENT_DURATION;
         } else if (time == this.movementEndTime) {
-            this.movementStartTime = time + idleDuration;
+            this.movementStartTime = time + IDLE_DURATION;
         }
 
         if (time > this.movementEndTime && time < this.movementStartTime) {

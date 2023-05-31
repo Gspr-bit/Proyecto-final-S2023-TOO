@@ -14,7 +14,7 @@ public class Thief extends Character
     private int movementStart;
     // Tiempo en que el ladrón continúa moviéndose hacia la misma dirección
     // antes de cambiar de dirección.
-    private final static int movementDelay = 2;
+    private final static int MOVEMENT_DELAY = 2;
     private final Random random;
 
     /**
@@ -87,7 +87,7 @@ public class Thief extends Character
     public void changeDirection() {
         // Determinar si el momento en que debe de cambiar su dirección ha llegado.
         // O si está a punto de chocar
-        if (Timer.getTime() >= this.movementStart + movementDelay ||
+        if (Timer.getTime() >= this.movementStart + MOVEMENT_DELAY ||
             !canMoveTowards(this.direction))
         {
             this.movementStart = Timer.getTime();

@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public enum Effect {
-    NONE, FREEZE, DIZZY, SLOW, BLIND;
+    NONE, FREEZE, DIZZY, SLOW, BLIND, FAST;
 
     /**
      * Regresa un efecto aleatorio, excepto NONE.

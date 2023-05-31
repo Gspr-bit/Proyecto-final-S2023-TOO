@@ -33,7 +33,7 @@ public class MyWorld extends World {
         this.random = new Random(new Date().getTime());
         this.fixedObjects = new ArrayList<>();
         this.worldMap = new WorldMap(new Date().getTime(), level);
-        this.dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, worldMap.mapTiles);
+        this.dog = new Dog(this.getWidth() / 2 + 8, this.getHeight() / 2, worldMap.getMapTiles());
         this.player = new Player();
         this.cars = new ArrayList<>();
         this.thieves = new ArrayList<>();
@@ -88,7 +88,8 @@ public class MyWorld extends World {
 
         // revisar si el perro ya llegó al otro lado
         if (this.dog.getPosX() + this.dog.getImage().getWidth() >= WorldMap.MAP_WIDTH * WorldMap.TILE_SIZE) {
-            WindowSwitcher.nextLevel(this.level);
+            // reiniciar el nivel
+            WindowSwitcher.showLevel(this.level);
         }
 
         this.cars.forEach(car -> {
@@ -109,7 +110,7 @@ public class MyWorld extends World {
             int x = random.nextInt(WorldMap.MAP_WIDTH);
             int y = random.nextInt(WorldMap.MAP_HEIGHT);
 
-            if (worldMap.mapTiles[x][y].isCollidable())
+            if (worldMap.getMapTiles()[x][y].isCollidable())
                 continue;
 
             fixedObjects.add(new Item(Effect.randomEffect(), random.nextInt(8) + 2, x, y));
@@ -123,13 +124,13 @@ public class MyWorld extends World {
      * @author Montse
      */
     private void generateThieves() {
-        int count = 10;
+        int count = 5;
 
         while (count > 0) {
             int x = random.nextInt(WorldMap.MAP_WIDTH);
             int y = random.nextInt(WorldMap.MAP_HEIGHT);
 
-            if (worldMap.mapTiles[x][y].isCollidable())
+            if (worldMap.getMapTiles()[x][y].isCollidable())
                 continue;
 
             thieves.add(new Thief(x * WorldMap.TILE_SIZE, y * WorldMap.TILE_SIZE));
@@ -140,7 +141,7 @@ public class MyWorld extends World {
     private void generateCars() {
         int numberOfVerticalStreets = WorldMap.MAP_WIDTH / 16 + (WorldMap.MAP_WIDTH % 16 > 0 ? 1 : 0);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             int randomStreet = random.nextInt(numberOfVerticalStreets);
             int y = random.nextInt(WorldMap.MAP_HEIGHT * WorldMap.TILE_SIZE);
             int x = randomStreet * 16 * WorldMap.TILE_SIZE + 32;

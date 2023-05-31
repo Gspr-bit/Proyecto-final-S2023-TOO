@@ -29,4 +29,12 @@ public class Timer {
     public static void update() {
         time++;
     }
+    
+    /**
+     * Reinicia el temporizador a 0
+     */
+    public static void reset()  {
+        time = 0;
+    }   
+
 }

@@ -68,8 +68,16 @@ public class Player extends Character {
     public void setVisibility(int visibility) {
         this.visibility = visibility;
     }
+
     public int getEffectEnd(){
         return this.effectEnd;
+    }
+
+     
+    public void act(){
+        changeDirection();
+        updateImage();
+        applyEffect();
     }
 
     /**
@@ -77,8 +85,6 @@ public class Player extends Character {
      * @author Mauricio, Montse
      */
     public void changeDirection() {
-        applyEffect();
-
         // Este método no mueve al jugador, solo cambia su sprite para que apunte a la dirección correspondiente
         if (Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("D")) {
             this.direction = Direction.RIGHT;
@@ -148,6 +154,9 @@ public class Player extends Character {
                     this.v = 0;
                     break;
                 }
+                case FAST: {
+                    this.v = 4;
+                }
                 case BLIND: {
                     // Ya lo hicimos arriba
                     break;
@@ -162,10 +171,5 @@ public class Player extends Character {
             ((MyWorld) getWorld()).getShadow().reset();
             this.effect=Effect.NONE;
         }
-    }
-    
-    public void act(){
-        changeDirection();
-        updateImage();
     }
 }
