@@ -14,6 +14,10 @@ Universidad Autónoma de San Luis Potosí
 - Huerta Saavedra Gaspar
 - Salazar Martinez Mauricio Antonio
 
+## Ejecutable
+
+[Archivo .jar](https://github.com/Gspr-bit/Proyecto-final-S2023-TOO/blob/main/bin/buscandoANemo.jar)
+
 ## Links de documentos
 
 [Diagrama de clases.](https://github.com/Gspr-bit/Proyecto-final-S2023-TOO/blob/main/docs/Diagrama%20de%20clases.pdf)
@@ -24,7 +28,7 @@ Universidad Autónoma de San Luis Potosí
 
 [GDD](https://docs.google.com/document/d/1A9WZvLQFwBW-sarXeNLkwbm-oMKjzaZj-78K0TxcB8Q/edit?usp=sharing)
 
-
+[Documentación](https://github.com/Gspr-bit/Proyecto-final-S2023-TOO/blob/main/docs/Documentaci%C3%B3n.pdf)
 
 ## Créditos
 
